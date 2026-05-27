@@ -61,7 +61,7 @@ const styles = {
 	entry: () => {
 		const entries = {};
 
-		const dir = './assets/src/css';
+		const dir = './src/css';
 		fs.readdirSync( dir ).forEach( ( fileName ) => {
 			const fullPath = `${ dir }/${ fileName }`;
 			if ( ! fs.lstatSync( fullPath ).isDirectory() ) {
@@ -86,8 +86,8 @@ const styles = {
 const scripts = {
 	...sharedConfig,
 	entry: {
-		main: path.resolve( process.cwd(), 'assets', 'src', 'js', 'main.js' ),
-		admin: path.resolve( process.cwd(), 'assets', 'src', 'js', 'admin.js' ),
+		main: path.resolve( process.cwd(), 'src', 'js', 'main.js' ),
+		admin: path.resolve( process.cwd(), 'src', 'js', 'admin.js' ),
 	},
 };
 
@@ -96,7 +96,7 @@ if (hasExperimentalModulesFlag) {
 	moduleScripts = {
 		...moduleConfig,
 		entry: {
-			module: path.resolve(process.cwd(), 'assets', 'src', 'js', 'modules', 'module.js'),
+			module: path.resolve(process.cwd(), 'src', 'js', 'modules', 'module.js'),
 		},
 		output: {
 			...moduleConfig.output,

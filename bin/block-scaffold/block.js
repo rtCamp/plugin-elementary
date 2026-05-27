@@ -207,7 +207,7 @@ const copyTemplateFiles = ( blockDirName, blockPath, blockFiles ) => {
  */
 const getBlocksDir = () => {
 	try {
-		const blocksDir = path.resolve( __dirname, '../../assets/src/blocks' );
+		const blocksDir = path.resolve( __dirname, '../../src/blocks' );
 		if ( ! fs.existsSync( blocksDir ) ) {
 			fs.mkdirSync( blocksDir );
 		}
@@ -225,7 +225,7 @@ const getBlocksDir = () => {
  */
 const getMetaBlocksDir = () => {
 	try {
-		const metaBlocksDir = path.resolve( __dirname, '../../assets/src/blocks/meta-blocks' );
+		const metaBlocksDir = path.resolve( __dirname, '../../src/blocks/meta-blocks' );
 		if ( ! fs.existsSync( metaBlocksDir ) ) {
 			fs.mkdirSync( metaBlocksDir );
 		}
@@ -312,7 +312,7 @@ const finalMessage = ( blockName, metaBlock = false ) => {
 	console.log( info.success( `Block ${ blockName } created successfully!\n` ) );
 	console.log( info.message( 'Next steps:' ) );
 	if ( metaBlock ) {
-		console.log( info.message( `1. Register '${ blockName }' in inc/Core/Assets.php — for a meta block under assets/src/blocks/meta-blocks/, you'll need to extend STATIC_BLOCKS or add a meta-blocks loop back.` ) );
+		console.log( info.message( `1. Register '${ blockName }' in inc/Core/Assets.php — for a meta block under src/blocks/meta-blocks/, you'll need to extend STATIC_BLOCKS or add a meta-blocks loop back.` ) );
 		console.log( info.message( `2. Register the backing post-meta keys (use 'register_post_meta' from a class implementing 'Registrable' — see inc/Modules/Cron/ExampleCronJob.php for the pattern).` ) );
 		console.log( info.message( `3. Add a webpack entry for the block's JS file.` ) );
 	} else {
