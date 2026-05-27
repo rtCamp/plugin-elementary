@@ -1,33 +1,68 @@
 <?php
 /**
- * Plugin Name: Project_Name Features
- * Description: All backend functionality will take place in this plugin. Like, registering post type, taxonomy, widget and meta box.
- * Plugin URI:  https://rtcamp.com
- * Author:      rtCamp
- * Author URI:  https://rtcamp.com
- * License:     GPL2
- * License URI: https://www.gnu.org/licenses/gpl-2.0.html
- * Version:     1.0
- * Text Domain: project-name-features
- * Domain Path: /languages
- * @package project-name-features
+ * Project Name Features
+ *
+ * @package           Project_Name\Features
+ * @author            rtCamp
+ * @copyright         2026 rtCamp
+ * @license           GPL-2.0-or-later
+ *
+ * Plugin Name:       Project Name Features
+ * Plugin URI:        https://rtcamp.com
+ * Description:       All backend functionality: post types, taxonomies, blocks, REST endpoints, settings, shortcodes, and custom roles.
+ * Version:           1.0.0
+ * Author:            rtCamp
+ * Author URI:        https://rtcamp.com
+ * License:           GPL-2.0-or-later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       project-name-features
+ * Domain Path:       /languages
+ * Requires PHP:      8.2
+ * Requires at least: 6.7
+ * Tested up to:      6.8
  */
 
-define( 'PROJECT_NAME_FEATURES_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
-define( 'PROJECT_NAME_FEATURES_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
+declare( strict_types = 1 );
 
-// phpcs:disable WordPressVIPMinimum.Files.IncludingFile.UsingCustomConstant
-require_once PROJECT_NAME_FEATURES_PATH . '/inc/helpers/autoloader.php';
-require_once PROJECT_NAME_FEATURES_PATH . '/inc/helpers/custom-functions.php';
-// phpcs:enable WordPressVIPMinimum.Files.IncludingFile.UsingCustomConstant
+namespace Project_Name\Features;
+
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 /**
- * To load plugin manifest class.
- *
- * @return void
+ * Define the plugin constants.
  */
-function project_name_features_plugin_loader() {
-	\Project_Name\Features\Inc\Plugin::get_instance();
+function constants(): void {
+	/**
+	 * File path to the plugin's main file.
+	 */
+	define( 'PROJECT_NAME_FEATURES_FILE', __FILE__ );
+
+	/**
+	 * Version of the plugin.
+	 */
+	define( 'PROJECT_NAME_FEATURES_VERSION', '1.0.0' );
+
+	/**
+	 * Root path to the plugin directory.
+	 */
+	define( 'PROJECT_NAME_FEATURES_PATH', plugin_dir_path( PROJECT_NAME_FEATURES_FILE ) );
+
+	/**
+	 * Root URL to the plugin directory.
+	 */
+	define( 'PROJECT_NAME_FEATURES_URL', plugin_dir_url( PROJECT_NAME_FEATURES_FILE ) );
 }
 
-project_name_features_plugin_loader();
+constants();
+
+// If autoloader fails, we cannot proceed.
+require_once __DIR__ . '/inc/Autoloader.php';
+if ( ! class_exists( 'Project_Name\Features\Autoloader' ) || ! \Project_Name\Features\Autoloader::autoload() ) {
+	return;
+}
+
+// Load the main plugin class.
+if ( class_exists( 'Project_Name\Features\Main' ) ) {
+	\Project_Name\Features\Main::get_instance();
+}

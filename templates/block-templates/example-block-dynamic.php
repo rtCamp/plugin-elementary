@@ -2,7 +2,7 @@
 /**
  * Example block dynamic template.
  *
- * @package project-name-features
+ * @package Project_Name\Features
  */
 
 ?>

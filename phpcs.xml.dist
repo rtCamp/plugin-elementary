@@ -3,14 +3,27 @@
 
 	<rule ref="WordPress-Core">
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax" />
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax" />
 		<exclude name="Generic.Commenting.DocComment.MissingShort" />
-		<exclude name="WordPress.PHP.DisallowShortTernary" />
 	</rule>
 
 	<rule ref="WordPress-Docs">
 		<exclude-pattern>tests/*</exclude-pattern>
 	</rule>
 	<rule ref="WordPress-Extra" />
+
+	<!-- Allow PSR-4 PascalCase filenames (e.g. `Autoloader.php`, `Core/Assets.php`). -->
+	<rule ref="WordPress.Files.FileName">
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
+	</rule>
+
+	<rule ref="Squiz.Classes.ClassFileName">
+		<exclude-pattern>tests/**</exclude-pattern>
+	</rule>
+	<rule ref="PSR1.Classes.ClassDeclaration">
+		<exclude-pattern>tests/**</exclude-pattern>
+	</rule>
 
 	<rule ref="WordPress.WP.I18n">
 		<properties>
@@ -19,6 +32,22 @@
 				<element value="default"/>
 			</property>
 		</properties>
+		<!-- Block render files carry their own text domain from @wordpress/create-block. -->
+		<exclude-pattern>assets/src/blocks/*/render.php</exclude-pattern>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="project_name_features"/>
+				<element value="PROJECT_NAME_FEATURES"/>
+				<element value="Project_Name\Features"/>
+				<!-- Legacy helpers predate the `_features` suffix. Keep them working. -->
+				<element value="project_name"/>
+			</property>
+		</properties>
+		<exclude-pattern>tests/bootstrap.php</exclude-pattern>
+		<exclude-pattern>assets/src/blocks/*/render.php</exclude-pattern>
 	</rule>
 
 	<rule ref="WordPress-VIP-Go">
@@ -33,10 +62,6 @@
 		<exclude name="WordPressVIPMinimum.Functions.RestrictedFunctions.wp_remote_get_wp_remote_get" />
 		<exclude name="WordPressVIPMinimum.Functions.RestrictedFunctions.get_page_by_path_get_page_by_path" />
 		<exclude name="WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown" />
-	</rule>
-
-	<rule ref="WordPress.Files.FileName.InvalidClassFileName">
-		<exclude-pattern>tests/*</exclude-pattern>
 	</rule>
 
 	<rule ref="WordPress.WP.GlobalVariablesOverride.Prohibited">

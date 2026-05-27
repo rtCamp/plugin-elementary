@@ -8,6 +8,8 @@
  *     $block (WP_Block): The block instance.
  *
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
+ *
+ * @package Project_Name\Features
  */
 
 // Generate unique id for aria-controls.
@@ -15,9 +17,9 @@ $unique_id = wp_unique_id( 'p-' );
 ?>
 
 <div
-	<?php echo get_block_wrapper_attributes(); ?>
+	<?php echo get_block_wrapper_attributes(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Core API returns safe HTML attributes. ?>
 	data-wp-interactive="create-block"
-	<?php echo wp_interactivity_data_wp_context( array( 'isOpen' => false ) ); ?>
+	<?php echo wp_interactivity_data_wp_context( array( 'isOpen' => false ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Core API returns safe HTML attributes. ?>
 	data-wp-watch="callbacks.logIsOpen"
 >
 	<button

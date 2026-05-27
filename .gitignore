@@ -36,3 +36,4 @@ assets/build/
 
 # Tests & Coverage
 /coverage/
+.phpunit.cache/

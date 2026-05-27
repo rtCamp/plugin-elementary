@@ -2,7 +2,7 @@
 /**
  * PHPUnit bootstrap file
  *
- * @package project-name-features
+ * @package Project_Name\Features
  */
 
 define( 'TESTS_PLUGIN_DIR', dirname( __DIR__ ) );
@@ -67,7 +67,7 @@ $GLOBALS['wp_tests_options'] = array(
 require_once $_test_root . '/includes/functions.php';
 tests_add_filter(
 	'plugins_loaded',
-	function() {
+	function () {
 		require_once TESTS_PLUGIN_DIR . '/project-name-features.php';
 	},
 	1

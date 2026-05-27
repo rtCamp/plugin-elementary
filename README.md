@@ -1,6 +1,10 @@
 # Project_Name Features [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
-Plugin for Project_Name. All backend functionality will take place in this plugin. Like, such as registering post type, taxonomy, custom blocks, and meta blocks.
+Plugin for Project_Name. All backend functionality lives here — post types, taxonomies, blocks, REST endpoints, settings pages, shortcodes, custom user roles, WP-Cron jobs, and WP-CLI commands.
+
+Reusable scaffolding (singleton, autoloader, asset loader, template loader, and a set of abstract base classes for the feature types above) ships separately as the `rtcamp/wp-framework` Composer package and is loaded from `vendor/`.
+
+> **Working on this plugin?** See [DEVELOPMENT.md](DEVELOPMENT.md) for the architecture overview, the module pattern, and how to add new classes.
 
 ## Get Started
 ### Plugin Setup
@@ -49,6 +53,12 @@ git clone git@github.com:rtCamp/features-plugin-skeleton.git <directory-name>
 - Tests suites:
     - `js`: JavaScript unit tests using `jest`.
     - `php`: PHP unit tests using WP PHPUnit.
+
+> **`composer test` vs `npm run test:php`** — both invoke the same `vendor/bin/phpunit -c phpunit.xml.dist`, but at different layers:
+> - `npm run test:php` runs phpunit **inside** the wp-env container (which already has WordPress test infrastructure configured). This is the day-to-day developer command.
+> - `composer test` runs phpunit **directly on the host**. It only works if WordPress test infrastructure is reachable from there — useful for CI runners or when you've shelled into the wp-env container manually.
+>
+> The two are not in conflict; the npm script is the host-side wrapper, the composer script is the low-level invocation.
 
 ### Working with PHPUnit Tests
 This plugin is configured with WP PHPUnit tests out of the box. The tests are run inside the docker container using [wp-env](https://www.npmjs.com/package/@wordpress/env) package. There can be chances when you need to run test cases with the different matrix of PHP, WP, and WP PHPUnit versions. To do that, you can override the default `.wp-env.json` file with `.wp-env.override.json` which is not included in your version control.
@@ -110,138 +120,133 @@ module.exports = [
 ```
 
 ## Plugin Structure
-Plugin structure is helpful to understand how the plugin is structured with different files and folders.
+
+High-level layout. See [DEVELOPMENT.md](DEVELOPMENT.md) for the full `inc/` tree and the architecture rules.
 
 <details>
 <summary>Expand Plugin Structure</summary>
 
-```markdown
-|-- features-plugin-skeleton
-    |-- .browserslistrc
-    |-- .editorconfig
-    |-- .eslintignore
-    |-- .eslintrc
-    |-- .gitignore
-    |-- .lintstagedrc.js
-    |-- .npmrc
-    |-- .nvmrc
-    |-- .stylelintignore
-    |-- .stylelintrc.json
-    |-- .wp-env.json
-    |-- README.md
-    |-- babel.config.js
-    |-- composer.json
-    |-- composer.lock
-    |-- package-lock.json
-    |-- package.json
-    |-- phpcs.xml.dist
-    |-- project-name-features.php
-    |-- webpack.config.js
-    |-- .github
-		|   |-- bin
-		|   |   |-- determine-modified-files-count.js
-    |   |-- PULL_REQUEST_TEMPLATE.md
-    |   |-- dependabot.yml
-    |   |-- ISSUE_TEMPLATE
-    |   |   |-- bug.md
-    |   |   |-- epic.md
-    |   |   |-- task.md
-    |   |-- workflows
-    |       |-- build-test-measure.yml
-    |-- assets
-    |   |-- src
-    |       |-- blocks
-    |       |   |-- example-block
-    |       |   |   |-- block.json
-    |       |   |   |-- edit.js
-    |       |   |   |-- editor.scss
-    |       |   |   |-- index.js
-    |       |   |   |-- save.js
-    |       |   |   |-- style.scss
-    |       |   |-- example-block-dynamic
-    |       |   |   |-- block.json
-    |       |   |   |-- edit.js
-    |       |   |   |-- editor.scss
-    |       |   |   |-- index.js
-    |       |   |   |-- save.js
-    |       |   |   |-- style.scss
-    |       |   |-- meta-blocks
-    |       |       |-- example-meta-block
-    |       |           |-- block.json
-    |       |           |-- edit.js
-    |       |           |-- index.js
-    |       |-- css
-    |       |   |-- admin.scss
-    |       |   |-- main.scss
-    |       |-- js
-    |           |-- admin.js
-    |           |-- main.js
-    |-- bin
-    |   |-- husky.sh
-    |   |-- init.js
-    |   |-- phpcbf.sh
-    |   |-- pre-commit-hook.sh
-    |-- inc
-    |   |-- classes
-    |   |   |-- class-assets.php
-    |   |   |-- class-blocks.php
-    |   |   |-- class-cache.php
-    |   |   |-- class-meta-blocks.php
-    |   |   |-- class-plugin.php
-    |   |   |-- class-rewrite.php
-    |   |   |-- class-seo.php
-    |   |   |-- plugin-configs
-    |   |   |   |-- .gitkeep
-    |   |   |-- post-types
-    |   |   |   |-- .gitkeep
-    |   |   |   |-- class-base.php
-    |   |   |   |-- class-post-type-example.php
-    |   |   |-- taxonomies
-    |   |       |-- .gitkeep
-    |   |       |-- class-base.php
-    |   |       |-- class-taxonomy-example.php
-    |   |-- helpers
-    |   |   |-- autoloader.php
-    |   |   |-- custom-functions.php
-    |   |-- traits
-    |       |-- trait-singleton.php
-    |-- templates
-    |   |-- .gitkeep
-    |   |-- block-templates
-    |       |-- example-block-dynamic.php
-    |-- tests
-        |-- js
-            |-- jest.config.js
-            |-- setup-globals.js
+```
+features-plugin-skeleton/
+├── .github/                              # CI workflows, issue / PR templates
+├── assets/
+│   └── src/
+│       ├── blocks/
+│       │   ├── example-block/            # Static block
+│       │   ├── example-block-interactive/# Static block + Interactivity API
+│       │   └── example-block-dynamic/    # Dynamic block (server-rendered)
+│       ├── css/
+│       └── js/
+├── bin/                                  # Build, init, and pre-commit scripts
+├── inc/                                  # All project-specific PHP — PSR-4 root
+│   ├── Autoloader.php                    # Wraps vendor/autoload.php with graceful failure
+│   ├── Main.php                          # Plugin bootstrap — loads modules
+│   ├── Helpers/                          # Stateless static utility classes (final + private __construct)
+│   │   └── Util.php                      # General-purpose helpers (get_data, is_production, is_mobile)
+│   ├── Core/                             # Plugin-wide infrastructure
+│   │   ├── Assets.php
+│   │   └── Templates.php
+│   └── Modules/                          # Feature areas; each *Module groups its classes
+│       ├── BlocksModule.php
+│       ├── Blocks/                       # Dynamic blocks (extend AbstractBlock)
+│       ├── CLI.php                       # WP-CLI registrar (ConditionallyRegistrable)
+│       ├── CLI/                          # Individual CLICommand implementations
+│       ├── CronModule.php
+│       ├── Cron/                         # WP-Cron jobs (implement Registrable)
+│       ├── PostTypesModule.php
+│       ├── PostTypes/                    # Extend AbstractPostType
+│       ├── RESTModule.php
+│       ├── REST/                         # Extend AbstractRESTController
+│       ├── RolesModule.php
+│       ├── Roles/                        # Extend AbstractUserRole
+│       ├── SettingsModule.php
+│       ├── Settings/                     # Extend AbstractSettingsPage
+│       ├── ShortcodesModule.php
+│       ├── Shortcodes/                   # Extend AbstractShortcode
+│       ├── TaxonomiesModule.php
+│       └── Taxonomies/                   # Extend AbstractTaxonomy
+├── languages/
+├── templates/                            # Theme-overridable templates
+│   └── block-templates/
+├── tests/
+│   ├── php/                              # PHPUnit suite
+│   └── js/                               # Jest suite
+├── vendor/
+│   └── rtcamp/wp-framework/              # Framework — do not modify (Composer-managed)
+├── DEVELOPMENT.md
+├── README.md
+├── composer.json
+├── package.json
+├── phpcs.xml.dist
+├── phpunit.xml.dist
+├── project-name-features.php             # Plugin entry point
+└── webpack.config.js
 ```
 
 </details>
 
 ## Post types
 
-| Label                                     | Slug               | Public | Taxonomies                       |
-|-------------------------------------------|--------------------|--------|----------------------------------|
-| Post (Default)                            | post               | Yes    | Category, Tag                    |
-| Page (Default)                            | page               | Yes    | N/A                              |
-| Media (Default)                           | attachment         | Yes    | N/A                              |
+| Label                | Slug                  | Public | Taxonomies          | Source                                       |
+|----------------------|-----------------------|--------|---------------------|----------------------------------------------|
+| Post (Default)       | `post`                | Yes    | Category, Tag       | WordPress core                               |
+| Page (Default)       | `page`                | Yes    | —                   | WordPress core                               |
+| Media (Default)      | `attachment`          | Yes    | —                   | WordPress core                               |
+| Post Type Label      | `post-type-slug`      | Yes    | Taxonomy Label      | `Modules\PostTypes\ExamplePostType`          |
+| Post Type Two Label  | `post-type-slug-two`  | Yes    | Taxonomy Two Label  | `Modules\PostTypes\ExamplePostTypeTwo`       |
 
 ## Taxonomies
 
-| Label              | Slug               | Public |
-|--------------------|--------------------|--------|
-| Category (Default) | category           | No     |
-| Tag (Default)      | post_tag           | Yes    |
+| Label               | Slug                 | Public | Source                                       |
+|---------------------|----------------------|--------|----------------------------------------------|
+| Category (Default)  | `category`           | No     | WordPress core                               |
+| Tag (Default)       | `post_tag`           | Yes    | WordPress core                               |
+| Taxonomy Label      | `taxonomy-slug`      | Yes    | `Modules\Taxonomies\ExampleTaxonomy`         |
+| Taxonomy Two Label  | `taxonomy-slug-two`  | Yes    | `Modules\Taxonomies\ExampleTaxonomyTwo`      |
 
-## Meta Blocks
-| Label                                     | Type               |
-|-------------------------------------------|--------------------|
-| Example Meta Block                        | Static             |
+## Blocks
 
-## Gutenberg Blocks.
-| Label                                     | Type               |
-|-------------------------------------------|--------------------|
-| Example Block                             | Static             |
-| Example Dynamic Block                     | Dynamic            |
+| Label                     | Type    | Source                                                        |
+|---------------------------|---------|---------------------------------------------------------------|
+| Example Block             | Static  | `assets/src/blocks/example-block/`                            |
+| Example Block Interactive | Static  | `assets/src/blocks/example-block-interactive/`                |
+| Example Dynamic Block     | Dynamic | `Modules\Blocks\ExampleDynamicBlock` (extends `AbstractBlock`) |
+
+## REST endpoints
+
+| Route                                      | Source                                  |
+|--------------------------------------------|-----------------------------------------|
+| `/wp-json/project-name-features/v1/examples` | `Modules\REST\ExampleRESTController`  |
+
+## Settings pages
+
+| Page                | URL                                                  | Source                                  |
+|---------------------|------------------------------------------------------|-----------------------------------------|
+| Project Name Features | Settings → Project Name Features                   | `Modules\Settings\ExampleSettingsPage`  |
+
+## Shortcodes
+
+| Tag                       | Source                                  |
+|---------------------------|-----------------------------------------|
+| `[project_name_example]`  | `Modules\Shortcodes\ExampleShortcode`   |
+
+## Custom user roles
+
+| Role             | Slug                              | Source                              |
+|------------------|-----------------------------------|-------------------------------------|
+| Content Editor   | `project_name_content_editor`     | `Modules\Roles\ExampleUserRole`     |
+
+## WP-Cron jobs
+
+| Hook                                      | Recurrence | Source                              |
+|-------------------------------------------|------------|-------------------------------------|
+| `project_name_features_daily_cleanup`     | `daily`    | `Modules\Cron\ExampleCronJob`       |
+
+## WP-CLI commands
+
+| Command                                       | Source                              |
+|-----------------------------------------------|-------------------------------------|
+| `wp project-name-features health-check`       | `Modules\CLI\Healthcheck`           |
 
 ### Reporting a bug 🐞
 
