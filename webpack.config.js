@@ -25,7 +25,16 @@ if (hasExperimentalModulesFlag) {
 	scriptConfig = require("@wordpress/scripts/config/webpack.config");
 }
 
-// Extend the default config.
+// The base @wordpress/scripts config adds copy-webpack-plugin (whose class is
+// named `CopyPlugin`, not `CopyWebpackPlugin` — that's just wp-scripts' import
+// alias) to copy block.json/render.php from the source blocks directory into
+// the output. Block compilation is owned by the dedicated `build:blocks`
+// script (it scans src/blocks/ and outputs to assets/build/blocks/). Now that
+// our source lives in `src/` — wp-scripts' default location — this `build:js`
+// run would otherwise re-discover the blocks and copy them into
+// assets/build/js/blocks/. Strip only the copy plugin; the other block plugins
+// (PhpFilePaths, manifest, dependency) have interdependencies the script/css
+// build still relies on.
 const sharedConfig = {
 	...scriptConfig,
 	output: {
@@ -35,6 +44,9 @@ const sharedConfig = {
 	},
 	plugins: [
 		...scriptConfig.plugins
+			.filter(
+				( plugin ) => 'CopyPlugin' !== plugin.constructor.name,
+			)
 			.map(
 				( plugin ) => {
 					if ( plugin.constructor.name === 'MiniCssExtractPlugin' ) {
@@ -61,7 +73,7 @@ const styles = {
 	entry: () => {
 		const entries = {};
 
-		const dir = './assets/src/css';
+		const dir = './src/css';
 		fs.readdirSync( dir ).forEach( ( fileName ) => {
 			const fullPath = `${ dir }/${ fileName }`;
 			if ( ! fs.lstatSync( fullPath ).isDirectory() ) {
@@ -86,8 +98,8 @@ const styles = {
 const scripts = {
 	...sharedConfig,
 	entry: {
-		main: path.resolve( process.cwd(), 'assets', 'src', 'js', 'main.js' ),
-		admin: path.resolve( process.cwd(), 'assets', 'src', 'js', 'admin.js' ),
+		main: path.resolve( process.cwd(), 'src', 'js', 'main.js' ),
+		admin: path.resolve( process.cwd(), 'src', 'js', 'admin.js' ),
 	},
 };
 
@@ -96,7 +108,7 @@ if (hasExperimentalModulesFlag) {
 	moduleScripts = {
 		...moduleConfig,
 		entry: {
-			module: path.resolve(process.cwd(), 'assets', 'src', 'js', 'modules', 'module.js'),
+			module: path.resolve(process.cwd(), 'src', 'js', 'modules', 'module.js'),
 		},
 		output: {
 			...moduleConfig.output,

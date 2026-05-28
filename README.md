@@ -23,10 +23,10 @@ git clone git@github.com:rtCamp/features-plugin-skeleton.git <directory-name>
 - Use `npm start` to build the plugin assets in interactive mode.
 - Use `npm run build:dev` or `npm run build:prod` to build the plugin assets in a non-interactive mode for Development and Production environments respectively.
 - There are some additional commands available for building the assets separately:
-    - `npm run start:blocks`: Builds the blocks assets only in interactive mode within `assets/src/blocks` directory.
-    - `npm run start:js`: Builds the JavaScript assets only in interactive mode within `assets/src/js` directory.
-    - `npm run build:blocks`: Builds the blocks assets only within `assets/src/blocks` directory.
-    - `npm run build:js`: Builds the JavaScript assets only within `assets/src/js` directory.
+    - `npm run start:blocks`: Builds the blocks assets only in interactive mode within `src/blocks` directory.
+    - `npm run start:js`: Builds the JavaScript assets only in interactive mode within `src/js` directory.
+    - `npm run build:blocks`: Builds the blocks assets only within `src/blocks` directory.
+    - `npm run build:js`: Builds the JavaScript assets only within `src/js` directory.
 
 ### Run Linters and CS
 - Use `npm run lint` to lint the plugin assets.
@@ -87,14 +87,14 @@ Since wp env supports xdebug coverage mode, you can generate the coverage report
 
 ### Extend Webpack Configuration
 - Blocks are using [@wordpress/scripts](https://www.npmjs.com/package/@wordpress/scripts) Webpack configuration so no need to extend Webpack configuration for blocks.
-- `assets/src/js` directory is using custom Webpack configuration extended from `@wordpress/scripts` Webpack configuration, so you need to specify entry point for the JavaScript files in `assets/src/js` directory.
+- `src/js` directory is using custom Webpack configuration extended from `@wordpress/scripts` Webpack configuration, so you need to specify entry point for the JavaScript files in `src/js` directory.
 - To add more JavaScript files to the Webpack configuration, you can use the following syntax:
 ```js
-// If you have an example.js file in the `assets/src/js` directory, you can add it to the Webpack configuration like this:
+// If you have an example.js file in the `src/js` directory, you can add it to the Webpack configuration like this:
 const exampleJS = {
     ...sharedConfig,
     entry: {
-        'example': path.resolve( process.cwd(), 'assets', 'src', 'js', 'example.js' ),
+        'example': path.resolve( process.cwd(), 'src', 'js', 'example.js' ),
     },
 };
 
@@ -102,7 +102,7 @@ const exampleJS = {
 const exampleJS = {
     ...sharedConfig,
     entry: {
-        'example': path.resolve( process.cwd(), 'assets', 'src', 'js', 'example.js' ),
+        'example': path.resolve( process.cwd(), 'src', 'js', 'example.js' ),
     },
     plugins: [
         ...sharedConfig.plugins,
@@ -208,8 +208,8 @@ features-plugin-skeleton/
 
 | Label                     | Type    | Source                                                        |
 |---------------------------|---------|---------------------------------------------------------------|
-| Example Block             | Static  | `assets/src/blocks/example-block/`                            |
-| Example Block Interactive | Static  | `assets/src/blocks/example-block-interactive/`                |
+| Example Block             | Static  | `src/blocks/example-block/`                                   |
+| Example Block Interactive | Static  | `src/blocks/example-block-interactive/`                       |
 | Example Dynamic Block     | Dynamic | `Modules\Blocks\ExampleDynamicBlock` (extends `AbstractBlock`) |
 
 ## REST endpoints
