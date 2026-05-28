@@ -35,7 +35,7 @@ export default [
 			sourceType: 'module',
 		},
 		rules: {
-			'import/no-unresolved': [ 'error', { ignore: [ '^@wordpress/' ] } ],
+			'import/no-unresolved': 'error',
 			'import/named': 'error',
 			'import/namespace': 'error',
 			'import/default': 'error',
