@@ -9,14 +9,15 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features\Core;
 
-use rtCamp\WPFramework\Contracts\Traits\AssetLoaderTrait;
+use rtCamp\WPFramework\AssetLoader;
 use rtCamp\WPFramework\Contracts\Interfaces\Registrable;
 
 /**
  * Class - Assets
+ *
+ * Extends the framework's AssetLoader to register the plugin's own assets.
  */
-final class Assets implements Registrable {
-	use AssetLoaderTrait;
+final class Assets extends AssetLoader implements Registrable {
 
 	/**
 	 * Prefix for all asset handles.
@@ -44,9 +45,11 @@ final class Assets implements Registrable {
 	 * Constructor.
 	 */
 	public function __construct() {
-		$this->base_dir   = (string) PROJECT_NAME_FEATURES_PATH;
-		$this->base_url   = (string) PROJECT_NAME_FEATURES_URL;
-		$this->assets_dir = 'assets/build';
+		parent::__construct(
+			(string) PROJECT_NAME_FEATURES_PATH,
+			(string) PROJECT_NAME_FEATURES_URL,
+			'assets/build'
+		);
 	}
 
 	/**
