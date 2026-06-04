@@ -11,13 +11,14 @@ namespace Project_Name\Features\Core;
 
 use rtCamp\WPFramework\AssetLoader;
 use rtCamp\WPFramework\Contracts\Interfaces\Registrable;
+use rtCamp\WPFramework\Contracts\Interfaces\Shareable;
 
 /**
  * Class - Assets
  *
  * Extends the framework's AssetLoader to register the plugin's own assets.
  */
-final class Assets extends AssetLoader implements Registrable {
+final class Assets extends AssetLoader implements Registrable, Shareable {
 
 	/**
 	 * Prefix for all asset handles.

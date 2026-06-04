@@ -58,11 +58,11 @@ constants();
 
 // If autoloader fails, we cannot proceed.
 require_once __DIR__ . '/inc/Autoloader.php';
-if ( ! class_exists( 'Project_Name\Features\Autoloader' ) || ! \Project_Name\Features\Autoloader::autoload() ) {
+if ( ! class_exists( Autoloader::class ) || ! Autoloader::autoload() ) {
 	return;
 }
 
 // Load the main plugin class.
-if ( class_exists( 'Project_Name\Features\Main' ) ) {
-	\Project_Name\Features\Main::get_instance();
+if ( class_exists( Main::class ) ) {
+	Main::get_instance();
 }
