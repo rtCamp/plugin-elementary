@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/rtCamp/wp-framework.git",
-                "reference": "f4c25118d32f9e3fe7a7b55396dc8465ebc989c1"
+                "reference": "daf0208ab2e1d9835bf5e664e6c5ffb4e12112d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rtCamp/wp-framework/zipball/f4c25118d32f9e3fe7a7b55396dc8465ebc989c1",
-                "reference": "f4c25118d32f9e3fe7a7b55396dc8465ebc989c1",
+                "url": "https://api.github.com/repos/rtCamp/wp-framework/zipball/daf0208ab2e1d9835bf5e664e6c5ffb4e12112d2",
+                "reference": "daf0208ab2e1d9835bf5e664e6c5ffb4e12112d2",
                 "shasum": ""
             },
             "require": {
@@ -74,7 +74,7 @@
                 "issues": "https://github.com/rtCamp/wp-framework/issues",
                 "source": "https://github.com/rtCamp/wp-framework"
             },
-            "time": "2026-06-04T13:16:13+00:00"
+            "time": "2026-06-07T18:15:35+00:00"
         }
     ],
     "packages-dev": [
