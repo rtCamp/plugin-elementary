@@ -27,6 +27,7 @@ final class Main {
 		Core\Assets::class,
 		Core\PluginSetup::class,
 		Core\Components::class,
+		Core\Templates::class,
 
 		// CLI commands.
 		Modules\CLI::class,

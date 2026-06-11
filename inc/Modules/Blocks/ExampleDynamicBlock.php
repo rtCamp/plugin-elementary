@@ -40,19 +40,10 @@ final class ExampleDynamicBlock extends AbstractBlock {
 	 * @return string Rendered block HTML.
 	 */
 	public function render( array $attributes, string $content, \WP_Block $block ): string {
-		$located = \Project_Name\Features\Core\Templates::get_template_part(
+		return \Project_Name\Features\Helpers\Util::get_template(
 			'block-templates/example-block-dynamic',
 			null,
-			[ 'attributes' => $attributes ],
-			false
+			$attributes
 		);
-
-		if ( ! $located ) {
-			return '';
-		}
-
-		ob_start();
-		load_template( $located, false, [ 'attributes' => $attributes ] );
-		return (string) ob_get_clean();
 	}
 }

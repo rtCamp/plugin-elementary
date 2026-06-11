@@ -16,6 +16,7 @@ declare( strict_types = 1 );
 namespace Project_Name\Features\Helpers;
 
 use Project_Name\Features\Core\Components;
+use Project_Name\Features\Core\Templates;
 use Project_Name\Features\Main;
 
 /**
@@ -66,6 +67,51 @@ final class Util {
 		 * @var Components $loader
 		 */
 		$loader = Main::get_instance()->get_shared( Components::class );
+
+		return $loader;
+	}
+
+	/**
+	 * Render a plugin template part, echoing its output.
+	 *
+	 * Resolves the highest-priority template across child theme, parent theme,
+	 * then the plugin, via the shared Templates loader.
+	 *
+	 * @param string               $slug Template slug.
+	 * @param string|null          $name Optional. Template variation name.
+	 * @param array<string, mixed> $args Optional. Data passed to the template.
+	 *
+	 * @return void
+	 */
+	public static function render_template( string $slug, ?string $name = null, array $args = [] ): void {
+		self::template_loader()->render( $slug, $name, $args );
+	}
+
+	/**
+	 * Get a rendered plugin template part as a string.
+	 *
+	 * @param string               $slug Template slug.
+	 * @param string|null          $name Optional. Template variation name.
+	 * @param array<string, mixed> $args Optional. Data passed to the template.
+	 *
+	 * @return string Rendered template output, or '' if not found.
+	 */
+	public static function get_template( string $slug, ?string $name = null, array $args = [] ): string {
+		return self::template_loader()->get( $slug, $name, $args );
+	}
+
+	/**
+	 * Get the shared plugin template loader.
+	 *
+	 * @return Templates Shared template loader.
+	 */
+	private static function template_loader(): Templates {
+		/**
+		 * Shared template loader.
+		 *
+		 * @var Templates $loader
+		 */
+		$loader = Main::get_instance()->get_shared( Templates::class );
 
 		return $loader;
 	}
