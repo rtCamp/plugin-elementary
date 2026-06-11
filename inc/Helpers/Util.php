@@ -16,6 +16,7 @@ declare( strict_types = 1 );
 namespace Project_Name\Features\Helpers;
 
 use Project_Name\Features\Core\Components;
+use Project_Name\Features\Core\Encryption;
 use Project_Name\Features\Core\Templates;
 use Project_Name\Features\Main;
 
@@ -159,5 +160,47 @@ final class Util {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Encrypt a value with the plugin's shared Encryptor.
+	 *
+	 * @param string $value Plaintext to encrypt.
+	 *
+	 * @return string|false Encrypted value, or false on failure.
+	 *
+	 * @throws \RuntimeException If PROJECT_NAME_FEATURES_ENCRYPTION_KEY is not configured.
+	 */
+	public static function encrypt( string $value ): string|false {
+		return self::encryptor()->encrypt( $value );
+	}
+
+	/**
+	 * Decrypt a value produced by Util::encrypt().
+	 *
+	 * @param string $value Encrypted value.
+	 *
+	 * @return string|false Decrypted value, or false on failure/tampering.
+	 *
+	 * @throws \RuntimeException If PROJECT_NAME_FEATURES_ENCRYPTION_KEY is not configured.
+	 */
+	public static function decrypt( string $value ): string|false {
+		return self::encryptor()->decrypt( $value );
+	}
+
+	/**
+	 * Get the plugin's shared Encryptor.
+	 *
+	 * @return Encryption Shared encryptor.
+	 */
+	private static function encryptor(): Encryption {
+		/**
+		 * Shared encryptor.
+		 *
+		 * @var Encryption $encryptor
+		 */
+		$encryptor = Main::get_instance()->get_shared( Encryption::class );
+
+		return $encryptor;
 	}
 }

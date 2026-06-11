@@ -28,6 +28,7 @@ final class Main {
 		Core\PluginSetup::class,
 		Core\Components::class,
 		Core\Templates::class,
+		Core\Encryption::class,
 
 		// CLI commands.
 		Modules\CLI::class,
