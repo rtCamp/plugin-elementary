@@ -24,9 +24,9 @@ git clone git@github.com:rtCamp/features-plugin-skeleton.git <directory-name>
 - Use `npm run build:dev` or `npm run build:prod` to build the plugin assets in a non-interactive mode for Development and Production environments respectively.
 - There are some additional commands available for building the assets separately:
     - `npm run start:blocks`: Builds the blocks assets only in interactive mode within `src/blocks` directory.
-    - `npm run start:js`: Builds the JavaScript assets only in interactive mode within `src/js` directory.
+    - `npm run start:plugin`: Builds the plugin's JS, CSS, and module assets only in interactive mode within `src/js` and `src/css` directories.
     - `npm run build:blocks`: Builds the blocks assets only within `src/blocks` directory.
-    - `npm run build:js`: Builds the JavaScript assets only within `src/js` directory.
+    - `npm run build:plugin`: Builds the plugin's JS, CSS, and module assets only within `src/js` and `src/css` directories.
 
 ### Run Linters and CS
 - Use `npm run lint` to lint the plugin assets.

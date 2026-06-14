@@ -21,6 +21,7 @@ Thumbs.db
 
 # Enviroment
 .env
+.env.local
 
 # Build
 assets/build/
