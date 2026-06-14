@@ -24,7 +24,7 @@ if ( isWatch ) {
 	require( 'dotenv' ).config( { path: '.env.local', quiet: true } );
 }
 
-const DEFAULT_BS_PORT = 3000;
+const DEFAULT_BS_PORT = 3003;
 
 /**
  * Parse a TCP port from an env value, falling back when it is missing or not a
@@ -114,7 +114,7 @@ if (hasExperimentalModulesFlag) {
 // alias) to copy block.json/render.php from the source blocks directory into
 // the output. Block compilation is owned by the dedicated `build:blocks`
 // script (it scans src/blocks/ and outputs to assets/build/blocks/). Now that
-// our source lives in `src/` — wp-scripts' default location — this `build:plugin`
+// our source lives in `src/` — wp-scripts' default location — this `build:assets`
 // run would otherwise re-discover the blocks and copy them into
 // assets/build/js/blocks/. Strip only the copy plugin; the other block plugins
 // (PhpFilePaths, manifest, dependency) have interdependencies the script/css

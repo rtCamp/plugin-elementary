@@ -52,13 +52,6 @@ function constants(): void {
 	 * Root URL to the plugin directory.
 	 */
 	define( 'PROJECT_NAME_FEATURES_URL', plugin_dir_url( PROJECT_NAME_FEATURES_FILE ) );
-
-	/**
-	 * Whether to disable the BrowserSync client script (local dev live reload).
-	 */
-	if ( ! defined( 'PROJECT_NAME_FEATURES_DISABLE_BROWSER_SYNC' ) ) {
-		define( 'PROJECT_NAME_FEATURES_DISABLE_BROWSER_SYNC', false );
-	}
 }
 
 constants();

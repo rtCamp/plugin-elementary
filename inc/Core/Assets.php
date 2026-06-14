@@ -68,14 +68,14 @@ final class Assets extends AssetLoader implements Registrable, Shareable {
 	/**
 	 * Enqueue the BrowserSync client script for local live reload.
 	 *
-	 * Only runs in the `local` environment and when not disabled. The client URL
-	 * is derived from the site URL and the BrowserSync port (BS_PORT in
-	 * .env.local, default 3000), or taken verbatim from the
-	 * PROJECT_NAME_FEATURES_BROWSER_SYNC_URL constant when defined (for custom
-	 * ports or remote/proxied setups).
+	 * Only runs in the `local` environment and when not disabled via DISABLE_BS
+	 * in .env.local. The client URL is derived from the site URL and the
+	 * BrowserSync port (BS_PORT in .env.local, default 3003), or taken verbatim
+	 * from the PROJECT_NAME_FEATURES_BROWSER_SYNC_URL constant when defined (for
+	 * custom ports or remote/proxied setups).
 	 */
 	public function enqueue_browser_sync(): void {
-		if ( 'local' !== wp_get_environment_type() || PROJECT_NAME_FEATURES_DISABLE_BROWSER_SYNC ) {
+		if ( 'local' !== wp_get_environment_type() || $this->is_browser_sync_disabled() ) {
 			return;
 		}
 
@@ -93,7 +93,7 @@ final class Assets extends AssetLoader implements Registrable, Shareable {
 	}
 
 	/**
-	 * Read the BrowserSync port from .env.local (BS_PORT), defaulting to 3000.
+	 * Read the BrowserSync port from .env.local (BS_PORT), defaulting to 3003.
 	 *
 	 * Keeps the enqueued client URL in sync with the port webpack/BrowserSync
 	 * actually bind to, which is read from the same .env.local on the build side.
@@ -105,22 +105,11 @@ final class Assets extends AssetLoader implements Registrable, Shareable {
 	 * @return int BrowserSync port.
 	 */
 	private function get_browser_sync_port(): int {
-		$default  = 3000;
-		$env_file = PROJECT_NAME_FEATURES_PATH . '.env.local';
+		$default = 3003;
+		$value   = $this->get_env_value( 'BS_PORT' );
 
-		if ( ! is_readable( $env_file ) ) {
-			return $default;
-		}
-
-		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Local dev only; reading a small project file, not remote.
-		$contents = file_get_contents( $env_file );
-
-		if ( false === $contents ) {
-			return $default;
-		}
-
-		if ( preg_match( '/^\s*BS_PORT\s*=\s*(\d+)/m', $contents, $matches ) ) {
-			$port = (int) $matches[1];
+		if ( null !== $value && preg_match( '/^\d+$/', $value ) ) {
+			$port = (int) $value;
 
 			if ( $port >= 1 && $port <= 65535 ) {
 				return $port;
@@ -128,6 +117,61 @@ final class Assets extends AssetLoader implements Registrable, Shareable {
 		}
 
 		return $default;
+	}
+
+	/**
+	 * Whether BrowserSync is disabled via DISABLE_BS in .env.local.
+	 *
+	 * Disabling prevents PHP from enqueuing the BrowserSync client script. The
+	 * BrowserSync server still starts (webpack still runs it), but the browser
+	 * won't connect to it. Truthy values are `1`, `true`, `yes`, and `on`
+	 * (case-insensitive); anything else (or an absent key) keeps it enabled.
+	 *
+	 * THIS METHOD IS INTENDED FOR LOCAL DEVELOPMENT ENVIRONMENTS ONLY.
+	 *
+	 * @return bool True when BrowserSync should be disabled.
+	 */
+	private function is_browser_sync_disabled(): bool {
+		$value = $this->get_env_value( 'DISABLE_BS' );
+
+		if ( null === $value ) {
+			return false;
+		}
+
+		return in_array( strtolower( $value ), [ '1', 'true', 'yes', 'on' ], true );
+	}
+
+	/**
+	 * Read a single key's value from .env.local.
+	 *
+	 * Returns the trimmed value (without surrounding single/double quotes) for
+	 * the given key, or null when the file is unreadable or the key is absent.
+	 *
+	 * THIS METHOD IS INTENDED FOR LOCAL DEVELOPMENT ENVIRONMENTS ONLY.
+	 *
+	 * @param string $key Environment variable name to read.
+	 *
+	 * @return string|null The value, or null when not found.
+	 */
+	private function get_env_value( string $key ): ?string {
+		$env_file = PROJECT_NAME_FEATURES_PATH . '.env.local';
+
+		if ( ! is_readable( $env_file ) ) {
+			return null;
+		}
+
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Local dev only; reading a small project file, not remote.
+		$contents = file_get_contents( $env_file );
+
+		if ( false === $contents ) {
+			return null;
+		}
+
+		if ( preg_match( '/^\s*' . preg_quote( $key, '/' ) . '\s*=\s*(.*)$/m', $contents, $matches ) ) {
+			return trim( $matches[1], " \t\"'" );
+		}
+
+		return null;
 	}
 
 	/**

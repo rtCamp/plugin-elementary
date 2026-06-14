@@ -27,7 +27,7 @@ require( 'dotenv' ).config( { path: '.env.local', quiet: true } );
  */
 const config = require( '@wordpress/scripts/config/webpack.config' );
 
-const DEFAULT_DEV_SERVER_PORT = 8887;
+const DEFAULT_DEV_SERVER_PORT = 8888;
 
 /**
  * Parse a TCP port from an env value, falling back when it is missing or not a
