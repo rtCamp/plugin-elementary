@@ -21,16 +21,10 @@ use rtCamp\WPFramework\Contracts\Interfaces\Shareable;
 final class Assets extends AssetLoader implements Registrable, Shareable {
 
 	/**
-	 * Prefix for all asset handles.
+	 * Asset handle prefix, namespacing this plugin's handles. Overrides the
+	 * framework default; read by AssetLoader::handle().
 	 */
-	private const PREFIX = 'project-name-features-';
-
-	/**
-	 * Asset handles.
-	 */
-	public const FRONTEND_HANDLE = self::PREFIX . 'frontend';
-	public const ADMIN_HANDLE    = self::PREFIX . 'admin';
-	public const EDITOR_HANDLE   = self::PREFIX . 'editor';
+	public const HANDLE_PREFIX = 'project-name-features-';
 
 	/**
 	 * Static blocks to register (build dir names, no render_callback needed).
@@ -89,7 +83,7 @@ final class Assets extends AssetLoader implements Registrable, Shareable {
 			$bs_url = "{$scheme}://{$host}:{$port}/browser-sync/browser-sync-client.js";
 		}
 
-		wp_enqueue_script( self::PREFIX . 'browser-sync', $bs_url, [], PROJECT_NAME_FEATURES_VERSION, true );
+		wp_enqueue_script( $this->handle( 'browser-sync' ), $bs_url, [], PROJECT_NAME_FEATURES_VERSION, true );
 	}
 
 	/**
@@ -196,27 +190,27 @@ final class Assets extends AssetLoader implements Registrable, Shareable {
 	 * Assets are registered once centrally and enqueued in modules that need them.
 	 */
 	public function register_assets(): void {
-		$this->register_script( self::FRONTEND_HANDLE, 'js/main' );
-		$this->register_style( self::FRONTEND_HANDLE, 'css/main' );
+		$this->register_script( $this->handle( 'frontend' ), 'js/main' );
+		$this->register_style( $this->handle( 'frontend' ), 'css/main' );
 
-		wp_enqueue_script( self::FRONTEND_HANDLE );
-		wp_enqueue_style( self::FRONTEND_HANDLE );
+		wp_enqueue_script( $this->handle( 'frontend' ) );
+		wp_enqueue_style( $this->handle( 'frontend' ) );
 	}
 
 	/**
 	 * Register assets for the admin.
 	 */
 	public function register_admin_assets(): void {
-		$this->register_script( self::ADMIN_HANDLE, 'js/admin' );
-		$this->register_style( self::ADMIN_HANDLE, 'css/admin' );
+		$this->register_script( $this->handle( 'admin' ), 'js/admin' );
+		$this->register_style( $this->handle( 'admin' ), 'css/admin' );
 	}
 
 	/**
 	 * Register assets for the block editor.
 	 */
 	public function register_editor_assets(): void {
-		$this->register_script( self::EDITOR_HANDLE, 'js/editor' );
-		$this->register_style( self::EDITOR_HANDLE, 'css/editor' );
+		$this->register_script( $this->handle( 'editor' ), 'js/editor' );
+		$this->register_style( $this->handle( 'editor' ), 'css/editor' );
 	}
 
 	/**
