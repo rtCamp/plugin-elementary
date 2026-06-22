@@ -1,268 +1,109 @@
-# Project_Name Features [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+# Features Plugin Skeleton [![Project Status: Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 
-Plugin for Project_Name. All backend functionality lives here — post types, taxonomies, blocks, REST endpoints, settings pages, shortcodes, custom user roles, WP-Cron jobs, and WP-CLI commands.
+The starting template for an rtCamp client WordPress **feature plugin**: all backend functionality (post types, taxonomies, blocks, REST endpoints, settings pages, shortcodes, user roles, WP-Cron, WP-CLI) lives here. The reusable framework (autoloader, asset/template loaders, abstract base classes) ships as the `rtcamp/wp-framework` Composer package in `vendor/`.
 
-Reusable scaffolding (singleton, autoloader, asset loader, template loader, and a set of abstract base classes for the feature types above) ships separately as the `rtcamp/wp-framework` Composer package and is loaded from `vendor/`.
+> This is a **template**. `Project Name` / `project-name` / `Project_Name` are placeholders. Use this template, then run `npm run init` to turn it into a named project.
 
-> **Working on this plugin?** See [DEVELOPMENT.md](DEVELOPMENT.md) for the architecture overview, the module pattern, and how to add new classes.
+## Quick start
 
-## Get Started
-### Plugin Setup
-- Clone the `features-plugin-skeleton` repository from [GitHub](https://github.com/rtCamp/features-plugin-skeleton/) with the desired directory name using the following command:
+1. **Use this template** on GitHub (or clone) to create your project's repo.
+2. Install dependencies (needs Node 22 — run `nvm use` — and access to the private rtCamp packages, see [Private packages](#private-packages)):
+   ```bash
+   nvm use
+   composer install
+   npm install
+   ```
+3. **Initialize the plugin** — the setup wizard renames the starter tokens to your project, lets you keep or remove the shipped example sets, and toggle optional features (Tailwind, HMR):
+   ```bash
+   npm run init
+   ```
+   > Prefer to drive it with AI? In Claude Code, run `/init` and describe the project.
+4. **Build assets:** `npm start` (watch) or `npm run build:prod`.
+
+## Working on the plugin (humans and AI)
+
+Conventions are written once and shared across every AI tool:
+
+- **[AGENTS.md](AGENTS.md)** — the source of truth: stack, structure, TDD, framework patterns, security, guardrails. [`CLAUDE.md`](CLAUDE.md) and [`.github/copilot-instructions.md`](.github/copilot-instructions.md) are thin pointers to it; path-scoped detail lives in [`.github/instructions/`](.github/instructions/).
+- **[`.claude/skills/`](.claude/skills/)** — built-in AI skills: `/init` (set up / manage the project), `/scaffold` (add one feature), `/setup` (bootstrap from a brief).
+- **[DEVELOPMENT.md](DEVELOPMENT.md)** — the architecture overview, the module pattern, and how to add classes by hand.
+
+## Commands
+
+| Command | What it does |
+|---|---|
+| `npm run init` | Setup + manage wizard: rename, keep/remove examples, toggle features. |
+| `npm start` / `npm run build:dev` / `npm run build:prod` | Build `src/{blocks,css,js}` into `assets/build/` (watch / dev / prod). |
+| `npm run lint` · `npm run test` | Lint (PHP/JS/CSS) · run JS + PHP test suites. |
+| `composer test` · `composer lint` · `composer phpstan` | PHPUnit · PHPCS · PHPStan, on the host. |
+| `npx wp-tooling add <category>/<slug>` | Scaffold a new feature (see below). |
+
+See the build / test detail (wp-env, coverage, matrix overrides, extending webpack) in [DEVELOPMENT.md](DEVELOPMENT.md).
+
+## Adding a feature
+
+Use the scaffold engine instead of hand-writing — it writes the class, wires it into the right module, and emits a test stub:
+
 ```bash
-git clone git@github.com:rtCamp/features-plugin-skeleton.git <directory-name>
-```
-- Run `nvm use` to use the preferred Node.js version. It is highly recommended to use the Node version mentioned in the `.nvmrc` file to ensure building scripts run without failing.
-- Run `npm install` to install all the dependencies.
-    - After running the `npm install`, `npm run init` command will run the init script in interactive mode to initialize the plugin.
-    - `npm:init` command is responsible for handling search-replace and Plugin cleanup.
-    - If you don't want to run the init script, you can run `npm install --ignore-scripts` to install the dependencies without running the init script.
-- Run `npm run init` to initialize the plugin anytime you want.
-
-### Build Assets
-- Use `npm start` to build the plugin assets in interactive mode.
-- Use `npm run build:dev` or `npm run build:prod` to build the plugin assets in a non-interactive mode for Development and Production environments respectively.
-- There are some additional commands available for building the assets separately:
-    - `npm run start:blocks`: Builds the blocks assets only in interactive mode within `src/blocks` directory.
-    - `npm run start:assets`: Builds the plugin's JS, CSS, and module assets only in interactive mode within `src/js` and `src/css` directories.
-    - `npm run build:blocks`: Builds the blocks assets only within `src/blocks` directory.
-    - `npm run build:assets`: Builds the plugin's JS, CSS, and module assets only within `src/js` and `src/css` directories.
-
-### Run Linters and CS
-- Use `npm run lint` to lint the plugin assets.
-- Use `npm run lint:php`, `npm run lint:js` and `npm run lint:css` to lint the PHP, JavaScript and CSS files respectively.
-- Use `npm run lint:php:fix`, `npm run lint:js:fix` and `npm run lint:php:fix` to lint the PHP, JavaScript or CSS files respectively and automatically fix the issues that are auto-fixable.
-- There are linting commands available for `package.json` and `lint-staged` files:
-    - `npm run lint:package-json`: Lints the package.json file.
-    - `npm run lint:staged`: Lints the staged files.
-- Used Linters and CS:
-    - `stylelint`: Lints the CSS files.
-    - `eslint`: Lints the JavaScript files.
-    - `phpcs/phpcbf`: Lints the PHP files.
-
-### Run Tests
-- Use `npm run test` to run the plugin tests.
-- WP PHPUnit tests are run inside the docker container using [wp-env](https://www.npmjs.com/package/@wordpress/env) package.
-- wp env Usage:
-    - `npm run wp-env start`: Starts the wp env docker container.
-    - `npm run wp-env start -- --xdebug`: Starts the wp env docker container with Xdebug enabled.
-    - `npm run wp-env start -- --xdebug=debug,coverage`: Starts the wp env docker container with Xdebug enabled in debug and coverage mode.
-    - `npm run wp-env stop`: Stops the wp env docker container.
-- Use `npm run test:js` and `npm run test:php` to run the JavaScript or PHP unit tests respectively.
-- Use `npm run test:php:coverage` to run the PHP unit tests with coverage. Before using this command, make sure to run wp env with xdebug coverage mode using `npm run wp-env start -- --xdebug=coverage` command.
-- Tests suites:
-    - `js`: JavaScript unit tests using `jest`.
-    - `php`: PHP unit tests using WP PHPUnit.
-
-> **`composer test` vs `npm run test:php`** — both invoke the same `vendor/bin/phpunit -c phpunit.xml.dist`, but at different layers:
-> - `npm run test:php` runs phpunit **inside** the wp-env container (which already has WordPress test infrastructure configured). This is the day-to-day developer command.
-> - `composer test` runs phpunit **directly on the host**. It only works if WordPress test infrastructure is reachable from there — useful for CI runners or when you've shelled into the wp-env container manually.
->
-> The two are not in conflict; the npm script is the host-side wrapper, the composer script is the low-level invocation.
-
-### Working with PHPUnit Tests
-This plugin is configured with WP PHPUnit tests out of the box. The tests are run inside the docker container using [wp-env](https://www.npmjs.com/package/@wordpress/env) package. There can be chances when you need to run test cases with the different matrix of PHP, WP, and WP PHPUnit versions. To do that, you can override the default `.wp-env.json` file with `.wp-env.override.json` which is not included in your version control.
-
-For example, you can use the following configuration to run the tests with PHP 7.4, WP 5.6, and WP PHPUnit 5.7:
-```json
-{
-    "core": "WordPress/WordPress#5.6",
-    "phpVersion": "7.4",
-    "mappings": {
-        "../wordpress-develop": "WordPress/wordpress-develop#5.7"
-    }
-}
-```
-Since wp env supports xdebug coverage mode, you can generate the coverage report for the tests on your local using `npm run test:php:coverage`. To do that, you need to run wp env with xdebug coverage mode using `npm run wp-env start -- --xdebug=coverage` command. After running the tests, you can find the coverage report in `coverage` directory.
-
-> While running for test coverage in CI we suggest using `pcov` driver instead of `xdebug` driver to generate reports in less time in comparison to `xdebug` driver.
-
-### Pre-commit Hook
-- A `husky` pre-commit hook is installed automatically when the project is set up (`npm run init`). The previous opt-in `install:husky` / `remove:husky` / `install:pre-commit-hook` scripts have been removed — Husky is the single, default mechanism now.
-
-### Extend Webpack Configuration
-- Blocks are using [@wordpress/scripts](https://www.npmjs.com/package/@wordpress/scripts) Webpack configuration so no need to extend Webpack configuration for blocks.
-- `src/js` directory is using custom Webpack configuration extended from `@wordpress/scripts` Webpack configuration, so you need to specify entry point for the JavaScript files in `src/js` directory.
-- To add more JavaScript files to the Webpack configuration, you can use the following syntax:
-```js
-// If you have an example.js file in the `src/js` directory, you can add it to the Webpack configuration like this:
-const exampleJS = {
-    ...sharedConfig,
-    entry: {
-        'example': path.resolve( process.cwd(), 'src', 'js', 'example.js' ),
-    },
-};
-
-// If you want to add a plugin for this specific JS file, you can use the following syntax:
-const exampleJS = {
-    ...sharedConfig,
-    entry: {
-        'example': path.resolve( process.cwd(), 'src', 'js', 'example.js' ),
-    },
-    plugins: [
-        ...sharedConfig.plugins,
-        new Plugin(),
-    ],
-};
-
-// Similarly you can modify the webpack configuration for a entry point.
-
-// Now you need to export the webpack configuration like this:
-module.exports = [
-    // ... more webpack configurations ...
-    exampleJS,
-]
+npx wp-tooling add wp/cli --name=health-check    # add a WP-CLI command
+npx wp-tooling list --json                        # see the full catalogue
 ```
 
-## Plugin Structure
+Or run `/scaffold` in Claude Code and describe the feature. By hand: create the concrete class extending the right framework abstract, register its `::class` in the owning module's `get_classes()`, and add a whole new domain to `Main::CLASSES`.
 
-High-level layout. See [DEVELOPMENT.md](DEVELOPMENT.md) for the full `inc/` tree and the architecture rules.
-
-<details>
-<summary>Expand Plugin Structure</summary>
+## Project structure
 
 ```
-features-plugin-skeleton/
-├── .github/                              # CI workflows, issue / PR templates
-├── assets/
-│   └── src/
-│       ├── blocks/
-│       │   ├── example-block/            # Static block
-│       │   ├── example-block-interactive/# Static block + Interactivity API
-│       │   └── example-block-dynamic/    # Dynamic block (server-rendered)
-│       ├── css/
-│       └── js/
-├── bin/                                  # Build, init, and pre-commit scripts
-├── inc/                                  # All project-specific PHP — PSR-4 root
-│   ├── Autoloader.php                    # Wraps vendor/autoload.php with graceful failure
-│   ├── Main.php                          # Plugin bootstrap — loads modules
-│   ├── Helpers/                          # Stateless static utility classes (final + private __construct)
-│   │   └── Util.php                      # General-purpose helpers (get_data, is_production, is_mobile)
-│   ├── Core/                             # Plugin-wide infrastructure
-│   │   ├── Assets.php
-│   │   └── Templates.php
-│   └── Modules/                          # Feature areas; each *Module groups its classes
-│       ├── BlocksModule.php
-│       ├── Blocks/                       # Dynamic blocks (extend AbstractBlock)
-│       ├── CLI.php                       # WP-CLI registrar (ConditionallyRegistrable)
-│       ├── CLI/                          # Individual CLICommand implementations
-│       ├── CronModule.php
-│       ├── Cron/                         # WP-Cron jobs (implement Registrable)
-│       ├── PostTypesModule.php
-│       ├── PostTypes/                    # Extend AbstractPostType
-│       ├── RESTModule.php
-│       ├── REST/                         # Extend AbstractRESTController
-│       ├── RolesModule.php
-│       ├── Roles/                        # Extend AbstractUserRole
-│       ├── SettingsModule.php
-│       ├── Settings/                     # Extend AbstractSettingsPage
-│       ├── ShortcodesModule.php
-│       ├── Shortcodes/                   # Extend AbstractShortcode
-│       ├── TaxonomiesModule.php
-│       └── Taxonomies/                   # Extend AbstractTaxonomy
-├── languages/
-├── templates/                            # Theme-overridable templates
-│   └── block-templates/
-├── tests/
-│   ├── php/                              # PHPUnit suite
-│   └── js/                               # Jest suite
-├── vendor/
-│   └── rtcamp/wp-framework/              # Framework — do not modify (Composer-managed)
-├── DEVELOPMENT.md
-├── README.md
-├── composer.json
-├── package.json
-├── phpcs.xml.dist
-├── phpunit.xml.dist
-├── project-name-features.php             # Plugin entry point
-└── webpack.config.js
+project-name-features.php   # entry: Autoloader::autoload() → Main::get_instance()
+inc/                        # PSR-4 root — Project_Name\Features\ → inc/
+├── Autoloader.php
+├── Main.php                # Main::CLASSES boots Core + Modules via the framework Loader
+├── Core/                   # always-loaded infra: Assets, Templates, Components, Encryption, PluginSetup
+├── Helpers/                # stateless static utilities
+└── Modules/                # one AbstractModule per domain; concrete classes in the matching subdir
+    ├── PostTypes.php  + PostTypes/      Taxonomies.php  + Taxonomies/
+    ├── Blocks.php     + Blocks/         REST.php        + REST/
+    ├── Settings.php   + Settings/       Shortcodes.php  + Shortcodes/
+    ├── Roles.php      + Roles/          Cron.php        + Cron/
+    └── CLI.php        + CLI/
+src/{blocks,css,js}/        # build sources → assets/build/
+bin/                        # init.js (npm run init), scaffold.config.js, sync-ai.js, build helpers
+tests/php/                  # PHPUnit suite — Project_Name\Features\Tests\ → tests/php/
+templates/                  # theme-overridable templates
+.claude/skills/             # AI skills: init, scaffold, setup
+.github/                    # CI, issue/PR templates, copilot-instructions, instructions/
 ```
 
-</details>
+## What ships as examples
 
-## Post types
+Each feature domain ships a working `Example*` class so you can see the pattern. `npm run init` offers to keep or remove each set; what you remove is deleted and its registration stripped.
 
-| Label                | Slug                  | Public | Taxonomies          | Source                                       |
-|----------------------|-----------------------|--------|---------------------|----------------------------------------------|
-| Post (Default)       | `post`                | Yes    | Category, Tag       | WordPress core                               |
-| Page (Default)       | `page`                | Yes    | —                   | WordPress core                               |
-| Media (Default)      | `attachment`          | Yes    | —                   | WordPress core                               |
-| Post Type Label      | `post-type-slug`      | Yes    | Taxonomy Label      | `Modules\PostTypes\ExamplePostType`          |
-| Post Type Two Label  | `post-type-slug-two`  | Yes    | Taxonomy Two Label  | `Modules\PostTypes\ExamplePostTypeTwo`       |
+| Set | Source | Set | Source |
+|---|---|---|---|
+| Post types | `Modules\PostTypes\Example*` | Settings | `Modules\Settings\ExampleSettingsPage` |
+| Taxonomies | `Modules\Taxonomies\Example*` | Shortcodes | `Modules\Shortcodes\ExampleShortcode` |
+| Blocks | `Modules\Blocks\ExampleDynamicBlock` + `src/blocks/example-*` | User roles | `Modules\Roles\ExampleUserRole` |
+| REST | `Modules\REST\ExampleRESTController` | Cron | `Modules\Cron\ExampleCronJob` |
+| WP-CLI | `Modules\CLI\Healthcheck` | | |
 
-## Taxonomies
+## Private packages
 
-| Label               | Slug                 | Public | Source                                       |
-|---------------------|----------------------|--------|----------------------------------------------|
-| Category (Default)  | `category`           | No     | WordPress core                               |
-| Tag (Default)       | `post_tag`           | Yes    | WordPress core                               |
-| Taxonomy Label      | `taxonomy-slug`      | Yes    | `Modules\Taxonomies\ExampleTaxonomy`         |
-| Taxonomy Two Label  | `taxonomy-slug-two`  | Yes    | `Modules\Taxonomies\ExampleTaxonomyTwo`      |
+During the pilot, `@rtcamp/wp-tooling` and `@rtcamp/tailwind-config` are served from **GitHub Packages** (private to the rtCamp org), mapped via `.npmrc`. To install them you need a GitHub token with `read:packages`:
 
-## Blocks
+```bash
+export GITHUB_TOKEN=ghp_your_token   # org users; CI uses a secret
+```
 
-| Label                     | Type    | Source                                                        |
-|---------------------------|---------|---------------------------------------------------------------|
-| Example Block             | Static  | `src/blocks/example-block/`                                   |
-| Example Block Interactive | Static  | `src/blocks/example-block-interactive/`                       |
-| Example Dynamic Block     | Dynamic | `Modules\Blocks\ExampleDynamicBlock` (extends `AbstractBlock`) |
+For local end-to-end testing before the packages are published, see [docs/internal-testing.md](docs/internal-testing.md).
 
-## REST endpoints
+## Contributing
 
-| Route                                      | Source                                  |
-|--------------------------------------------|-----------------------------------------|
-| `/wp-json/project-name-features/v1/examples` | `Modules\REST\ExampleRESTController`  |
+1. Open or find an [issue](https://github.com/rtCamp/features-plugin-skeleton/issues) describing the change.
+2. Branch from the active release branch (not `master`), commit, and push.
+3. Open a pull request using the template. CI (lint + tests) must pass.
 
-## Settings pages
-
-| Page                | URL                                                  | Source                                  |
-|---------------------|------------------------------------------------------|-----------------------------------------|
-| Project Name Features | Settings → Project Name Features                   | `Modules\Settings\ExampleSettingsPage`  |
-
-## Shortcodes
-
-| Tag                       | Source                                  |
-|---------------------------|-----------------------------------------|
-| `[project_name_example]`  | `Modules\Shortcodes\ExampleShortcode`   |
-
-## Custom user roles
-
-| Role             | Slug                              | Source                              |
-|------------------|-----------------------------------|-------------------------------------|
-| Content Editor   | `project_name_content_editor`     | `Modules\Roles\ExampleUserRole`     |
-
-## WP-Cron jobs
-
-| Hook                                      | Recurrence | Source                              |
-|-------------------------------------------|------------|-------------------------------------|
-| `project_name_features_daily_cleanup`     | `daily`    | `Modules\Cron\ExampleCronJob`       |
-
-## WP-CLI commands
-
-| Command                                       | Source                              |
-|-----------------------------------------------|-------------------------------------|
-| `wp project-name-features health-check`       | `Modules\CLI\Healthcheck`           |
-
-### Reporting a bug 🐞
-
-Before creating a new issue, do browse through the [existing issues](https://github.com/rtCamp/features-plugin-skeleton/issues) for resolution or upcoming fixes. 
-
-If you still need to [log an issue](https://github.com/rtCamp/features-plugin-skeleton/issues/new), making sure to include as much detail as you can, including clear steps to reproduce your issue if possible.
-
-### Creating a pull request
-
-Want to contribute a new feature? Start a conversation by logging an [issue](https://github.com/rtCamp/features-plugin-skeleton/issues).
-
-Once you're ready to send a pull request, please run through the following checklist: 
-
-1. Browse through the [existing issues](https://github.com/rtCamp/features-plugin-skeleton/issues) for anything related to what you want to work on. If you don't find any related issues, open a new one.
-
-2. Create a branch from `develop` for each issue you'd like to address, commit and push your changes.
-
-3. Open a pull request and that's it! We'll with feedback as soon as possible (Isn't collaboration a great thing? 😌)
-
-4. Once your pull request has passed final code review and tests, it will be merged into `develop` and be in the pipeline for the next release. Props to you! 🎉
-
+Found a bug? Browse [existing issues](https://github.com/rtCamp/features-plugin-skeleton/issues) first, then [log a new one](https://github.com/rtCamp/features-plugin-skeleton/issues/new) with clear reproduction steps.
 
 ## Does this interest you?
+
 <a href="https://rtcamp.com/"><img src="https://rtcamp.com/wp-content/uploads/sites/2/2019/04/github-banner@2x.png" alt="Join us at rtCamp, we specialize in providing high performance enterprise WordPress solutions"></a>
