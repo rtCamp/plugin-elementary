@@ -32,8 +32,10 @@ final class Assets extends AssetLoader implements Registrable, Shareable {
 	 * Dynamic blocks are registered via their own AbstractBlock subclasses.
 	 */
 	private const STATIC_BLOCKS = [
+		// wp:example
 		'example-block',
 		'example-block-interactive',
+		// wp:example:end
 	];
 
 	/**
@@ -45,6 +47,17 @@ final class Assets extends AssetLoader implements Registrable, Shareable {
 			(string) PROJECT_NAME_FEATURES_URL,
 			'assets/build'
 		);
+	}
+
+	/**
+	 * Whether Tailwind CSS is enabled. Resolved at enqueue time (not in the
+	 * constructor) so the project_name_features_tailwind_enabled filter can be
+	 * added by themes/plugins that load after this one.
+	 *
+	 * @return bool
+	 */
+	private function is_tailwind_enabled(): bool {
+		return (bool) apply_filters( 'project_name_features_tailwind_enabled', PROJECT_NAME_FEATURES_ENABLE_TAILWIND );
 	}
 
 	/**
@@ -62,14 +75,15 @@ final class Assets extends AssetLoader implements Registrable, Shareable {
 	/**
 	 * Enqueue the BrowserSync client script for local live reload.
 	 *
-	 * Only runs in the `local` environment and when not disabled via DISABLE_BS
-	 * in .env.local. The client URL is derived from the site URL and the
+	 * Only runs in the `local` environment, while HMR is on (ENABLE_HMR in
+	 * .env.local, the master switch honoured by webpack and PHP alike) and not
+	 * disabled via DISABLE_BS. The client URL is derived from the site URL and the
 	 * BrowserSync port (BS_PORT in .env.local, default 3003), or taken verbatim
 	 * from the PROJECT_NAME_FEATURES_BROWSER_SYNC_URL constant when defined (for
 	 * custom ports or remote/proxied setups).
 	 */
 	public function enqueue_browser_sync(): void {
-		if ( 'local' !== wp_get_environment_type() || $this->is_browser_sync_disabled() ) {
+		if ( 'local' !== wp_get_environment_type() || ! $this->is_hmr_enabled() || $this->is_browser_sync_disabled() ) {
 			return;
 		}
 
@@ -111,6 +125,29 @@ final class Assets extends AssetLoader implements Registrable, Shareable {
 		}
 
 		return $default;
+	}
+
+	/**
+	 * Whether HMR (BrowserSync live reload) is enabled via ENABLE_HMR in .env.local.
+	 *
+	 * Master switch for both sides: webpack only starts the BrowserSync server,
+	 * and PHP only enqueues its client, when this is on. Defaults ON when the key
+	 * is absent. Off values are `0`, `false`, `no`, and `off` (case-insensitive).
+	 * DISABLE_BS still works as a finer client-only override. Toggle it from
+	 * `npm run init` (manage mode) or by editing .env.local directly.
+	 *
+	 * THIS METHOD IS INTENDED FOR LOCAL DEVELOPMENT ENVIRONMENTS ONLY.
+	 *
+	 * @return bool True when HMR is enabled.
+	 */
+	private function is_hmr_enabled(): bool {
+		$value = $this->get_env_value( 'ENABLE_HMR' );
+
+		if ( null === $value ) {
+			return true;
+		}
+
+		return ! in_array( strtolower( $value ), [ '0', 'false', 'no', 'off' ], true );
 	}
 
 	/**
@@ -195,6 +232,11 @@ final class Assets extends AssetLoader implements Registrable, Shareable {
 
 		wp_enqueue_script( $this->handle( 'frontend' ) );
 		wp_enqueue_style( $this->handle( 'frontend' ) );
+
+		if ( $this->is_tailwind_enabled() ) {
+			$this->register_style( $this->handle( 'tailwind' ), 'css/tailwind' );
+			wp_enqueue_style( $this->handle( 'tailwind' ) );
+		}
 	}
 
 	/**

@@ -12,7 +12,9 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features\Modules;
 
+// wp:example
 use Project_Name\Features\Modules\Roles\ExampleUserRole;
+// wp:example:end
 use rtCamp\WPFramework\Contracts\Abstracts\AbstractModule;
 
 /**
@@ -25,7 +27,9 @@ final class Roles extends AbstractModule {
 	 */
 	protected function get_classes(): array {
 		return [
+			// wp:example
 			ExampleUserRole::class,
+			// wp:example:end
 		];
 	}
 }

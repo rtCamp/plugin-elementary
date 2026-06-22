@@ -12,7 +12,9 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features\Modules;
 
+// wp:example
 use Project_Name\Features\Modules\Settings\ExampleSettingsPage;
+// wp:example:end
 use rtCamp\WPFramework\Contracts\Abstracts\AbstractModule;
 
 /**
@@ -25,7 +27,9 @@ final class Settings extends AbstractModule {
 	 */
 	protected function get_classes(): array {
 		return [
+			// wp:example
 			ExampleSettingsPage::class,
+			// wp:example:end
 		];
 	}
 }

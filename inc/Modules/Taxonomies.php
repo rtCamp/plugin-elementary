@@ -12,8 +12,10 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features\Modules;
 
+// wp:example
 use Project_Name\Features\Modules\Taxonomies\ExampleTaxonomy;
 use Project_Name\Features\Modules\Taxonomies\ExampleTaxonomyTwo;
+// wp:example:end
 use rtCamp\WPFramework\Contracts\Abstracts\AbstractModule;
 
 /**
@@ -26,8 +28,10 @@ final class Taxonomies extends AbstractModule {
 	 */
 	protected function get_classes(): array {
 		return [
+			// wp:example
 			ExampleTaxonomy::class,
 			ExampleTaxonomyTwo::class,
+			// wp:example:end
 		];
 	}
 }

@@ -78,12 +78,7 @@ Since wp env supports xdebug coverage mode, you can generate the coverage report
 > While running for test coverage in CI we suggest using `pcov` driver instead of `xdebug` driver to generate reports in less time in comparison to `xdebug` driver.
 
 ### Pre-commit Hook
-- Support for two types of pre-commit hooks has been added:
-    - Husky-based: `husky` package is used to run the pre-commit hook.
-    - Bash Script-based: A bash script is added in `.git/hooks/pre-commit` directory.
-- Use `npm run install:husky` or `npm run remove:husky` to install or remove the Husky pre-commit hook.
-- Use `npm run install:pre-commit-hook` or `npm run remove:pre-commit-hook` to install or remove the bash script-based pre-commit hook.
-**Note:** If you are switching from husky to bash script-based pre-commit hook, you need to remove `hooksPath = .husky` from `.git/config` file.
+- A `husky` pre-commit hook is installed automatically when the project is set up (`npm run init`). The previous opt-in `install:husky` / `remove:husky` / `install:pre-commit-hook` scripts have been removed — Husky is the single, default mechanism now.
 
 ### Extend Webpack Configuration
 - Blocks are using [@wordpress/scripts](https://www.npmjs.com/package/@wordpress/scripts) Webpack configuration so no need to extend Webpack configuration for blocks.

@@ -12,7 +12,9 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features\Modules;
 
+// wp:example
 use Project_Name\Features\Modules\REST\ExampleRESTController;
+// wp:example:end
 use rtCamp\WPFramework\Contracts\Abstracts\AbstractModule;
 
 /**
@@ -25,7 +27,9 @@ final class REST extends AbstractModule {
 	 */
 	protected function get_classes(): array {
 		return [
+			// wp:example
 			ExampleRESTController::class,
+			// wp:example:end
 		];
 	}
 }

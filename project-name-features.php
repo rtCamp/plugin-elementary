@@ -52,6 +52,15 @@ function constants(): void {
 	 * Root URL to the plugin directory.
 	 */
 	define( 'PROJECT_NAME_FEATURES_URL', plugin_dir_url( PROJECT_NAME_FEATURES_FILE ) );
+
+	/**
+	 * Whether Tailwind CSS is enabled. Off by default; the scaffold's Tailwind
+	 * feature flips this to true on enable. Define it in wp-config.php to force
+	 * it either way.
+	 */
+	if ( ! defined( 'PROJECT_NAME_FEATURES_ENABLE_TAILWIND' ) ) {
+		define( 'PROJECT_NAME_FEATURES_ENABLE_TAILWIND', false );
+	}
 }
 
 constants();
