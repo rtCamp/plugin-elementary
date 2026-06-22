@@ -13,6 +13,7 @@ The starting template for an rtCamp client WordPress **feature plugin**: all bac
    composer install
    npm install
    ```
+   > **Pilot note:** until `@rtcamp/wp-tooling` and `@rtcamp/tailwind-config` are published, `npm install` cannot resolve them yet. Follow [docs/internal-testing.md](docs/internal-testing.md) for the interim local-path setup.
 3. **Initialize the plugin** — the setup wizard renames the starter tokens to your project, lets you keep or remove the shipped example sets, and toggle optional features (Tailwind, HMR):
    ```bash
    npm run init
@@ -88,13 +89,14 @@ Each feature domain ships a working `Example*` class so you can see the pattern.
 
 ## Private packages
 
-During the pilot, `@rtcamp/wp-tooling` and `@rtcamp/tailwind-config` are served from **GitHub Packages** (private to the rtCamp org), mapped via `.npmrc`. To install them you need a GitHub token with `read:packages`:
+`@rtcamp/wp-tooling` and `@rtcamp/tailwind-config` are served from **GitHub Packages** (private to the rtCamp org), mapped via `.npmrc`.
 
-```bash
-export GITHUB_TOKEN=ghp_your_token   # org users; CI uses a secret
-```
-
-For local end-to-end testing before the packages are published, see [docs/internal-testing.md](docs/internal-testing.md).
+- **Once published:** install with a GitHub token that has `read:packages`:
+  ```bash
+  export GITHUB_TOKEN=ghp_your_token   # org users; CI uses a secret
+  npm install
+  ```
+- **Until published (now):** the token path can't resolve them yet. Use a local `file:` path to a sibling `wp-tooling` clone instead — full steps in [docs/internal-testing.md](docs/internal-testing.md). (`npm link` does **not** work here: the `.npmrc` `@rtcamp` scope mapping makes `npm install` hit the registry and 404 on the unpublished packages.)
 
 ## Contributing
 
