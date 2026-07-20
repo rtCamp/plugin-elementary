@@ -17,11 +17,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.head_ref || github.ref }}
   cancel-in-progress: true
 
-# Least-privilege default; jobs only read the repo. (No job here writes contents,
-# and there is no PR-approval/merge in this workflow.)
-permissions:
-  contents: read
-
 jobs:
   pre-run:
     name: "Pre run"
@@ -49,7 +44,7 @@ jobs:
       - name: Fetch base branch
         # Only fetch base ref if it's a PR.
         if: ${{ github.base_ref != null }}
-        run: git fetch --depth=1 --no-tags origin "${{ github.base_ref }}"
+        run: git fetch --depth=1 --no-tags origin ${{ github.base_ref }}
 
       - name: Determine modified files for PR
         if: ${{ github.base_ref != null }}
@@ -106,18 +101,9 @@ jobs:
           cache: npm
 
       - name: Install Node dependencies
-        run: |
-          # @rtcamp/wp-tooling is a git dependency on a private repo; authenticate
-          # git so `npm ci` can clone it. The lockfile pins a git+ssh URL, so rewrite
-          # every github.com form (https, ssh, scp) to an HTTPS token URL. The token
-          # has read access to that repo.
-          for u in "https://github.com/" "ssh://git@github.com/" "git@github.com:"; do
-            git config --global url."https://x-access-token:${WPT_TOKEN}@github.com/".insteadOf "$u"
-          done
-          npm ci
+        run: npm ci
         env:
           CI: true
-          WPT_TOKEN: ${{ secrets.WP_FRAMEWORK_REPO_TEMP_TOKEN }}
 
       - name: Detect coding standard violations (stylelint)
         run: npm run lint:css
@@ -140,18 +126,9 @@ jobs:
           cache: npm
 
       - name: Install Node dependencies
-        run: |
-          # @rtcamp/wp-tooling is a git dependency on a private repo; authenticate
-          # git so `npm ci` can clone it. The lockfile pins a git+ssh URL, so rewrite
-          # every github.com form (https, ssh, scp) to an HTTPS token URL. The token
-          # has read access to that repo.
-          for u in "https://github.com/" "ssh://git@github.com/" "git@github.com:"; do
-            git config --global url."https://x-access-token:${WPT_TOKEN}@github.com/".insteadOf "$u"
-          done
-          npm ci
+        run: npm ci
         env:
           CI: true
-          WPT_TOKEN: ${{ secrets.WP_FRAMEWORK_REPO_TEMP_TOKEN }}
 
       - name: Validate package.json
         run: npm run lint:package-json
@@ -187,18 +164,9 @@ jobs:
           key: ${{ runner.os }}-jest
 
       - name: Install Node dependencies
-        run: |
-          # @rtcamp/wp-tooling is a git dependency on a private repo; authenticate
-          # git so `npm ci` can clone it. The lockfile pins a git+ssh URL, so rewrite
-          # every github.com form (https, ssh, scp) to an HTTPS token URL. The token
-          # has read access to that repo.
-          for u in "https://github.com/" "ssh://git@github.com/" "git@github.com:"; do
-            git config --global url."https://x-access-token:${WPT_TOKEN}@github.com/".insteadOf "$u"
-          done
-          npm ci
+        run: npm ci
         env:
           CI: true
-          WPT_TOKEN: ${{ secrets.WP_FRAMEWORK_REPO_TEMP_TOKEN }}
 
       - name: Run unit tests
         run: npm run test:js -- --ci --cacheDirectory="$HOME/.jest-cache"
@@ -225,7 +193,7 @@ jobs:
 
       - name: Get Composer Cache Directory
         id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Configure Composer cache
         uses: actions/cache@v5
@@ -273,18 +241,9 @@ jobs:
           cache: npm
 
       - name: Install Node dependencies
-        run: |
-          # @rtcamp/wp-tooling is a git dependency on a private repo; authenticate
-          # git so `npm ci` can clone it. The lockfile pins a git+ssh URL, so rewrite
-          # every github.com form (https, ssh, scp) to an HTTPS token URL. The token
-          # has read access to that repo.
-          for u in "https://github.com/" "ssh://git@github.com/" "git@github.com:"; do
-            git config --global url."https://x-access-token:${WPT_TOKEN}@github.com/".insteadOf "$u"
-          done
-          npm ci
+        run: npm ci
         env:
           CI: true
-          WPT_TOKEN: ${{ secrets.WP_FRAMEWORK_REPO_TEMP_TOKEN }}
 
       - name: Start WP environment
         run: npm run wp-env start
