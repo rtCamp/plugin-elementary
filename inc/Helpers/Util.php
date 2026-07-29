@@ -2,11 +2,18 @@
 /**
  * General-purpose plugin utility helpers.
  *
- * Stateless utility class — pure functions wrapped in a namespace.
- * Final + private constructor: must be used statically, never instantiated.
+ * Stateless: final + private constructor, used statically only.
  *
- * Future helper classes (string, cache, url, …) should be siblings of this
- * one under `inc/Helpers/`.
+ * The service accessors (logger / encryption / templates) return the plugin's
+ * shared framework service from the container, so callers use the framework
+ * API directly with no extra wrapping:
+ *
+ *   Util::logger()->info( 'Cache warmed', [ 'items' => 42 ] );
+ *   $cipher = Util::encryption()->encrypt( $secret );
+ *   Util::templates()->render( 'content', 'card', [ 'title' => 'Hi' ] );
+ *
+ * Add new shared services by adding the Core\<Service> class (implementing
+ * Shareable) to Main::CLASSES and a one-line accessor below.
  *
  * @package Project_Name\Features
  */
@@ -15,8 +22,8 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features\Helpers;
 
-use Project_Name\Features\Core\Components;
 use Project_Name\Features\Core\Encryption;
+use Project_Name\Features\Core\Logger;
 use Project_Name\Features\Core\Templates;
 use Project_Name\Features\Main;
 
@@ -26,95 +33,55 @@ use Project_Name\Features\Main;
 final class Util {
 
 	/**
-	 * Disallow instantiation — this class only exposes static helpers.
+	 * Disallow instantiation - this class only exposes static helpers.
 	 */
 	private function __construct() {}
 
 	/**
-	 * Render a component by name.
+	 * The plugin's shared Logger. Silent unless WP_DEBUG.
 	 *
-	 * @param string               $name    Component name.
-	 * @param array<string, mixed> $args    Arguments to pass to the component.
-	 * @param array<string, mixed> $options Optional. Resolution options. See ComponentLoader::render().
-	 *
-	 * @return void
+	 * @return Logger Shared logger.
 	 */
-	public static function component( string $name, array $args = [], array $options = [] ): void {
-		self::component_loader()->render( $name, $args, $options );
+	public static function logger(): Logger {
+		return self::shared( Logger::class );
 	}
 
 	/**
-	 * Get the rendered HTML of a component as a string.
+	 * The plugin's shared Encryptor.
 	 *
-	 * @param string               $name    Component name.
-	 * @param array<string, mixed> $args    Arguments to pass to the component.
-	 * @param array<string, mixed> $options Optional. Resolution options. See ComponentLoader::get().
-	 *
-	 * @return string Rendered component HTML.
+	 * @return Encryption Shared encryptor.
 	 */
-	public static function get_component( string $name, array $args = [], array $options = [] ): string {
-		return self::component_loader()->get( $name, $args, $options );
+	public static function encryption(): Encryption {
+		return self::shared( Encryption::class );
 	}
 
 	/**
-	 * Get the shared plugin component loader.
-	 *
-	 * @return Components Shared component loader.
-	 */
-	private static function component_loader(): Components {
-		/**
-		 * Shared component loader.
-		 *
-		 * @var Components $loader
-		 */
-		$loader = Main::get_instance()->get_shared( Components::class );
-
-		return $loader;
-	}
-
-	/**
-	 * Render a plugin template part, echoing its output.
-	 *
-	 * Resolves the highest-priority template across child theme, parent theme,
-	 * then the plugin, via the shared Templates loader.
-	 *
-	 * @param string               $slug Template slug.
-	 * @param string|null          $name Optional. Template variation name.
-	 * @param array<string, mixed> $args Optional. Data passed to the template.
-	 *
-	 * @return void
-	 */
-	public static function render_template( string $slug, ?string $name = null, array $args = [] ): void {
-		self::template_loader()->render( $slug, $name, $args );
-	}
-
-	/**
-	 * Get a rendered plugin template part as a string.
-	 *
-	 * @param string               $slug Template slug.
-	 * @param string|null          $name Optional. Template variation name.
-	 * @param array<string, mixed> $args Optional. Data passed to the template.
-	 *
-	 * @return string Rendered template output, or '' if not found.
-	 */
-	public static function get_template( string $slug, ?string $name = null, array $args = [] ): string {
-		return self::template_loader()->get( $slug, $name, $args );
-	}
-
-	/**
-	 * Get the shared plugin template loader.
+	 * The plugin's shared template loader (child theme > parent theme > plugin).
 	 *
 	 * @return Templates Shared template loader.
 	 */
-	private static function template_loader(): Templates {
-		/**
-		 * Shared template loader.
-		 *
-		 * @var Templates $loader
-		 */
-		$loader = Main::get_instance()->get_shared( Templates::class );
+	public static function templates(): Templates {
+		return self::shared( Templates::class );
+	}
 
-		return $loader;
+	/**
+	 * Resolve a shared service from the container.
+	 *
+	 * @template T of object
+	 *
+	 * @param class-string<T> $service Service class-string.
+	 *
+	 * @return T Shared instance.
+	 */
+	private static function shared( string $service ): object {
+		/**
+		 * Shared instance.
+		 *
+		 * @var T $instance
+		 */
+		$instance = Main::get_instance()->get_shared( $service );
+
+		return $instance;
 	}
 
 	/**
@@ -136,7 +103,7 @@ final class Util {
 	}
 
 	/**
-	 * Determine whether the current environment is production.
+	 * Whether the current environment is production.
 	 *
 	 * @see https://make.wordpress.org/core/2020/07/24/new-wp_get_environment_type-function-in-wordpress-5-5/
 	 */
@@ -145,14 +112,12 @@ final class Util {
 	}
 
 	/**
-	 * Determine if the current User Agent matches the given kind.
+	 * Whether the current User Agent matches the given kind.
 	 *
 	 * Delegates to Jetpack's jetpack_is_mobile() when available.
 	 *
 	 * @param string $kind                 Category of mobile device: 'any', 'dumb', or 'smart'.
 	 * @param bool   $return_matched_agent Return the matched UA string instead of a boolean.
-	 *
-	 * @return bool|string
 	 */
 	public static function is_mobile( string $kind = 'any', bool $return_matched_agent = false ): bool|string {
 		if ( function_exists( 'jetpack_is_mobile' ) ) {
@@ -160,47 +125,5 @@ final class Util {
 		}
 
 		return false;
-	}
-
-	/**
-	 * Encrypt a value with the plugin's shared Encryptor.
-	 *
-	 * @param string $value Plaintext to encrypt.
-	 *
-	 * @return string|false Encrypted value, or false on failure.
-	 *
-	 * @throws \RuntimeException If PROJECT_NAME_FEATURES_ENCRYPTION_KEY is not configured.
-	 */
-	public static function encrypt( string $value ): string|false {
-		return self::encryptor()->encrypt( $value );
-	}
-
-	/**
-	 * Decrypt a value produced by Util::encrypt().
-	 *
-	 * @param string $value Encrypted value.
-	 *
-	 * @return string|false Decrypted value, or false on failure/tampering.
-	 *
-	 * @throws \RuntimeException If PROJECT_NAME_FEATURES_ENCRYPTION_KEY is not configured.
-	 */
-	public static function decrypt( string $value ): string|false {
-		return self::encryptor()->decrypt( $value );
-	}
-
-	/**
-	 * Get the plugin's shared Encryptor.
-	 *
-	 * @return Encryption Shared encryptor.
-	 */
-	private static function encryptor(): Encryption {
-		/**
-		 * Shared encryptor.
-		 *
-		 * @var Encryption $encryptor
-		 */
-		$encryptor = Main::get_instance()->get_shared( Encryption::class );
-
-		return $encryptor;
 	}
 }

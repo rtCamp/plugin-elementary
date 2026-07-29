@@ -37,10 +37,10 @@ final class ExampleShortcode extends AbstractShortcode {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @param array       $atts Shortcode attributes.
 	 * @param string|null $content Shortcode inner content.
-	 * 
+	 *
 	 * @return string Rendered shortcode output.
 	 */
 	protected function render( array $atts, ?string $content ): string {

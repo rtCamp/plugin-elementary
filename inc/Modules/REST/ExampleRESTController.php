@@ -19,6 +19,7 @@ use rtCamp\WPFramework\Contracts\Abstracts\AbstractRESTController;
  * Registers routes under: /wp-json/project-name-features/v1/examples
  */
 final class ExampleRESTController extends AbstractRESTController {
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -65,7 +66,7 @@ final class ExampleRESTController extends AbstractRESTController {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @param \WP_REST_Request $request Full details about the request.
 	 * @return bool|\WP_Error True if the request has permission, WP_Error otherwise.
 	 */

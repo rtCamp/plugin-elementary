@@ -1,28 +1,36 @@
 <?xml version="1.0"?>
-<ruleset name="WordPress Coding Standards for Features Plugin">
+<ruleset
+	name="WordPress Coding Standards for Features Plugin"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/PHPCSStandards/PHP_CodeSniffer/master/phpcs.xsd"
+>
+	<description>Sniffs for this features plugin, extending the shared rtCamp WordPress standard.</description>
 
-	<rule ref="WordPress-Core">
-		<exclude name="Generic.Arrays.DisallowShortArraySyntax" />
-		<exclude name="Universal.Arrays.DisallowShortArraySyntax" />
-		<exclude name="Generic.Commenting.DocComment.MissingShort" />
-	</rule>
+	<!-- ==========================================================
+	     The shared rtCamp WordPress standard.
 
-	<rule ref="WordPress-Docs">
-		<exclude-pattern>tests/*</exclude-pattern>
-	</rule>
-	<rule ref="WordPress-Extra" />
+	     rtCampWP        : full strict (declare strict_types, short arrays,
+	                       WPCS + VIP + Docs + PHPCompatibilityWP + Slevomat).
+	     rtCampWP-Basic  : lenient variant without strict typing.
+	     ========================================================== -->
+	<rule ref="rtCampWP" />
+
+	<!-- ==========================================================
+	     Project constraints.
+	     ========================================================== -->
+	<!-- Lowest PHP version supported (used by PHPCompatibilityWP). -->
+	<config name="testVersion" value="8.2-"/>
+	<!-- Lowest WordPress version supported. -->
+	<config name="minimum_wp_version" value="6.9"/>
+
+	<!-- ==========================================================
+	     Project-specific configuration rtCampWP cannot know.
+	     ========================================================== -->
 
 	<!-- Allow PSR-4 PascalCase filenames (e.g. `Autoloader.php`, `Core/Assets.php`). -->
 	<rule ref="WordPress.Files.FileName">
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
-	</rule>
-
-	<rule ref="Squiz.Classes.ClassFileName">
-		<exclude-pattern>tests/**</exclude-pattern>
-	</rule>
-	<rule ref="PSR1.Classes.ClassDeclaration">
-		<exclude-pattern>tests/**</exclude-pattern>
 	</rule>
 
 	<rule ref="WordPress.WP.I18n">
@@ -46,37 +54,65 @@
 				<element value="project_name"/>
 			</property>
 		</properties>
-		<exclude-pattern>tests/bootstrap.php</exclude-pattern>
+		<exclude-pattern>tests/*</exclude-pattern>
 		<exclude-pattern>src/blocks/*/render.php</exclude-pattern>
 	</rule>
 
-	<rule ref="WordPress-VIP-Go">
+	<!-- Relax noisy rules in test files. Test code legitimately changes runtime
+	     config, does /tmp file ops and log capture, fetches fixtures, reassigns
+	     WordPress core globals, and documents methods by name. -->
+	<rule ref="WordPress-Docs">
 		<exclude-pattern>tests/*</exclude-pattern>
-		<exclude-pattern>bin/*</exclude-pattern>
-		<exclude-pattern>docs/*</exclude-pattern>
-
-		<!-- This is not theme code -->
-		<exclude name="WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules" />
-
-		<!-- This is not a WordPress.com VIP environment -->
-		<exclude name="WordPressVIPMinimum.Functions.RestrictedFunctions.wp_remote_get_wp_remote_get" />
-		<exclude name="WordPressVIPMinimum.Functions.RestrictedFunctions.get_page_by_path_get_page_by_path" />
-		<exclude name="WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown" />
 	</rule>
-
 	<rule ref="WordPress.WP.GlobalVariablesOverride.Prohibited">
 		<exclude-pattern>tests/*</exclude-pattern>
 	</rule>
-
-	<!-- Limit max. consecutive blank lines to 1 instead of 2. -->
-	<rule ref="Squiz.WhiteSpace.FunctionSpacing">
-		<properties>
-			<property name="spacing" value="1"/>
-			<property name="spacingBeforeFirst" value="1"/>
-			<property name="spacingAfterLast" value="0"/>
-		</properties>
+	<rule ref="WordPress.PHP.IniSet">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Functions.RestrictedFunctions">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
+	<rule ref="WordPressVIPMinimum.Performance.FetchingRemoteData">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
+	<rule ref="Generic.Commenting.DocComment.ShortNotCapital">
+		<exclude-pattern>tests/*</exclude-pattern>
+	</rule>
+	<!-- The abstract TestCase base is intentionally empty; the empty-braces sniff
+	     cannot be satisfied for an empty class (it wants both one line after the
+	     opening brace and zero before the closing brace). -->
+	<rule ref="SlevomatCodingStandard.Classes.EmptyLinesAroundClassBraces">
+		<exclude-pattern>tests/*</exclude-pattern>
 	</rule>
 
+	<!-- These files carry `// wp:example:<key>` marker comments that the init
+	     engine matches verbatim to add/remove capabilities; they are structural,
+	     not prose, so they cannot take trailing punctuation. -->
+	<rule ref="Squiz.Commenting.InlineComment.InvalidEndChar">
+		<exclude-pattern>inc/Main.php</exclude-pattern>
+		<exclude-pattern>inc/Core/Assets.php</exclude-pattern>
+		<exclude-pattern>inc/Core/PluginSetup.php</exclude-pattern>
+	</rule>
+
+	<!-- Block render.php files are generated by @wordpress/create-block and carry
+	     their own header conventions, not a PHP file docblock. -->
+	<rule ref="Squiz.Commenting.FileComment">
+		<exclude-pattern>src/blocks/*/render.php</exclude-pattern>
+	</rule>
+	<rule ref="PSR12.Files.FileHeader">
+		<exclude-pattern>src/blocks/*/render.php</exclude-pattern>
+	</rule>
+
+	<!-- Util::shared() is a PHPStan generic (`@param class-string<T>` -> `@return T`);
+	     the native hint can only be `string`, so the docblock intentionally differs. -->
+	<rule ref="Squiz.Commenting.FunctionComment.IncorrectTypeHint">
+		<exclude-pattern>inc/Helpers/Util.php</exclude-pattern>
+	</rule>
+
+	<!-- ==========================================================
+	     How to scan.
+	     ========================================================== -->
 	<arg value="s"/>
 	<arg name="extensions" value="php"/>
 	<file>.</file>

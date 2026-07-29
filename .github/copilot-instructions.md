@@ -1,4 +1,4 @@
-# Copilot instructions — Features Plugin skeleton
+# Copilot instructions: Features Plugin skeleton
 
 Read **[AGENTS.md](../AGENTS.md)** first: it is the source of truth for this project's conventions (stack, structure, TDD, framework patterns, security, guardrails), shared across all AI tools. This file adds only the Copilot-specific review conduct.
 
@@ -7,6 +7,14 @@ Detailed, path-scoped rules live in [`.github/instructions/`](instructions/):
 - `structure.instructions.md`: plugin layout and wiring.
 
 This is the skeleton/template: names are placeholders (`Project_Name` / `project-name`) filled in per project. The framework (`rtCamp\WPFramework`) lives in the gitignored `vendor/` and is not visible at review.
+
+## Task prompts
+
+Two reusable prompts in [`prompts/`](prompts/), invoked in Copilot Chat. They are the Copilot peers of the Claude skills, kept consistent with them:
+- `/init` ([init.prompt.md](prompts/init.prompt.md)): set up / manage the project; during the pilot it can run the full local bootstrap (sibling clones, local refs, installs).
+- `/scaffold` ([scaffold.prompt.md](prompts/scaffold.prompt.md)): add one feature, TDD-first, via `@rtcamp/wp-tooling`.
+
+Both are agentic: gather inputs and confirm before acting, and after any code change refresh the knowledge graph (`/graphify . --update`) per the graphify policy in [AGENTS.md](../AGENTS.md). The review conduct below applies to PR review, not to running these prompts.
 
 ## Review conduct
 

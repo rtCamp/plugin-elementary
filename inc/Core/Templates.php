@@ -17,9 +17,9 @@ use rtCamp\WPFramework\TemplateLoader;
  *
  * The plugin's template loader: ships template parts the active theme can
  * override (child theme > parent theme > plugin). Extends the framework
- * TemplateLoader and is shared through the container, mirroring the Assets /
- * Components loaders. Render wrappers live in Helpers\Util
- * (Util::render_template() / Util::get_template()).
+ * TemplateLoader and is shared through the container, mirroring the Assets
+ * loader. Access it from anywhere via Helpers\Util::templates(), e.g.
+ * Util::templates()->render( $slug ) or Util::templates()->get( $slug ).
  */
 final class Templates extends TemplateLoader implements Shareable {
 

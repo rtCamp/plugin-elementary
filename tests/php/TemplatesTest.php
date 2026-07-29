@@ -40,13 +40,27 @@ final class TemplatesTest extends TestCase {
 	}
 
 	/**
-	 * It resolves the plugin's own templates (e.g. the example block template).
+	 * It resolves a plugin-shipped template part by slug.
+	 *
+	 * Self-contained: writes a throwaway template into the plugin's `templates/`
+	 * dir and removes it, so the test does not depend on any example capability
+	 * (the example block template is deleted when `blocks` is removed at init).
 	 */
 	public function test_resolves_a_plugin_template(): void {
-		$located = ( new Templates() )->locate( 'block-templates/example-block-dynamic' );
+		$templates_dir = PROJECT_NAME_FEATURES_PATH . 'templates';
+		$fixture       = $templates_dir . '/zz-templates-test-fixture.php';
+
+		if ( ! is_dir( $templates_dir ) ) {
+			mkdir( $templates_dir, 0755, true );
+		}
+		file_put_contents( $fixture, "<?php\n" );
+
+		$located = ( new Templates() )->locate( 'zz-templates-test-fixture' );
+
+		unlink( $fixture );
 
 		$this->assertIsString( $located );
-		$this->assertStringEndsWith( 'block-templates/example-block-dynamic.php', (string) $located );
+		$this->assertStringEndsWith( 'zz-templates-test-fixture.php', (string) $located );
 	}
 
 	/**

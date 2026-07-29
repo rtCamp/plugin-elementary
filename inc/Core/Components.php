@@ -9,10 +9,10 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features\Core;
 
+use Project_Name\Features\Main;
 use rtCamp\WPFramework\AssetLoader;
 use rtCamp\WPFramework\ComponentLoader;
 use rtCamp\WPFramework\Contracts\Interfaces\Shareable;
-use Project_Name\Features\Main;
 
 /**
  * Class Components
@@ -26,8 +26,6 @@ final class Components extends ComponentLoader implements Shareable {
 
 	/**
 	 * Context slug used to namespace the plugin's component asset handles.
-	 *
-	 * @return string
 	 */
 	protected function get_context(): string {
 		return 'project-name-features';

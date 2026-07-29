@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Bootstrap a WordPress plugin or theme from a natural-language description. Detects project type, applies tooling (EditorConfig, PSR-4, PHPCS, PHPStan, ESLint, Stylelint, PHPUnit, Jest, pa11y), and chains feature scaffolds (CLI commands, blocks, REST, etc.) in one session. Asks for clarification whenever intent is ambiguous — never assumes.
+description: Bootstrap a WordPress plugin or theme from a natural-language description. Detects project type, applies tooling (EditorConfig, PSR-4, PHPCS, PHPStan, ESLint, Stylelint, PHPUnit, Jest, pa11y), and chains feature scaffolds (CLI commands, blocks, REST, etc.) in one session. Asks for clarification whenever intent is ambiguous - never assumes.
 ---
 
 # setup
@@ -44,8 +44,8 @@ Before I start, I need a few details:
 2. Will this be deployed on WordPress VIP? (Determines the PHPCS standard.)
 3. What is the PHP root namespace you want to use? (e.g. Acme\\ImageOptimizer)
 4. What directory holds the PHP source? (e.g. includes/ or src/)
-5. Do you want tests set up? If so: PHPUnit for PHP, Jest for JS, pa11y for a11y — any or all?
-6. You mentioned a CLI command — what should it do? (I need a command name or slug.)
+5. Do you want tests set up? If so: PHPUnit for PHP, Jest for JS, pa11y for a11y - any or all?
+6. You mentioned a CLI command - what should it do? (I need a command name or slug.)
 ```
 
 ### 1. Detect what already exists
@@ -138,7 +138,7 @@ Show the complete two-phase plan. Be specific: include the scaffold ID, what fil
 ```
 Here is what I will do. Please confirm or adjust before I start.
 
-Phase A — Project setup:
+Phase A - Project setup:
   1. setup/editorconfig    → .editorconfig
   2. setup/psr4            → wiring in composer.json  (namespace: Acme\ImageOptimizer, path: includes/)
   3. lint/phpcs/vip        → phpcs.xml.dist           (WordPress-VIP-Minimum + WordPress-Docs)
@@ -146,7 +146,7 @@ Phase A — Project setup:
   5. lint/eslint           → eslint.config.js
   6. setup/phpunit         → phpunit.xml.dist, tests/bootstrap.php
 
-Phase B — Feature scaffolds:
+Phase B - Feature scaffolds:
   7. wp/cli                → includes/Cli/OptimizeImagesCommand.php
                              (namespace: Acme\ImageOptimizer\Cli, class suffix: Command,
                               registers via $this->boot(...) in includes/Plugin.php)
@@ -196,11 +196,11 @@ Process each result before running the next:
 
 ### 5. Execute Phase B
 
-For each feature scaffold, follow the full workflow from `skills/scaffold.md` — introspect conventions, apply naming, invoke the engine, adaptive wiring, **expand test stubs into a real suite, then drive implementation from those tests** (red → green → refactor).
+For each feature scaffold, follow the full workflow from `skills/scaffold.md` - introspect conventions, apply naming, invoke the engine, adaptive wiring, **expand test stubs into a real suite, then drive implementation from those tests** (red → green → refactor).
 
 Do not batch feature scaffolds. Run one at a time, apply its wiring, complete the TDD loop (see `skills/scaffold.md` §5b), then move to the next.
 
-For `wp/cli`, pass the same project conventions detected in Stage 1 (namespace, base path, class suffix) — defaults assume the rtCamp skeleton (`Inc\Cli`, `includes/Cli`) and will be wrong for any other project:
+For `wp/cli`, pass the same project conventions detected in Stage 1 (namespace, base path, class suffix) - defaults assume the rtCamp skeleton (`Inc\Cli`, `includes/Cli`) and will be wrong for any other project:
 
 ```bash
 npx wp-tooling add wp/cli \
@@ -211,6 +211,8 @@ npx wp-tooling add wp/cli \
 
 The engine emits `ai.wiring` (where to register the command) and a thin test stub at `tests/Cli/OptimizeImagesCommandTest.php`. Show the wiring snippet, get consent, apply. Then turn the stub into a real test suite (happy path, dry-run flag, edge cases, error handling) and implement `__invoke()` test-by-test until the suite is green. Never leave `markTestIncomplete` in the final state.
 
+**Code quality (required).** For any PHP a feature scaffold writes or changes under `inc/` or `tests/`, run the compliance pipeline once the implementation is green, exactly as in the `scaffold` skill (`skills/scaffold.md` §7a): `composer format` (phpcbf) -> `composer lint` (phpcs, `rtCampWP` ruleset via `phpcs.xml.dist`) -> `composer phpstan` (PHPStan level 5 via `phpstan.neon.dist`), resolving every finding in the generated code. Write it compliant in the first place (`declare( strict_types = 1 );`, short arrays, typed signatures, prefixed globals, documented). If a fix is unclear or would change behaviour, public API, or intent, STOP and ask - never silence a real issue with a blanket `phpcs:ignore` / `@phpstan-ignore`.
+
 **Phase B feature scaffolds require the matching test framework from Phase A.** If Phase A skipped `setup/phpunit` because the developer did not ask for tests, surface this before running Phase B feature scaffolds:
 
 ```
@@ -218,7 +220,7 @@ You asked for a CLI command, but Phase A skipped setup/phpunit.
 The wp/cli scaffold ships a PHPUnit stub I cannot run without it.
 
 Options:
-  1. Add setup/phpunit now (recommended — I drive feature development from tests).
+  1. Add setup/phpunit now (recommended - I drive feature development from tests).
   2. Proceed without tests (stub will be written but not executed; I will note this as a manual follow-up).
 
 Which?
@@ -233,7 +235,7 @@ When `setup/psr4` wiring is received:
 1. Show the current `"autoload"` block in `composer.json` (or note it is absent).
 2. Show the intended entry: namespace `Acme\ImageOptimizer` maps to `includes/`.
 3. Ask: `Apply PSR-4 autoload to composer.json? [apply / skip]`
-4. If apply: paste the engine's `ai.wiring[0].snippet` verbatim. The engine already emits the PSR-4 key JSON-encoded with its trailing backslash (e.g. `"Acme\\ImageOptimizer\\"`) — **do not escape it again**, or you will double the backslashes and break autoload.
+4. If apply: paste the engine's `ai.wiring[0].snippet` verbatim. The engine already emits the PSR-4 key JSON-encoded with its trailing backslash (e.g. `"Acme\\ImageOptimizer\\"`) - **do not escape it again**, or you will double the backslashes and break autoload.
 5. Remind: run `composer dump-autoload --optimize` after applying.
 
 If `composer.json` does not exist, offer to create a minimal one:
@@ -255,7 +257,7 @@ Create it? [yes / skip PSR-4 / give me the values to use]
 
 ### Wiring: feature scaffolds
 
-Same as `skills/scaffold.md` §5 — `ai.wiring`. Show diff, get consent, apply.
+Same as `skills/scaffold.md` §5 - `ai.wiring`. Show diff, get consent, apply.
 
 ### 6. Consolidated final report
 
@@ -276,10 +278,10 @@ Files written (Phase B):
   tests/Cli/OptimizeImagesCommandTest.php
 
 Wiring applied:
-  includes/Plugin.php:43 — $this->boot('optimize-images', \Acme\ImageOptimizer\Cli\OptimizeImagesCommand::class);
+  includes/Plugin.php:43 - $this->boot('optimize-images', \Acme\ImageOptimizer\Cli\OptimizeImagesCommand::class);
 
 Tests:
-  tests/Cli/OptimizeImagesCommandTest.php — stub passing.
+  tests/Cli/OptimizeImagesCommandTest.php - stub passing.
 
 Developer actions (run these yourself):
 
@@ -328,7 +330,7 @@ Deduplicate packages. Sort alphabetically within each block. Pinned packages use
 |---|---|---|
 | `lint/phpcs/full` | Most rtCamp projects (recommended default) | `vendor/rtcamp/wp-framework/phpcs.xml.dist`, WordPress-Core + Extra + Docs + VIP-Go |
 | `lint/phpcs/vip` | WordPress VIP platform projects | `WordPress-VIP-Minimum` + `WordPress-Docs` |
-| `lint/phpcs/core` | Projects explicitly opting out of VIP-Go rules | `WordPress` — Core + Extra + Docs only |
+| `lint/phpcs/core` | Projects explicitly opting out of VIP-Go rules | `WordPress` - Core + Extra + Docs only |
 
 Developers can add `<rule>` entries to `phpcs.xml.dist` to override or extend the selected standard.
 
@@ -342,7 +344,7 @@ Developers can add `<rule>` entries to `phpcs.xml.dist` to override or extend th
 
 ## Rules: never assume, always ask
 
-Before running any scaffold, every required input must be confirmed by the developer or verified from the project files. The following facts require explicit confirmation or verification — never infer them silently:
+Before running any scaffold, every required input must be confirmed by the developer or verified from the project files. The following facts require explicit confirmation or verification - never infer them silently:
 
 - Plugin vs theme.
 - VIP vs non-VIP.
@@ -352,18 +354,22 @@ Before running any scaffold, every required input must be confirmed by the devel
 - REST route and controller name.
 - pa11y base URL.
 
-If the developer's request is clear enough that a fact can be read unambiguously from the project (e.g. namespace from `composer.json` autoload, VIP from existing `phpcs.xml.dist`), no need to ask — cite the source in the confirmation plan instead.
+If the developer's request is clear enough that a fact can be read unambiguously from the project (e.g. namespace from `composer.json` autoload, VIP from existing `phpcs.xml.dist`), no need to ask - cite the source in the confirmation plan instead.
 
 ## Hard prohibitions
 
-You **must never**:
+You **must never** (BASE, see AGENTS.md guardrails):
 
+- Run history/remote `git`/`gh` at all (commit, push, `branch -D`, `reset --hard`, PR, issue comment, `gh secret set`); print them as developer actions. `git clone`/`checkout` for setup are fine.
+- Do a destructive operation outside this plugin directory (cloning a NEW sibling is additive and OK; deleting/overwriting existing out-of-repo files is not).
+- Commit or push `graphify-out/graph.json`; local graph refreshes stay local.
 - Run `composer require`, `npm install`, `composer dump-autoload`, or any package manager command without explicit user approval.
-- Edit `composer.json` scripts or `package.json` scripts — show them, let the developer apply.
+- Edit `composer.json` scripts or `package.json` scripts - show them, let the developer apply.
 - Apply wiring to any file without showing the diff and receiving consent.
 - Apply more scaffolds than the confirmed plan.
 - Silently skip a scaffold; always report skips with a reason.
-- Set up CI/CD — that requires a separate `scaffold` skill invocation targeting `ci/` scaffolds.
+- Set up CI/CD - that requires a separate `scaffold` skill invocation targeting `ci/` scaffolds.
+- Declare generated PHP done without running the §5 code-quality pipeline (`composer format` -> `composer lint` -> `composer phpstan`) clean, or silence a real finding with a blanket `phpcs:ignore` / `@phpstan-ignore` to pass it.
 - Commit, push, or open PRs without explicit approval.
 
 ## Error handling

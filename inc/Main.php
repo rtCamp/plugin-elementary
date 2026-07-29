@@ -16,32 +16,63 @@ use rtCamp\WPFramework\Contracts\Traits\Singleton;
  * Class - Main
  */
 final class Main {
+
 	use Singleton;
 	use Loader;
 
 	/*
 	 * List of classes to load
 	 */
-	const CLASSES = [
-		// Core infrastructure.
+	public const CLASSES = [
+		// Core infrastructure - always loaded.
 		Core\Assets::class,
 		Core\PluginSetup::class,
 		Core\Components::class,
 		Core\Templates::class,
 		Core\Encryption::class,
+		Core\Logger::class,
 
-		// CLI commands.
+		// Optional capabilities - each is keep/remove at init time. Per-capability
+		// init markers (stripped on keep) let the engine drop a capability's line
+		// from this list when it is deselected.
+		// wp:example:cli
 		Modules\CLI::class,
-
-		// Feature modules — each module groups related Registrable classes.
+		// wp:example:cli:end
+		// wp:example:post-types
 		Modules\PostTypes::class,
+		// wp:example:post-types:end
+		// wp:example:taxonomies
 		Modules\Taxonomies::class,
+		// wp:example:taxonomies:end
+		// wp:example:blocks
 		Modules\Blocks::class,
+		// wp:example:blocks:end
+		// wp:example:rest
 		Modules\REST::class,
+		// wp:example:rest:end
+		// wp:example:settings
 		Modules\Settings::class,
+		// wp:example:settings:end
+		// wp:example:shortcodes
 		Modules\Shortcodes::class,
+		// wp:example:shortcodes:end
+		// wp:example:roles
 		Modules\Roles::class,
+		// wp:example:roles:end
+		// wp:example:admin
+		Modules\Admin::class,
+		// wp:example:admin:end
+		// wp:example:cron
 		Modules\Cron::class,
+		// wp:example:cron:end
+
+		// Framework service usage examples.
+		// wp:example:cache
+		Modules\Cache::class,
+		// wp:example:cache:end
+		// wp:example:transients
+		Modules\Transients::class,
+		// wp:example:transients:end
 	];
 
 	/**

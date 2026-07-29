@@ -7,7 +7,7 @@ A short guide to test `npm run init` (project rename, feature toggles, example-s
 ## Prerequisites
 
 - Node 22 (`nvm use`).
-- `rtCamp/wp-tooling` cloned **as a sibling** of this repo, on the branch that has the init engine: `release/v1.0.0` once it lands, until then `v1.0.0/task/init-engine`.
+- `rtCamp/wp-tooling` cloned **as a sibling** of this repo, on the `release/v1.0.0` branch (the init engine landed there in wp-tooling #32).
 - A **fresh/throwaway clone** of this skeleton to test against — `npm run init` rewrites files in place.
 
 ## Steps
@@ -18,7 +18,7 @@ nvm use
 
 # 1. Clone wp-tooling as a sibling on the engine branch (skip if you already have it):
 git clone git@github.com:rtCamp/wp-tooling.git ../wp-tooling
-( cd ../wp-tooling && git checkout v1.0.0/task/init-engine )   # → release/v1.0.0 once merged
+( cd ../wp-tooling && git checkout release/v1.0.0 )
 
 # 2. Point the @rtcamp dependency at the local package (LOCAL ONLY — do not commit).
 #    Add the tailwind-config line too if you will test the Tailwind feature.
@@ -44,4 +44,4 @@ git checkout package.json
 ## Notes
 
 - Red CI is expected right now — the private packages are not published yet. This guide is for local testing only.
-- Manage mode (after first init): `npm run init -- --list` shows feature status; `--enable=`/`--disable=`/`--features=` change it.
+- Manage mode (after first init): `npm run init -- --list` shows capability + feature status (`--list --json` emits one machine-readable line, either mode); `--enable=`/`--disable=`/`--features=` change features.

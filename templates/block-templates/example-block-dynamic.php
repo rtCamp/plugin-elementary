@@ -5,6 +5,8 @@
  * @package Project_Name\Features
  */
 
+declare( strict_types = 1 );
+
 ?>
 <div>
 	<h2><?php esc_html_e( 'Example block dynamic', 'project-name-features' ); ?></h2>

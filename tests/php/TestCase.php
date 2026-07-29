@@ -5,6 +5,8 @@
  * @package Project_Name\Features
  */
 
+declare( strict_types = 1 );
+
 namespace Project_Name\Features\Tests;
 
 use WP_UnitTestCase;
@@ -14,4 +16,6 @@ use WP_UnitTestCase;
  *
  * @since 1.0.0
  */
-abstract class TestCase extends WP_UnitTestCase { }
+abstract class TestCase extends WP_UnitTestCase {
+
+}

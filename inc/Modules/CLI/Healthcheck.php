@@ -34,10 +34,10 @@ final class Healthcheck implements CLICommand {
 
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @param array $args Positional arguments passed to the command.
 	 * @param array $assoc_args Associative arguments passed to the command.
-	 * 
+	 *
 	 * @return void
 	 */
 	public static function run( array $args = [], array $assoc_args = [] ): void { // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed

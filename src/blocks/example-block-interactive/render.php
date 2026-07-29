@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types = 1);
+
 /**
  * PHP file to use when rendering the block type on the server to show on the front end.
  *
@@ -19,7 +22,7 @@ $unique_id = wp_unique_id( 'p-' );
 <div
 	<?php echo get_block_wrapper_attributes(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Core API returns safe HTML attributes. ?>
 	data-wp-interactive="create-block"
-	<?php echo wp_interactivity_data_wp_context( array( 'isOpen' => false ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Core API returns safe HTML attributes. ?>
+	<?php echo wp_interactivity_data_wp_context( [ 'isOpen' => false ] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Core API returns safe HTML attributes. ?>
 	data-wp-watch="callbacks.logIsOpen"
 >
 	<button

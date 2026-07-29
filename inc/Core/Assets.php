@@ -32,10 +32,10 @@ final class Assets extends AssetLoader implements Registrable, Shareable {
 	 * Dynamic blocks are registered via their own AbstractBlock subclasses.
 	 */
 	private const STATIC_BLOCKS = [
-		// wp:example.
+		// wp:example:blocks
 		'example-block',
 		'example-block-interactive',
-		// wp:example:end.
+		// wp:example:blocks:end
 	];
 
 	/**
@@ -53,8 +53,6 @@ final class Assets extends AssetLoader implements Registrable, Shareable {
 	 * Whether Tailwind CSS is enabled. Resolved at enqueue time (not in the
 	 * constructor) so the project_name_features_tailwind_enabled filter can be
 	 * added by themes/plugins that load after this one.
-	 *
-	 * @return bool
 	 */
 	private function is_tailwind_enabled(): bool {
 		return (bool) apply_filters( 'project_name_features_tailwind_enabled', PROJECT_NAME_FEATURES_ENABLE_TAILWIND );
@@ -109,7 +107,7 @@ final class Assets extends AssetLoader implements Registrable, Shareable {
 	 * (1–65535).
 	 *
 	 * THIS METHOD IS INTENDED FOR LOCAL DEVELOPMENT ENVIRONMENTS ONLY.
-	 * 
+	 *
 	 * @return int BrowserSync port.
 	 */
 	private function get_browser_sync_port(): int {
@@ -191,7 +189,7 @@ final class Assets extends AssetLoader implements Registrable, Shareable {
 			return null;
 		}
 
-		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Local dev only; reading a small project file, not remote.
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents, WordPressVIPMinimum.Performance.FetchingRemoteData.FileGetContentsUnknown -- Local dev only; reading a small project file, not remote.
 		$contents = file_get_contents( $env_file );
 
 		if ( false === $contents ) {

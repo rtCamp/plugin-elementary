@@ -5,6 +5,8 @@
  * @package Project_Name\Features
  */
 
+declare( strict_types = 1 );
+
 define( 'TESTS_PLUGIN_DIR', dirname( __DIR__ ) );
 
 // Determine correct location for plugins directory to use.
@@ -59,15 +61,15 @@ if ( false !== getenv( 'WP_TESTS_DIR' ) ) {
 }
 
 // Force plugin to be active.
-$GLOBALS['wp_tests_options'] = array(
-	'active_plugins' => array( basename( TESTS_PLUGIN_DIR ) . '/project-name-features.php' ),
-);
+$GLOBALS['wp_tests_options'] = [
+	'active_plugins' => [ basename( TESTS_PLUGIN_DIR ) . '/project-name-features.php' ],
+];
 
 // Add filter to ensure the plugin's admin integration and all modules are loaded for tests.
 require_once $_test_root . '/includes/functions.php';
 tests_add_filter(
 	'plugins_loaded',
-	function () {
+	static function () {
 		require_once TESTS_PLUGIN_DIR . '/project-name-features.php';
 	},
 	1

@@ -9,7 +9,10 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features\Core;
 
+use Project_Name\Features\Helpers\Util;
+// wp:example:cron
 use Project_Name\Features\Modules\Cron\ExampleCronJob;
+// wp:example:cron:end
 use rtCamp\WPFramework\Contracts\Interfaces\Registrable;
 
 /**
@@ -32,6 +35,9 @@ class PluginSetup implements Registrable {
 	 */
 	public function activate(): void {
 		update_option( 'project_name_features_version', PROJECT_NAME_FEATURES_VERSION );
+
+		// The shared Logger is available anywhere via Util::logger() (silent unless WP_DEBUG).
+		Util::logger()->info( 'Plugin activated', [ 'version' => PROJECT_NAME_FEATURES_VERSION ] );
 	}
 
 	/**
@@ -41,7 +47,9 @@ class PluginSetup implements Registrable {
 	 * `uninstall.php` file instead — that runs only on actual uninstall.
 	 */
 	public function deactivate(): void {
+		// wp:example:cron
 		ExampleCronJob::unschedule();
+		// wp:example:cron:end
 	}
 
 	/**

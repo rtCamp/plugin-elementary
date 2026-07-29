@@ -20,10 +20,27 @@
 > This is a **template**. `Project Name` / `project-name` / `Project_Name` are
 > placeholders — run `npm run init` to turn it into a named project.
 
+## What it offers
+
+- **Capability-based setup.** One command names the plugin and ships only the
+  capabilities you need; everything else is removed cleanly, leaving a
+  gate-clean starting point.
+- **AI that writes consistent, tested code.** The `/init` and `/scaffold` skills
+  build on `rtcamp/wp-framework` and the scaffold engine, so they produce the
+  same structure no matter who prompts them, write the test first, and run the
+  `phpcs`/`phpstan` gates by default.
+- **Shared framework and standards.** Base classes and a registration layer from
+  `rtcamp/wp-framework`, plus the rtCamp PHPCS ruleset, PHPStan, ESLint and
+  Stylelint, so every plugin reads the same.
+- **Reusable CI.** Lint, test and build run through
+  [`rtCamp/wp-shared-workflows`](https://github.com/rtCamp/wp-shared-workflows),
+  called from a single thin workflow file; every job is gated on detected
+  changes, so a docs-only PR runs almost nothing.
+
 ## Quick start
 
 Requires Node 22 (`nvm use`), PHP 8.2+, and access to rtCamp's private packages
-(see [Private packages](#private-packages)).
+(see [Dependencies](#dependencies)).
 
 ```bash
 nvm use
@@ -111,11 +128,15 @@ its registration stripped.
 | REST | `Modules\REST\ExampleRESTController` | Cron | `Modules\Cron\ExampleCronJob` |
 | WP-CLI | `Modules\CLI\Healthcheck` | | |
 
-## Private packages
+## Dependencies
 
-`@rtcamp/wp-tooling` and `@rtcamp/tailwind-config` are served from **GitHub
-Packages** (private to the rtCamp org), mapped via `.npmrc`. Install with a
-GitHub token that has `read:packages`:
+`rtcamp/wp-framework` is a Composer package resolved from its public GitHub
+repository (see the `repositories` entry in `composer.json`) — no token needed.
+
+The npm-side rtCamp packages (`@rtcamp/wp-tooling` and the shared ESLint and
+Stylelint configs) are still unpublished during the pilot and are mapped to
+GitHub Packages via `.npmrc`. Until they ship, installing needs a token with
+`read:packages`:
 
 ```bash
 export GITHUB_TOKEN=<token-with-read:packages>   # CI uses a secret

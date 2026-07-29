@@ -13,9 +13,7 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features\Modules;
 
-// wp:example.
 use Project_Name\Features\Modules\Blocks\ExampleDynamicBlock;
-// wp:example:end.
 use rtCamp\WPFramework\Contracts\Abstracts\AbstractModule;
 
 /**
@@ -28,9 +26,7 @@ final class Blocks extends AbstractModule {
 	 */
 	protected function get_classes(): array {
 		return [
-			// wp:example.
 			ExampleDynamicBlock::class,
-			// wp:example:end.
 		];
 	}
 }

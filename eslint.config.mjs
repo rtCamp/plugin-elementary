@@ -1,22 +1,14 @@
 /**
- * WordPress dependencies
+ * rtCamp shared ESLint flat config.
+ *
+ * Extends @rtcamp/eslint-config (which bundles @wordpress/eslint-plugin,
+ * eslint-comments, and the jest config for test files). Only the
+ * project-specific ignores are layered on top.
  */
-import wordpressPlugin from '@wordpress/eslint-plugin';
-/**
- * External dependencies
- */
-import comments from '@eslint-community/eslint-plugin-eslint-comments/configs';
-import jestPlugin from 'eslint-plugin-jest';
-import globals from 'globals';
-
-const TEST_FILES = [
-	'**/__tests__/**/*.js',
-	'**/test/*.js',
-	'**/?(*.)test.js',
-	'tests/js/**/*.js',
-];
+import rtcampConfig from '@rtcamp/eslint-config';
 
 export default [
+	...rtcampConfig,
 	{
 		ignores: [
 			'**/*.min.js',
@@ -24,49 +16,5 @@ export default [
 			'**/vendor/**',
 			'assets/build/**',
 		],
-	},
-
-	...wordpressPlugin.configs[ 'recommended-with-formatting' ],
-
-	// import plugin is already registered by the WordPress config above;
-	// add the remaining rules from plugin:import/recommended without re-registering.
-	{
-		languageOptions: {
-			sourceType: 'module',
-		},
-		rules: {
-			'import/no-unresolved': 'error',
-			'import/named': 'error',
-			'import/namespace': 'error',
-			'import/default': 'error',
-			'import/export': 'error',
-			'import/no-named-as-default': 'warn',
-			'import/no-named-as-default-member': 'warn',
-			'import/no-duplicates': 'warn',
-		},
-	},
-
-	comments.recommended,
-
-	{
-		languageOptions: {
-			globals: globals.browser,
-		},
-		rules: {
-			'jsdoc/check-indentation': 'error',
-			'jsdoc/no-undefined-types': [ 'error', { definedTypes: [ 'WPElement' ] } ],
-			'@wordpress/dependency-group': 'error',
-		},
-	},
-
-	{
-		files: TEST_FILES,
-		...jestPlugin.configs[ 'flat/all' ],
-	},
-
-	{
-		settings: {
-			'import/resolver': { node: true },
-		},
 	},
 ];

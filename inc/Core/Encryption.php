@@ -16,11 +16,12 @@ use rtCamp\WPFramework\Utils\Encryptor;
  * Class - Encryption
  *
  * The plugin's shared Encryptor. Extends the framework Encryptor and sources the
- * key via the key() seam from the PROJECT_NAME_FEATURES_ENCRYPTION_KEY constant —
+ * key via the key() seam from the PROJECT_NAME_FEATURES_ENCRYPTION_KEY constant;
  * define it in wp-config.php before using encryption. There is deliberately no
  * salt fallback: an auth salt should not double as an encryption key, and
  * rotating WordPress salts must not invalidate encrypted data. Shared through
- * the container; call it through Helpers\Util (Util::encrypt() / Util::decrypt()).
+ * the container; access it via Helpers\Util::encryption(), e.g.
+ * Util::encryption()->encrypt( $value ) / Util::encryption()->decrypt( $value ).
  */
 final class Encryption extends Encryptor implements Shareable {
 

@@ -1,7 +1,7 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "create-block/example-block-interactive",
+	"name": "project-name-features/example-block-interactive",
 	"version": "0.1.0",
 	"title": "Example Block Interactive",
 	"category": "widgets",

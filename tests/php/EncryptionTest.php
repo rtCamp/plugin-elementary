@@ -45,18 +45,19 @@ final class EncryptionTest extends TestCase {
 	}
 
 	/**
-	 * With the key constant defined, Util::encrypt() / Util::decrypt() roundtrip.
+	 * With the key constant defined, the shared encryptor roundtrips via
+	 * Util::encryption()->encrypt() / ->decrypt().
 	 */
 	public function test_encrypt_decrypt_roundtrips_with_key_constant(): void {
 		if ( ! defined( 'PROJECT_NAME_FEATURES_ENCRYPTION_KEY' ) ) {
 			define( 'PROJECT_NAME_FEATURES_ENCRYPTION_KEY', str_repeat( 'k', 32 ) );
 		}
 
-		$encrypted = Util::encrypt( 'sensitive-value' );
+		$encrypted = Util::encryption()->encrypt( 'sensitive-value' );
 
 		$this->assertIsString( $encrypted );
 		$this->assertNotSame( 'sensitive-value', $encrypted );
-		$this->assertSame( 'sensitive-value', Util::decrypt( $encrypted ) );
+		$this->assertSame( 'sensitive-value', Util::encryption()->decrypt( $encrypted ) );
 	}
 
 	/**
@@ -67,12 +68,12 @@ final class EncryptionTest extends TestCase {
 			define( 'PROJECT_NAME_FEATURES_ENCRYPTION_KEY', str_repeat( 'k', 32 ) );
 		}
 
-		$encrypted = Util::encrypt( 'secret' );
+		$encrypted = Util::encryption()->encrypt( 'secret' );
 		$this->assertIsString( $encrypted );
 
 		$decoded     = base64_decode( $encrypted, true );
 		$decoded[20] = 'A' === $decoded[20] ? 'B' : 'A';
 
-		$this->assertFalse( Util::decrypt( base64_encode( $decoded ) ) );
+		$this->assertFalse( Util::encryption()->decrypt( base64_encode( $decoded ) ) );
 	}
 }

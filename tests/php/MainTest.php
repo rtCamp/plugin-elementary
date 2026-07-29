@@ -9,8 +9,8 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features\Tests;
 
-use Project_Name\Features\Main;
 use Project_Name\Features\Core\PluginSetup;
+use Project_Name\Features\Main;
 
 /**
  * Class MainTest
@@ -20,7 +20,7 @@ final class MainTest extends TestCase {
 	/**
 	 * The bootstrap class autoloads under its FQN.
 	 *
-	 * Catches PSR-4 / namespace breakage at the cheapest possible level —
+	 * Catches PSR-4 / namespace breakage at the cheapest possible level;
 	 * if this fails, every other test in the suite is meaningless.
 	 */
 	public function test_main_class_exists(): void {
@@ -54,16 +54,19 @@ final class MainTest extends TestCase {
 	}
 
 	/**
-	 * deactivate() unschedules the example cron event.
+	 * register_hooks() wires the always-on Core hooks (textdomain on init), and
+	 * deactivate() stays callable for any capability set.
+	 *
+	 * The example-cron unschedule path is exercised by the cron capability's own
+	 * test, which ships and is removed with that capability; Core stays decoupled
+	 * from any example.
 	 */
-	public function test_deactivate_clears_scheduled_cron_event(): void {
-		wp_schedule_event( time(), 'daily', \Project_Name\Features\Modules\Cron\ExampleCronJob::HOOK );
-		$this->assertNotFalse( wp_next_scheduled( \Project_Name\Features\Modules\Cron\ExampleCronJob::HOOK ) );
-
+	public function test_register_hooks_wires_core_hooks(): void {
 		$setup = new PluginSetup();
+		$setup->register_hooks();
 		$setup->deactivate();
 
-		$this->assertFalse( wp_next_scheduled( \Project_Name\Features\Modules\Cron\ExampleCronJob::HOOK ) );
+		$this->assertNotFalse( has_action( 'init', [ $setup, 'load_textdomain' ] ) );
 	}
 
 	/**
