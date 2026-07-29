@@ -28,7 +28,7 @@ import './editor.scss';
  * @param {Object} root0.attributes
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  *
- * @return {WPElement} Element to render.
+ * @return {Element} Element to render.
  */
 export default function Edit( { attributes } ) {
 	return (

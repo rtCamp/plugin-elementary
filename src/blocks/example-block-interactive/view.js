@@ -19,4 +19,3 @@ store( 'create-block', {
 		},
 	},
 } );
-
