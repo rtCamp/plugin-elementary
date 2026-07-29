@@ -33,13 +33,15 @@ import './editor.scss';
  *
  * @see https://developer.wordpress.org/block-editor/developers/block-api/block-edit-save/#edit
  *
- * @return {WPElement} Element to render.
+ * @return {Element} Element to render.
  */
 export default function Edit() {
-	return ( <p {
-		...useBlockProps()
-	} > {
-			__( 'Example Block – hello from the editor!', 'project-name-features' )
-		} </p>
+	return (
+		<p { ...useBlockProps() }>
+			{ __(
+				'Example Block – hello from the editor!',
+				'project-name-features'
+			) }
+		</p>
 	);
 }

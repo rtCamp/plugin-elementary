@@ -29,7 +29,10 @@ export default function Edit() {
 
 	return (
 		<p { ...blockProps }>
-			{ __( 'Example Block Interactive – hello from the editor!', 'example-block-interactive' ) }
+			{ __(
+				'Example Block Interactive – hello from the editor!',
+				'example-block-interactive'
+			) }
 		</p>
 	);
 }
