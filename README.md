@@ -1,33 +1,51 @@
-# Features Plugin Skeleton [![Project Status: Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+<h1 align="center">Features Plugin Skeleton</h1>
 
-The starting template for an rtCamp client WordPress **feature plugin**: all backend functionality (post types, taxonomies, blocks, REST endpoints, settings pages, shortcodes, user roles, WP-Cron, WP-CLI) lives here. The reusable framework (autoloader, asset/template loaders, abstract base classes) ships as the `rtcamp/wp-framework` Composer package in `vendor/`.
+<p align="center">
+  <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active"></a>
+  <a href="LICENSE.md"><img src="https://img.shields.io/badge/license-GPL--2.0--or--later-blue.svg" alt="License: GPL-2.0-or-later"></a>
+  <img src="https://img.shields.io/badge/PHP-8.2%2B-777bb4.svg" alt="PHP 8.2+">
+  <img src="https://img.shields.io/badge/Node-22-5fa04e.svg" alt="Node 22">
+</p>
 
-> This is a **template**. `Project Name` / `project-name` / `Project_Name` are placeholders. Use this template, then run `npm run init` to turn it into a named project.
+<p align="center">
+  The starting template for a WordPress <b>feature plugin</b> — all backend
+  functionality (post types, taxonomies, blocks, REST endpoints, settings pages,
+  shortcodes, user roles, WP-Cron, WP-CLI) lives here. The reusable framework
+  ships as the <a href="https://github.com/rtCamp/wp-framework"><code>rtcamp/wp-framework</code></a>
+  Composer package in <code>vendor/</code>.
+</p>
+
+---
+
+> This is a **template**. `Project Name` / `project-name` / `Project_Name` are
+> placeholders — run `npm run init` to turn it into a named project.
 
 ## Quick start
 
-1. **Use this template** on GitHub (or clone) to create your project's repo.
-2. Install dependencies (needs Node 22 — run `nvm use` — and access to the private rtCamp packages, see [Private packages](#private-packages)):
-   ```bash
-   nvm use
-   composer install
-   npm install
-   ```
-   > **Pilot note:** until `@rtcamp/wp-tooling` and `@rtcamp/tailwind-config` are published, `npm install` cannot resolve them yet. Follow [docs/internal-testing.md](docs/internal-testing.md) for the interim local-path setup.
-3. **Initialize the plugin** — the setup wizard renames the starter tokens to your project, lets you keep or remove the shipped example sets, and toggle optional features (Tailwind, HMR):
-   ```bash
-   npm run init
-   ```
-   > Prefer to drive it with AI? In Claude Code, run `/init` and describe the project.
-4. **Build assets:** `npm start` (watch) or `npm run build:prod`.
+Requires Node 22 (`nvm use`), PHP 8.2+, and access to rtCamp's private packages
+(see [Private packages](#private-packages)).
 
-## Working on the plugin (humans and AI)
+```bash
+nvm use
+composer install
+npm install
+npm run init        # rename the starter tokens, keep/remove examples, toggle features
+npm start           # build assets (watch); npm run build:prod for production
+```
 
-Conventions are written once and shared across every AI tool:
+Prefer to drive it with AI? In Claude Code, run `/init` and describe the project.
 
-- **[AGENTS.md](AGENTS.md)** — the source of truth: stack, structure, TDD, framework patterns, security, guardrails. [`CLAUDE.md`](CLAUDE.md) and [`.github/copilot-instructions.md`](.github/copilot-instructions.md) are thin pointers to it; path-scoped detail lives in [`.github/instructions/`](.github/instructions/).
-- **[`.claude/skills/`](.claude/skills/)** — built-in AI skills: `/init` (set up / manage the project), `/scaffold` (add one feature), `/setup` (bootstrap from a brief).
-- **[DEVELOPMENT.md](DEVELOPMENT.md)** — the architecture overview, the module pattern, and how to add classes by hand.
+## Working on the plugin
+
+Conventions are written once and shared across every tool:
+
+- **[AGENTS.md](AGENTS.md)** — the source of truth: stack, structure, TDD,
+  framework patterns, security, guardrails. `CLAUDE.md` and
+  `.github/copilot-instructions.md` are thin pointers to it; path-scoped detail
+  lives in `.github/instructions/`.
+- **[DEVELOPMENT.md](DEVELOPMENT.md)** — architecture overview, the module
+  pattern, and how to add classes by hand.
+- **`.claude/skills/`** — built-in AI skills: `/init`, `/scaffold`, `/setup`.
 
 ## Commands
 
@@ -39,18 +57,22 @@ Conventions are written once and shared across every AI tool:
 | `composer test` · `composer lint` · `composer phpstan` | PHPUnit · PHPCS · PHPStan, on the host. |
 | `npx wp-tooling add <category>/<slug>` | Scaffold a new feature (see below). |
 
-See the build / test detail (wp-env, coverage, matrix overrides, extending webpack) in [DEVELOPMENT.md](DEVELOPMENT.md).
+See the build/test detail (wp-env, coverage, matrix overrides, extending webpack)
+in [DEVELOPMENT.md](DEVELOPMENT.md).
 
 ## Adding a feature
 
-Use the scaffold engine instead of hand-writing — it writes the class, wires it into the right module, and emits a test stub:
+Use the scaffold engine instead of hand-writing — it writes the class, wires it
+into the right module, and emits a test stub:
 
 ```bash
 npx wp-tooling add wp/cli --name=health-check    # add a WP-CLI command
 npx wp-tooling list --json                        # see the full catalogue
 ```
 
-Or run `/scaffold` in Claude Code and describe the feature. By hand: create the concrete class extending the right framework abstract, register its `::class` in the owning module's `get_classes()`, and add a whole new domain to `Main::CLASSES`.
+Or run `/scaffold` in Claude Code and describe the feature. By hand: create the
+concrete class extending the right framework abstract, register its `::class` in
+the owning module's `get_classes()`, and add a whole new domain to `Main::CLASSES`.
 
 ## Project structure
 
@@ -77,7 +99,9 @@ templates/                  # theme-overridable templates
 
 ## What ships as examples
 
-Each feature domain ships a working `Example*` class so you can see the pattern. `npm run init` offers to keep or remove each set; what you remove is deleted and its registration stripped.
+Each feature domain ships a working `Example*` class so you can see the pattern.
+`npm run init` offers to keep or remove each set; what you remove is deleted and
+its registration stripped.
 
 | Set | Source | Set | Source |
 |---|---|---|---|
@@ -89,23 +113,26 @@ Each feature domain ships a working `Example*` class so you can see the pattern.
 
 ## Private packages
 
-`@rtcamp/wp-tooling` and `@rtcamp/tailwind-config` are served from **GitHub Packages** (private to the rtCamp org), mapped via `.npmrc`.
+`@rtcamp/wp-tooling` and `@rtcamp/tailwind-config` are served from **GitHub
+Packages** (private to the rtCamp org), mapped via `.npmrc`. Install with a
+GitHub token that has `read:packages`:
 
-- **Once published:** install with a GitHub token that has `read:packages`:
-  ```bash
-  export GITHUB_TOKEN=ghp_your_token   # org users; CI uses a secret
-  npm install
-  ```
-- **Until published (now):** the token path can't resolve them yet. Use a local `file:` path to a sibling `wp-tooling` clone instead — full steps in [docs/internal-testing.md](docs/internal-testing.md). (`npm link` does **not** work here: the `.npmrc` `@rtcamp` scope mapping makes `npm install` hit the registry and 404 on the unpublished packages.)
+```bash
+export GITHUB_TOKEN=<token-with-read:packages>   # CI uses a secret
+npm install
+```
 
 ## Contributing
 
-1. Open or find an [issue](https://github.com/rtCamp/features-plugin-skeleton/issues) describing the change.
-2. Branch from the active release branch (not `master`), commit, and push.
+1. Open or find an [issue](https://github.com/rtCamp/features-plugin-skeleton/issues)
+   describing the change.
+2. Branch from the active release branch, commit, and push.
 3. Open a pull request using the template. CI (lint + tests) must pass.
 
-Found a bug? Browse [existing issues](https://github.com/rtCamp/features-plugin-skeleton/issues) first, then [log a new one](https://github.com/rtCamp/features-plugin-skeleton/issues/new) with clear reproduction steps.
+## License
 
-## Does this interest you?
+[GPL-2.0-or-later](LICENSE.md)
 
-<a href="https://rtcamp.com/"><img src="https://rtcamp.com/wp-content/uploads/sites/2/2019/04/github-banner@2x.png" alt="Join us at rtCamp, we specialize in providing high performance enterprise WordPress solutions"></a>
+<p align="center">
+  <a href="https://rtcamp.com"><img src="https://n8e0ka87m9.gdcdn.us/kfnbt046p8/GitHub_Banner.webp" alt="rtCamp — high-performance enterprise WordPress" width="100%"></a>
+</p>
