@@ -12,10 +12,10 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features\Modules;
 
-// wp:example
+// wp:example.
 use Project_Name\Features\Modules\PostTypes\ExamplePostType;
 use Project_Name\Features\Modules\PostTypes\ExamplePostTypeTwo;
-// wp:example:end
+// wp:example:end.
 use rtCamp\WPFramework\Contracts\Abstracts\AbstractModule;
 
 /**
@@ -28,10 +28,10 @@ final class PostTypes extends AbstractModule {
 	 */
 	protected function get_classes(): array {
 		return [
-			// wp:example
+			// wp:example.
 			ExamplePostType::class,
 			ExamplePostTypeTwo::class,
-			// wp:example:end
+			// wp:example:end.
 		];
 	}
 }
