@@ -1,5 +1,5 @@
 {
-  "extends": "@rtcamp/stylelint-config",
+  "extends": "@rtcamp/wp-tooling/stylelint-config",
   "ignoreFiles" : [
     "**/*.js",
     "**/*.json",

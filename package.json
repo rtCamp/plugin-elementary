@@ -21,8 +21,6 @@
   "devDependencies": {
     "@babel/core": "7.29.7",
     "@eslint-community/eslint-plugin-eslint-comments": "4.7.2",
-    "@rtcamp/eslint-config": "^0.1.0",
-    "@rtcamp/stylelint-config": "^0.1.0",
     "@rtcamp/wp-tooling": "git+https://github.com/rtCamp/wp-tooling.git",
     "@wordpress/babel-preset-default": "8.47.0",
     "@wordpress/browserslist-config": "6.47.0",
