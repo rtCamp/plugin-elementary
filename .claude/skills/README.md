@@ -15,4 +15,4 @@ Skills for AI assistants (Claude Code, Cursor, and any tool that reads the Claud
 
 These skills are opinionated about safety and never: run a package manager or `npm run build` without consent; read, log, or transmit secret values; apply cross-file wiring without showing the diff and getting consent; or commit, push, or open PRs without approval. `init` additionally never runs a destructive setup without confirming the resolved values against a clean working tree.
 
-Two consented exceptions to the package-manager rule: `npm run init` (the project's own setup script), and the **pilot bootstrap** `init` runs on request (sibling clones + local `file:`/`path` refs + `composer update`/`npm install`). After any code change, the skills refresh the graph with `/graphify . --update`.
+Consented exceptions to the package-manager rule: `npm run init` (the project's own setup script), and the `npm install`/`composer install` `init` runs at the start of setup. After any code change, the skills refresh the graph with `/graphify . --update`.

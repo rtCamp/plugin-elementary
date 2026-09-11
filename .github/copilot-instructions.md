@@ -11,7 +11,7 @@ This is the skeleton/template: names are placeholders (`Project_Name` / `project
 ## Task prompts
 
 Two reusable prompts in [`prompts/`](prompts/), invoked in Copilot Chat. They are the Copilot peers of the Claude skills, kept consistent with them:
-- `/init` ([init.prompt.md](prompts/init.prompt.md)): set up / manage the project; during the pilot it can run the full local bootstrap (sibling clones, local refs, installs).
+- `/init` ([init.prompt.md](prompts/init.prompt.md)): set up / manage the project; installs dependencies (`npm install`, `composer install`), then drives `npm run init`.
 - `/scaffold` ([scaffold.prompt.md](prompts/scaffold.prompt.md)): add one feature, TDD-first, via `@rtcamp/wp-tooling`.
 
 Both are agentic: gather inputs and confirm before acting, and after any code change refresh the knowledge graph (`/graphify . --update`) per the graphify policy in [AGENTS.md](../AGENTS.md). The review conduct below applies to PR review, not to running these prompts.

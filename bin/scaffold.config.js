@@ -19,8 +19,14 @@
  * `features` instead, so the engine can add/remove those deps on toggle.
  */
 
+/**
+ * Internal dependencies
+ */
+const devTools = require( './features/dev-tools' );
+
 const mainFile = ( api ) => `${ api.identity.package.split( '/' )[ 1 ] }.php`;
-const tailwindConst = ( api ) => `${ api.identity.constantPrefix }_FEATURES_ENABLE_TAILWIND`;
+const tailwindConst = ( api ) =>
+	`${ api.identity.constantPrefix }_FEATURES_ENABLE_TAILWIND`;
 
 // One keep/remove capability. inc/Main.php is always a strip target (the
 // Main::CLASSES line); `module` adds the module file + its class dir to the
@@ -30,7 +36,12 @@ const tailwindConst = ( api ) => `${ api.identity.constantPrefix }_FEATURES_ENAB
 // `tests/php/<Module>Test.php`, or the suite is left referencing deleted classes.
 // `tests` overrides the derived name (default `tests/php/<module>Test.php`); pass
 // `[]` for a capability that ships no test.
-const capability = ( key, label, category, { module, strip = [], remove = [], tests } = {} ) => ( {
+const capability = (
+	key,
+	label,
+	category,
+	{ module, strip = [], remove = [], tests } = {}
+) => ( {
 	key,
 	label,
 	category,
@@ -40,7 +51,9 @@ const capability = ( key, label, category, { module, strip = [], remove = [], te
 	marker: `wp:example:${ key }`,
 	strip: [ 'inc/Main.php', ...strip ],
 	remove: [
-		...( module ? [ `inc/Modules/${ module }.php`, `inc/Modules/${ module }` ] : [] ),
+		...( module
+			? [ `inc/Modules/${ module }.php`, `inc/Modules/${ module }` ]
+			: [] ),
 		...( tests || ( module ? [ `tests/php/${ module }Test.php` ] : [] ) ),
 		...remove,
 	],
@@ -87,11 +100,14 @@ module.exports = {
 	],
 
 	versionFiles: [
-		{ path: ( target ) => `${ target.kebab }-features.php`, kind: 'php-header' },
+		{
+			path: ( target ) => `${ target.kebab }-features.php`,
+			kind: 'php-header',
+		},
 		{ path: 'package.json', kind: 'json', key: 'version' },
 	],
 
-	steps: { composer: true, cleanup: false, git: true, hooks: true },
+	steps: { composer: true, cleanup: true, git: true, hooks: true },
 
 	// Dep/build-config-carrying capabilities. Toggling adds/removes their deps.
 	featuresDir: 'bin/features',
@@ -100,11 +116,18 @@ module.exports = {
 			key: 'tailwind',
 			label: 'Tailwind CSS',
 			category: 'Editor & Front-end',
-			description: 'Tailwind v4 (opt-in). Adds the entry CSS, PostCSS config and deps, and flips the ENABLE_TAILWIND constant that gates the enqueue.',
+			description:
+				'Tailwind v4 (opt-in). Adds the entry CSS, PostCSS config and deps, and flips the ENABLE_TAILWIND constant that gates the enqueue.',
 			apply: {
 				files: [
-					{ from: 'tailwind/tailwind.css', to: 'src/css/tailwind.css' },
-					{ from: 'tailwind/postcss.config.js', to: 'postcss.config.js' },
+					{
+						from: 'tailwind/tailwind.css',
+						to: 'src/css/tailwind.css',
+					},
+					{
+						from: 'tailwind/postcss.config.js',
+						to: 'postcss.config.js',
+					},
 				],
 				devDependencies: {
 					'@rtcamp/tailwind-config': '^0.1.0',
@@ -112,23 +135,36 @@ module.exports = {
 					'@tailwindcss/postcss': '^4.3.0',
 				},
 			},
-			onEnable: ( api ) => api.setDefine( mainFile( api ), tailwindConst( api ), true ),
-			onDisable: ( api ) => api.setDefine( mainFile( api ), tailwindConst( api ), false ),
-			detect: ( api ) => true === api.readDefine( mainFile( api ), tailwindConst( api ) ),
+			onEnable: ( api ) =>
+				api.setDefine( mainFile( api ), tailwindConst( api ), true ),
+			onDisable: ( api ) =>
+				api.setDefine( mainFile( api ), tailwindConst( api ), false ),
+			detect: ( api ) =>
+				true ===
+				api.readDefine( mainFile( api ), tailwindConst( api ) ),
 		},
 		{
 			key: 'hmr',
 			label: 'HMR (BrowserSync live reload)',
 			category: 'Developer Tooling',
 			defaultOn: true,
-			description: 'Live reload in watch mode. Toggling flips ENABLE_HMR in .env.local, which webpack (BrowserSync server) and PHP (client enqueue) both honour. Default on; deps stay installed.',
-			onEnable: ( api ) => api.setEnv( '.env.local', 'ENABLE_HMR', 'true' ),
-			onDisable: ( api ) => api.setEnv( '.env.local', 'ENABLE_HMR', 'false' ),
+			description:
+				'Live reload in watch mode. Toggling flips ENABLE_HMR in .env.local, which webpack (BrowserSync server) and PHP (client enqueue) both honour. Default on; deps stay installed.',
+			onEnable: ( api ) =>
+				api.setEnv( '.env.local', 'ENABLE_HMR', 'true' ),
+			onDisable: ( api ) =>
+				api.setEnv( '.env.local', 'ENABLE_HMR', 'false' ),
 			detect: ( api ) => {
 				const value = api.readEnv( '.env.local', 'ENABLE_HMR' );
-				return null === value || ! [ 'false', '0', 'no', 'off' ].includes( value.toLowerCase() );
+				return (
+					null === value ||
+					! [ 'false', '0', 'no', 'off' ].includes(
+						value.toLowerCase()
+					)
+				);
 			},
 		},
+		devTools,
 	],
 
 	// Keep/remove capabilities. Removing deletes the module + classes + its
@@ -137,27 +173,42 @@ module.exports = {
 		marker: 'wp:example',
 		groups: [
 			// Content modeling.
-			capability( 'post-types', 'Post Types', 'Content', { module: 'PostTypes' } ),
-			capability( 'taxonomies', 'Taxonomies', 'Content', { module: 'Taxonomies' } ),
+			capability( 'post-types', 'Post Types', 'Content', {
+				module: 'PostTypes',
+			} ),
+			capability( 'taxonomies', 'Taxonomies', 'Content', {
+				module: 'Taxonomies',
+			} ),
 
 			// Editor & Front-end.
 			capability( 'blocks', 'Blocks', 'Editor & Front-end', {
 				module: 'Blocks',
 				strip: [ 'inc/Core/Assets.php' ],
-				remove: [ 'src/blocks/example-*', 'templates/block-templates/example-*.php' ],
+				remove: [
+					'src/blocks/example-*',
+					'templates/block-templates/example-*.php',
+				],
 			} ),
-			capability( 'shortcodes', 'Shortcodes', 'Editor & Front-end', { module: 'Shortcodes' } ),
+			capability( 'shortcodes', 'Shortcodes', 'Editor & Front-end', {
+				module: 'Shortcodes',
+			} ),
 
 			// APIs & Automation.
-			capability( 'rest', 'REST Controllers', 'APIs & Automation', { module: 'REST' } ),
-			capability( 'cli', 'WP-CLI Commands', 'APIs & Automation', { module: 'CLI' } ),
+			capability( 'rest', 'REST Controllers', 'APIs & Automation', {
+				module: 'REST',
+			} ),
+			capability( 'cli', 'WP-CLI Commands', 'APIs & Automation', {
+				module: 'CLI',
+			} ),
 			capability( 'cron', 'Cron Jobs', 'APIs & Automation', {
 				module: 'Cron',
 				strip: [ 'inc/Core/PluginSetup.php' ],
 			} ),
 
 			// Admin.
-			capability( 'settings', 'Settings Pages', 'Admin', { module: 'Settings' } ),
+			capability( 'settings', 'Settings Pages', 'Admin', {
+				module: 'Settings',
+			} ),
 			capability( 'admin', 'Admin Pages', 'Admin', { module: 'Admin' } ),
 			capability( 'roles', 'User Roles', 'Admin', { module: 'Roles' } ),
 
@@ -165,7 +216,9 @@ module.exports = {
 			// (Logger is demonstrated in always-loaded inc/Core/PluginSetup.php, not here,
 			// since it is cross-cutting and should survive any capability selection.)
 			capability( 'cache', 'Cache', 'Utilities', { module: 'Cache' } ),
-			capability( 'transients', 'Transients', 'Utilities', { module: 'Transients' } ),
+			capability( 'transients', 'Transients', 'Utilities', {
+				module: 'Transients',
+			} ),
 
 			// Developer Tooling - the consolidated CI caller. One thin workflow
 			// delegates lint/test/build (+ optional a11y) to the wp-ci.yml
@@ -173,10 +226,17 @@ module.exports = {
 			// on detected changes; deselecting it deletes the caller file.
 			// Per-check callers remain available via `npx wp-tooling add ci/<check>`.
 			// (HMR lives in this category too, as a feature.)
-			workflow( 'test-measure', 'CI: Test & Measure (all checks)', 'test-measure.yml' ),
+			workflow(
+				'test-measure',
+				'CI: Test & Measure (all checks)',
+				'test-measure.yml'
+			),
 		],
 	},
 
-	docsUrl: 'https://github.com/rtCamp/features-plugin-skeleton/blob/master/README.md',
+	cleanup: { targets: [ 'tests/js/scaffold-config.test.js' ] },
+
+	docsUrl:
+		'https://github.com/rtCamp/features-plugin-skeleton/blob/master/README.md',
 	repoUrl: 'https://github.com/rtCamp/features-plugin-skeleton',
 };
