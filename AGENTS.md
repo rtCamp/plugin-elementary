@@ -45,6 +45,7 @@ To add a feature: write the test, create the concrete class extending the right 
 - PHP: `composer lint` (PHPCS) · `composer format` (phpcbf) · `composer phpstan`; the PHPUnit suite runs under `wp-env` via `npm run test:php`.
 - JS/build: `npm run build:dev` · `npm run build:prod` · `npm run lint` · `npm run test`.
 - Setup / features: `npm run init` (setup + manage wizard) · `npx wp-tooling add <category>/<slug>` (add a feature).
+- Dev tools (opt-in): `npm run init -- --enable=dev-tools` then `npm run dev:connect` exposes runtime telemetry over MCP — [demo](docs/dev-tools-demo.md) · [e2e check](docs/dev-tools-e2e.md).
 
 ## AI tooling
 

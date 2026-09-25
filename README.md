@@ -77,6 +77,10 @@ Conventions are written once and shared across every tool:
 See the build/test detail (wp-env, coverage, matrix overrides, extending webpack)
 in [DEVELOPMENT.md](DEVELOPMENT.md).
 
+With the optional dev-tools feature enabled (`npm run init -- --enable=dev-tools`),
+`npm run dev:connect` gives a coding agent live runtime telemetry over MCP — see the
+[seven-beat demo](docs/dev-tools-demo.md) and the [end-to-end check](docs/dev-tools-e2e.md).
+
 ## Adding a feature
 
 Use the scaffold engine instead of hand-writing — it writes the class, wires it
