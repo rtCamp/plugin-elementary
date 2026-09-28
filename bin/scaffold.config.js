@@ -237,6 +237,6 @@ module.exports = {
 	cleanup: { targets: [ 'tests/js/scaffold-config.test.js' ] },
 
 	docsUrl:
-		'https://github.com/rtCamp/features-plugin-skeleton/blob/master/README.md',
+		'https://github.com/rtCamp/features-plugin-skeleton/blob/feature-plugin-skeleton-v2/docs/index.md',
 	repoUrl: 'https://github.com/rtCamp/features-plugin-skeleton',
 };

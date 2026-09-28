@@ -22,7 +22,7 @@ The review rules ARE the coding rules: the files Copilot reviews against are the
 Entry `project-name-features.php` → `Autoloader::autoload()` → `Main::get_instance()`. `inc/Main.php` lists every loaded class in `Main::CLASSES` and boots them through the framework `Loader` trait.
 
 - `inc/Core/`: always-loaded infrastructure (`Assets`, `Templates`, `Components`, `Encryption`, `Logger`, `PluginSetup`).
-- `inc/Modules/<Domain>.php`: an `AbstractModule` per feature domain (`PostTypes`, `Taxonomies`, `Blocks`, `REST`, `Settings`, `Shortcodes`, `Roles`, `Cron`, `CLI`, `Admin`, `Cache`, `Transients`, `Dev`); its `get_classes()` returns the `Registrable` classes it owns.
+- `inc/Modules/<Domain>.php`: an `AbstractModule` per feature domain (`PostTypes`, `Taxonomies`, `Blocks`, `REST`, `Settings`, `Shortcodes`, `Roles`, `Cron`, `Admin`, `Cache`, `Transients`); its `get_classes()` returns the `Registrable` classes it owns. Exception: `CLI` is a `ConditionallyRegistrable` class (WP-CLI only) whose `CLICommand` classes are listed in `CLI::get_commands()`.
 - `inc/Modules/<Domain>/`: the concrete classes for that domain (each extends the matching framework abstract).
 - `inc/Helpers/`: stateless static utilities.
 
@@ -45,7 +45,9 @@ To add a feature: write the test, create the concrete class extending the right 
 - PHP: `composer lint` (PHPCS) · `composer format` (phpcbf) · `composer phpstan`; the PHPUnit suite runs under `wp-env` via `npm run test:php`.
 - JS/build: `npm run build:dev` · `npm run build:prod` · `npm run lint` · `npm run test`.
 - Setup / features: `npm run init` (setup + manage wizard) · `npx wp-tooling add <category>/<slug>` (add a feature).
-- Dev tools (opt-in): `npm run init -- --enable=dev-tools` then `npm run dev:connect` exposes runtime telemetry over MCP — [demo](docs/dev-tools-demo.md) · [e2e check](docs/dev-tools-e2e.md).
+- Dev tools (opt-in): `npm run init -- --enable=dev-tools` then `npm run dev:connect` exposes runtime telemetry over MCP — [demo](docs/dev-tools-demo.md) · [e2e check](docs/internal/dev-tools-e2e.md).
+
+Human documentation: [README.md](README.md) → [docs/index.md](docs/index.md) (developer guides), [DEVELOPMENT.md](DEVELOPMENT.md) (extending by hand), [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/internal/](docs/internal/README.md) (skeleton maintainers). Framework API detail is linked, not copied, from the `rtcamp/wp-framework` docs at the locked tag.
 
 ## AI tooling
 

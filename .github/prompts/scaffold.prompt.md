@@ -53,7 +53,7 @@ Write compliant PHP up front (`declare( strict_types = 1 );`, short arrays, full
 Stop and report (what you tried, observed, what's blocking, 1-3 options) after: 3 stuck C-D iterations on one test; a result contradicting your model (re-read the file); conflicting project patterns; ambiguity after one clarification.
 
 ### 9a. Refresh the knowledge graph
-After all files are green, before the report: `/graphify . --update` (or `graphify update`) to re-extract changed files. <=30 words to the developer. If not installed/built, say so in one line; do not block. See `AGENTS.md` (graphify).
+After all files are green, before the report: `graphify update .` to re-extract changed files into the LOCAL graph (never commit it; never run the cross-repo `/graphify . --update` or `merge-graphs`). <=30 words to the developer. If not installed/built, say so in one line; do not block. See `AGENTS.md` (graphify).
 
 ### 9b. Final report
 Files written (by directory), wiring applied (file/line/pattern), tests authored + pass counts, lint result, graph refreshed (or skipped + reason), outstanding developer actions (installs, `npm run build`, secrets, CI branch protection).

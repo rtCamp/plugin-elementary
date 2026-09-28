@@ -201,5 +201,6 @@ This is the whole pitch in one prompt: no tool names, no dashboard, no guessing 
 
 ## Related
 
-- [dev-tools-e2e.md](dev-tools-e2e.md) — the repeatable check that all of this still works.
-- [internal-testing.md](internal-testing.md) — testing `npm run init` itself.
+- [Initialization](initialization.md#optional-dependencies) — enabling and disabling the feature.
+- [internal/dev-tools-e2e.md](internal/dev-tools-e2e.md) — the maintainers' repeatable check that all of this still works.
+- [wp-devtools package guide](https://github.com/rtCamp/wp-devtools/blob/release/v1.0.0/README.md) — configuration and the full tool reference (repository access required).

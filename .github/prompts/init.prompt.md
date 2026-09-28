@@ -65,7 +65,7 @@ npm run init -- --features=hmr --yes        # exact enabled set (empty = none)
 - Dev Tools enabled → still a private package (`rtcamp/wp-dev-tools`, VCS-sourced): developer runs `composer update rtcamp/wp-dev-tools` (may need GitHub auth), then `npm run dev:connect`.
 - Suggest `composer dump-autoload`.
 - If you hand-edited PHP under `inc/`, run `composer format` → `composer lint` → `composer phpstan` and resolve every finding. Never silence a real issue; if unclear, STOP and ask.
-- Refresh the knowledge graph: `/graphify . --update` (or, if graphify is a CLI here, `graphify update`). If not installed, say so in one line; do not block. See `AGENTS.md` (graphify).
+- Refresh the LOCAL knowledge graph with `graphify update .`. Never commit `graphify-out/graph.json`, and never run the cross-repo `/graphify . --update` or `merge-graphs`. If not installed, say so in one line; do not block. See `AGENTS.md` (graphify).
 - Report: new identity, capabilities removed/kept, features toggled, outstanding developer actions.
 
 ## Capability model
@@ -74,10 +74,11 @@ ONE keep-or-remove prompt; removing deletes the capability entirely (classes, `i
 | Category | Keys |
 |---|---|
 | Content | `post-types`, `taxonomies` |
-| Editor & Frontend | `blocks`, `shortcodes`, `tailwind` (feature) |
-| APIs & CLI | `rest`, `cli`, `cron` |
-| Admin & Access | `settings`, `roles` |
-| Dev & CI | `hmr` (feature), `dev-tools` (feature) |
+| Editor & Front-end | `blocks`, `shortcodes`, `tailwind` (feature) |
+| APIs & Automation | `rest`, `cli`, `cron` |
+| Admin | `settings`, `admin`, `roles` |
+| Utilities | `cache`, `transients` |
+| Developer Tooling | `test-measure` (CI workflow), `hmr` (feature), `dev-tools` (feature) |
 
 Sets kept by default; pass keys to `--remove-examples` to drop. Features: `hmr` on, `tailwind` and `dev-tools` off. `dev-tools` is the one feature still sourced from a private VCS repo (see step 4); everything else installs from public registries.
 

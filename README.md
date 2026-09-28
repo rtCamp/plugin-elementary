@@ -8,151 +8,88 @@
 </p>
 
 <p align="center">
-  The starting template for a WordPress <b>feature plugin</b> — all backend
-  functionality (post types, taxonomies, blocks, REST endpoints, settings pages,
-  shortcodes, user roles, WP-Cron, WP-CLI) lives here. The reusable framework
-  ships as the <a href="https://github.com/rtCamp/wp-framework"><code>rtcamp/wp-framework</code></a>
-  Composer package in <code>vendor/</code>.
+  The starting template for a WordPress <b>features plugin</b>: the plugin that
+  holds a site's backend functionality — post types, taxonomies, blocks, REST
+  endpoints, settings and admin pages, shortcodes, user roles, WP-Cron jobs and
+  WP-CLI commands.
 </p>
 
 ---
 
-> This is a **template**. `Project Name` / `project-name` / `Project_Name` are
-> placeholders — run `npm run init` to turn it into a named project.
+This skeleton gives a new client plugin its structure, working examples, asset pipeline, checks and CI, so a project starts from a tested baseline instead of an empty folder.
 
-## What it offers
+It builds on two shared rtCamp libraries and uses a third for CI:
 
-- **Capability-based setup.** One command names the plugin and ships only the
-  capabilities you need; everything else is removed cleanly, leaving a
-  gate-clean starting point.
-- **AI that writes consistent, tested code.** The `/init` and `/scaffold` skills
-  build on `rtcamp/wp-framework` and the scaffold engine, so they produce the
-  same structure no matter who prompts them, write the test first, and run the
-  `phpcs`/`phpstan` gates by default.
-- **Shared framework and standards.** Base classes and a registration layer from
-  `rtcamp/wp-framework`, plus the rtCamp PHPCS ruleset, PHPStan, ESLint and
-  Stylelint, so every plugin reads the same.
-- **Reusable CI.** Lint, test and build run through
-  [`rtCamp/wp-shared-workflows`](https://github.com/rtCamp/wp-shared-workflows),
-  called from a single thin workflow file; every job is gated on detected
-  changes, so a docs-only PR runs almost nothing.
+- [`rtcamp/wp-framework`](https://github.com/rtCamp/wp-framework) (Composer, runtime): the registration system, `Abstract*` base classes, loaders and utilities that every class in `inc/` extends.
+- [`@rtcamp/wp-tooling`](https://github.com/rtCamp/wp-tooling) (npm, development): the `npm run init` setup wizard, the `npx wp-tooling add` feature scaffolder, the shared lint configs and release scripts.
+- [`rtCamp/wp-shared-workflows`](https://github.com/rtCamp/wp-shared-workflows): the reusable lint, test and build CI that `.github/workflows/test-measure.yml` calls.
 
-## Quick start
+The skeleton documents what it provides and how to build on it. The framework's API and lifecycle are documented in [its own docs](https://github.com/rtCamp/wp-framework/blob/v1.0.1/docs/index.md), and these guides link there where needed.
 
-Requires Node 22 (`nvm use`), PHP 8.2+, and access to rtCamp's private packages
-(see [Dependencies](#dependencies)).
+> This is a **template**. `Project Name` / `project-name` / `Project_Name` are placeholders; `npm run init` renames them to your project.
 
-```bash
-nvm use
-composer install
-npm install
-npm run init        # rename the starter tokens, keep/remove examples, toggle features
-npm start           # build assets (watch); npm run build:prod for production
-```
+## Get started
 
-Prefer to drive it with AI? In Claude Code, run `/init` and describe the project.
+Follow [Getting Started](docs/getting-started.md): prerequisites, cloning, installing, naming the plugin, and seeing it running in a local WordPress site. It takes about fifteen minutes.
 
-## Working on the plugin
+> **Current v2 path:** the guides follow the `feature-plugin-skeleton-v2` branch.
 
-Conventions are written once and shared across every tool:
+## What is included
 
-- **[AGENTS.md](AGENTS.md)** — the source of truth: stack, structure, TDD,
-  framework patterns, security, guardrails. `CLAUDE.md` and
-  `.github/copilot-instructions.md` are thin pointers to it; path-scoped detail
-  lives in `.github/instructions/`.
-- **[DEVELOPMENT.md](DEVELOPMENT.md)** — architecture overview, the module
-  pattern, and how to add classes by hand.
-- **`.claude/skills/`** — built-in AI skills: `/init`, `/scaffold`, `/setup`.
+- **Infrastructure** that stays in every project: bootstrap and loader, asset registration, theme-overridable templates and components, a shared logger, an encryption service, activation and deactivation handling, and PHPUnit, PHPCS, PHPStan, ESLint and Stylelint setups.
+- **Twelve example sets**, one per feature domain (post types, taxonomies, blocks, REST, WP-CLI, cron, settings pages, admin pages, user roles, shortcodes, cache, transients). Each is a working, tested reference you keep or remove at setup.
+- **Optional development features**: HMR live reload (on by default), Tailwind CSS, and Dev Tools runtime telemetry over MCP.
 
-## Commands
+See [Included features](docs/features.md) for where each one lives and how to see it working.
 
-| Command | What it does |
-|---|---|
-| `npm run init` | Setup + manage wizard: rename, keep/remove examples, toggle features. |
-| `npm start` / `npm run build:dev` / `npm run build:prod` | Build `src/{blocks,css,js}` into `assets/build/` (watch / dev / prod). |
-| `npm run lint` · `npm run test` | Lint (PHP/JS/CSS) · run JS + PHP test suites. |
-| `composer test` · `composer lint` · `composer phpstan` | PHPUnit · PHPCS · PHPStan, on the host. |
-| `npx wp-tooling add <category>/<slug>` | Scaffold a new feature (see below). |
+## Choose your next task
 
-See the build/test detail (wp-env, coverage, matrix overrides, extending webpack)
-in [DEVELOPMENT.md](DEVELOPMENT.md).
+| I want to… | Read |
+| --- | --- |
+| Name the plugin and choose what ships | [Initialization](docs/initialization.md) |
+| Run WordPress locally, check a change, build for delivery | [Local development](docs/local-development.md) |
+| See what the skeleton already provides | [Included features](docs/features.md) |
+| Generate a feature with the CLI or AI | [Scaffolding](docs/scaffolding.md) |
+| Add blocks, scripts or styles | [Blocks and assets](docs/blocks-and-assets.md) |
+| Extend the plugin by hand | [Development guide](DEVELOPMENT.md) |
+| Contribute to this skeleton | [Contributing](CONTRIBUTING.md) |
 
-With the optional dev-tools feature enabled (`npm run init -- --enable=dev-tools`),
-`npm run dev:connect` gives a coding agent live runtime telemetry over MCP — see the
-[seven-beat demo](docs/dev-tools-demo.md) and the [end-to-end check](docs/dev-tools-e2e.md).
+The full documentation index is [docs/index.md](docs/index.md).
 
-## Adding a feature
+## AI tooling
 
-Use the scaffold engine instead of hand-writing — it writes the class, wires it
-into the right module, and emits a test stub:
+Setup and feature scaffolding are also available through AI assistants, kept in step across tools:
 
-```bash
-npx wp-tooling add wp/cli --name=health-check    # add a WP-CLI command
-npx wp-tooling list --json                        # see the full catalogue
-```
+- **Claude Code:** skills in [`.claude/skills/`](.claude/skills/) — `/init` (set up or manage the plugin) and `/scaffold` (add one feature, test first). `/setup` is a generic tooling bootstrapper and does not replace `/init`.
+- **GitHub Copilot:** matching `/init` and `/scaffold` prompts in [`.github/prompts/`](.github/prompts/).
+- **Any assistant:** [AGENTS.md](AGENTS.md) is the tool-agnostic source of conventions; `CLAUDE.md` and `.github/copilot-instructions.md` point to it.
 
-Or run `/scaffold` in Claude Code and describe the feature. By hand: create the
-concrete class extending the right framework abstract, register its `::class` in
-the owning module's `get_classes()`, and add a whole new domain to `Main::CLASSES`.
+A committed knowledge graph in [`graphify-out/`](graphify-out/) lets assistants query the code's structure instead of reading it all; see [docs/internal/knowledge-graph.md](docs/internal/knowledge-graph.md).
 
-## Project structure
+## Folder structure
 
 ```
-project-name-features.php   # entry: Autoloader::autoload() → Main::get_instance()
-inc/                        # PSR-4 root — Project_Name\Features\ → inc/
-├── Autoloader.php
-├── Main.php                # Main::CLASSES boots Core + Modules via the framework Loader
-├── Core/                   # always-loaded infra: Assets, Templates, Components, Encryption, PluginSetup
-├── Helpers/                # stateless static utilities
-└── Modules/                # one AbstractModule per domain; concrete classes in the matching subdir
-    ├── PostTypes.php  + PostTypes/      Taxonomies.php  + Taxonomies/
-    ├── Blocks.php     + Blocks/         REST.php        + REST/
-    ├── Settings.php   + Settings/       Shortcodes.php  + Shortcodes/
-    ├── Roles.php      + Roles/          Cron.php        + Cron/
-    └── CLI.php        + CLI/
-src/{blocks,css,js}/        # build sources → assets/build/
-bin/                        # init.js (npm run init), scaffold.config.js, sync-ai.js, build helpers
-tests/php/                  # PHPUnit suite — Project_Name\Features\Tests\ → tests/php/
-templates/                  # theme-overridable templates
-.claude/skills/             # AI skills: init, scaffold, setup
-.github/                    # CI, issue/PR templates, copilot-instructions, instructions/
+project-name-features.php   # entry: constants → Autoloader::autoload() → Main::get_instance()
+inc/                        # PSR-4 root: Project_Name\Features\ → inc/
+├── Autoloader.php          # loads vendor/autoload.php; admin notice instead of a fatal if missing
+├── Main.php                # Main::CLASSES — the list of everything the plugin loads
+├── Core/                   # always loaded: Assets, PluginSetup, Components, Templates, Encryption, Logger
+├── Helpers/                # stateless static utilities (Util)
+└── Modules/                # one module per feature domain, concrete classes in the matching subfolder
+    ├── PostTypes/  Taxonomies/  Blocks/  Shortcodes/
+    ├── REST/  CLI/  Cron/
+    ├── Settings/  Admin/  Roles/
+    └── Cache/  Transients/
+src/{blocks,css,js}/        # editable sources → assets/build/ (generated)
+templates/                  # theme-overridable PHP templates
+tests/{php,js}/             # PHPUnit (mirrors inc/) and Jest
+bin/                        # init wrapper, scaffold config, block scaffolder, helper scripts
+docs/                       # these guides; docs/internal/ is for skeleton maintainers
+.github/                    # CI caller, issue/PR templates, Copilot instructions and prompts
+vendor/rtcamp/wp-framework/ # the framework (Composer-managed; never edit)
 ```
 
-## What ships as examples
-
-Each feature domain ships a working `Example*` class so you can see the pattern.
-`npm run init` offers to keep or remove each set; what you remove is deleted and
-its registration stripped.
-
-| Set | Source | Set | Source |
-|---|---|---|---|
-| Post types | `Modules\PostTypes\Example*` | Settings | `Modules\Settings\ExampleSettingsPage` |
-| Taxonomies | `Modules\Taxonomies\Example*` | Shortcodes | `Modules\Shortcodes\ExampleShortcode` |
-| Blocks | `Modules\Blocks\ExampleDynamicBlock` + `src/blocks/example-*` | User roles | `Modules\Roles\ExampleUserRole` |
-| REST | `Modules\REST\ExampleRESTController` | Cron | `Modules\Cron\ExampleCronJob` |
-| WP-CLI | `Modules\CLI\Healthcheck` | | |
-
-## Dependencies
-
-`rtcamp/wp-framework` is a Composer package resolved from its public GitHub
-repository (see the `repositories` entry in `composer.json`) — no token needed.
-
-The npm-side rtCamp packages (`@rtcamp/wp-tooling` and the shared ESLint and
-Stylelint configs) are still unpublished during the pilot and are mapped to
-GitHub Packages via `.npmrc`. Until they ship, installing needs a token with
-`read:packages`:
-
-```bash
-export GITHUB_TOKEN=<token-with-read:packages>   # CI uses a secret
-npm install
-```
-
-## Contributing
-
-1. Open or find an [issue](https://github.com/rtCamp/features-plugin-skeleton/issues)
-   describing the change.
-2. Branch from the active release branch, commit, and push.
-3. Open a pull request using the template. CI (lint + tests) must pass.
+Some of these folders hold examples that initialization can remove; see [Included features](docs/features.md#supplied-examples).
 
 ## License
 

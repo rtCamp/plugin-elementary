@@ -93,10 +93,11 @@ ONE "Select the capabilities to include" prompt. Each is keep-or-remove; removin
 | Category | Keys |
 |---|---|
 | Content | `post-types`, `taxonomies` |
-| Editor & Frontend | `blocks`, `shortcodes`, `tailwind` (feature) |
-| APIs & CLI | `rest`, `cli`, `cron` |
-| Admin & Access | `settings`, `roles` |
-| Dev & CI | `hmr` (feature), `dev-tools` (feature) |
+| Editor & Front-end | `blocks`, `shortcodes`, `tailwind` (feature) |
+| APIs & Automation | `rest`, `cli`, `cron` |
+| Admin | `settings`, `admin`, `roles` |
+| Utilities | `cache`, `transients` |
+| Developer Tooling | `test-measure` (CI workflow), `hmr` (feature), `dev-tools` (feature) |
 
 Sets are kept by default; pass keys to `--remove-examples` to drop. Features: `hmr` on, `tailwind` and `dev-tools` off; toggle via `--features`/`--enable`/`--disable`. `dev-tools` (`rtcamp/wp-dev-tools`, runtime telemetry over MCP - Query Monitor + the MCP Adapter) is the one feature still sourced from a private VCS repo; enabling it needs GitHub auth on `composer update` (see step 4). Everything else here installs from public registries.
 

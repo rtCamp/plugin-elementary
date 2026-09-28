@@ -4,7 +4,7 @@ A repeatable check that the whole [wp-dev-tools](https://github.com/rtCamp/wp-de
 
 > The check only reads. It curls the site and makes read-only WP-CLI and MCP calls inside the container; it never installs anything, never writes a file, and never runs `git`. When a prerequisite is missing it prints the command for you to run rather than running it.
 
-For a guided tour of what these tools actually tell you, see [dev-tools-demo.md](dev-tools-demo.md).
+For a guided tour of what these tools actually tell you, see [dev-tools-demo.md](../dev-tools-demo.md).
 
 ## Prerequisites
 
@@ -108,5 +108,5 @@ Exit code `0`.
 
 ## Related
 
-- [dev-tools-demo.md](dev-tools-demo.md) — the seven-beat guided demo.
-- [internal-testing.md](internal-testing.md) — testing `npm run init` itself.
+- [dev-tools-demo.md](../dev-tools-demo.md) — the seven-beat guided demo.
+- [maintenance.md](maintenance.md#release-validation) — the full release validation this check belongs to.
