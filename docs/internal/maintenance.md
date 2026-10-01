@@ -152,27 +152,17 @@ See [knowledge-graph.md](knowledge-graph.md). In short: contributors refresh the
 
 Status recorded on **2026-09-25** for skeleton `e49d4f3`, framework `v1.0.1` (`87774ee`) and tooling `18d003c`. Recheck against the revisions being validated.
 
-| Active procedure | Why it is needed | Retire when |
-| --- | --- | --- |
-| Run the explicit check commands, not `npm test` / `npm run lint`. | The aggregates' wildcards include watch, coverage and fix scripts. | Both aggregates terminate and only check. |
-| Set `BLOCKS_DEV_SERVER_PORT` when using `wp-env`. | The block dev server and the `wp-env` site both default to 8888. | The default port no longer clashes. |
-| Point `@rtcamp/tailwind-config` at `github:rtCamp/wp-tooling#npm/tailwind-config` after enabling Tailwind. | `scaffold.config.js` declares `^0.1.0`, which is not on npm. | The config declares an installable spec (the starter theme already does). |
+None at the moment.
 
 ## Known gaps
 
 Keep implementation follow-ups out of documentation pull requests; record each with a reproduction and revision when it is picked up.
 
-- **Aggregate scripts:** `npm test` runs `test:*` (including `test:js:watch` and `test:php:coverage`); `npm run lint` runs `lint:*` (including every `:fix` script and `lint:staged`).
-- **Port clash:** `BLOCKS_DEV_SERVER_PORT` defaults to 8888 in `webpack.blocks.config.js` and `.env.local.example`, the same as `wp-env`.
-- **Tailwind dependency:** see the temporary procedure above.
 - **Release zip:** no `.distignore` ships, so `release:zip` includes `src/`, `docs/`, `graphify-out/`, AI files and dotfiles.
 - **Scaffold wiring targets:** `wp/rest` and `wp/cli` suggest `inc/Modules/Rest.php` and `inc/Modules/Cli.php`, but this skeleton's modules are `REST.php` and `CLI.php`, which are different files on case-sensitive filesystems. Keep the uppercase names (they match WordPress acronym style and the framework's `AbstractRESTController` / `CLICommand`); the skill adapts, and CLI users edit the existing file. Fix upstream in wp-tooling.
 - **Block scaffolder:** `npm run create:block` writes meta blocks to `src/blocks/meta-blocks/`, which `Assets::STATIC_BLOCKS` cannot register.
 - **Dangling references:** `PluginSetup::deactivate()` mentions a root `uninstall.php` and `Util::get_data()` reads `inc/data/`; neither ships.
 - **Stale wording:** `.npmrc` still calls `wp-tooling` a private repository, and `bin/init.js` suggests the pilot `npm install --install-links`.
 - **Lockfile URLs:** `package-lock.json` resolves `@rtcamp/*` over `git+ssh://`. Confirm a clean `npm ci` works for a developer without a GitHub SSH key.
-- **Plugin header:** `Tested up to: 6.8` while CI tests up to WordPress 7.0.
-- **CI trigger:** `test-measure.yml` runs on pushes to `master` only; client projects on `main` or `develop` must edit it.
 - **Downstream docs workflow:** `documentation.yml` ships into client projects. It is inert there (its jobs only run in `rtCamp/plugin-elementary`), but decide whether init cleanup should remove it.
 - **Multisite tests:** `composer test-multisite` has no `wp-env` wrapper.
-- **Tailwind lint:** with Tailwind on, Stylelint rejects `@source` in `src/css/tailwind.css` (`scss/at-rule-no-unknown`).

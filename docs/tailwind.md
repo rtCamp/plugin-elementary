@@ -18,13 +18,6 @@ Enabling makes these changes:
 | `package.json` | Adds `tailwindcss`, `@tailwindcss/postcss` and `@rtcamp/tailwind-config` as dev dependencies. |
 | Main plugin file | Sets `ACME_CONTENT_FEATURES_ENABLE_TAILWIND` to `true`. |
 
-> **Known gap:** init declares `@rtcamp/tailwind-config` as `^0.1.0`, which is not published on npm, so `npm install` fails. Until the skeleton config is fixed, point it at the GitHub distribution branch before installing:
->
-> ```bash
-> npm pkg set "devDependencies.@rtcamp/tailwind-config=github:rtCamp/wp-tooling#npm/tailwind-config"
-> npm install
-> ```
-
 ## Build and enqueue
 
 `src/css/tailwind.css` is picked up by `build:assets` like any other stylesheet and written to `assets/build/css/tailwind.css`. `inc/Core/Assets.php` enqueues it on the frontend, as the `acme-content-features-tailwind` handle, when Tailwind is enabled.
