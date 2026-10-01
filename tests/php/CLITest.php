@@ -87,6 +87,17 @@ final class CLITest extends TestCase {
 	}
 
 	/**
+	 * Commands are added on init, so their translated descriptions are not
+	 * requested before WordPress allows it.
+	 */
+	public function test_commands_are_added_on_init(): void {
+		$cli = new CLI();
+		$cli->register_hooks();
+
+		$this->assertSame( 10, has_action( 'init', [ $cli, 'register_commands' ] ) );
+	}
+
+	/**
 	 * The module skips registration when not running under WP-CLI.
 	 */
 	public function test_module_does_not_register_outside_wp_cli(): void {
