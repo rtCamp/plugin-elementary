@@ -24,7 +24,7 @@ It builds on two shared rtCamp libraries and uses a third for CI:
 - [`@rtcamp/wp-tooling`](https://github.com/rtCamp/wp-tooling) (npm, development): the `npm run init` setup wizard, the `npx wp-tooling add` feature scaffolder, the shared lint configs and release scripts.
 - [`rtCamp/wp-shared-workflows`](https://github.com/rtCamp/wp-shared-workflows): the reusable lint, test and build CI that `.github/workflows/test-measure.yml` calls.
 
-The skeleton documents what it provides and how to build on it. The framework's API and lifecycle are documented in [its own docs](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/index.md), and these guides link there where needed.
+The skeleton documents what it provides and how to build on it. The framework's API and lifecycle are documented in [its own docs](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/index.md), and these guides link there where needed.
 
 > This is a **template**. `Project Name` / `project-name` / `Project_Name` are placeholders; `npm run init` renames them to your project.
 

@@ -7,7 +7,7 @@ This guide turns the skeleton into a working plugin: you'll create a personalize
 - **Git**
 - **Composer 2**
 - **PHP 8.2+** (for Composer and the host-side PHPCS/PHPStan checks)
-- **Node and npm** matching [`.nvmrc`](../.nvmrc) (Node 22) — use `nvm` or another version manager
+- **Node and npm** matching [`.nvmrc`](../.nvmrc) (Node 22.22.2 or later) — use `nvm` or another version manager
 - **Docker**, running, for the bundled `wp-env` site and the PHP test suite
 
 An existing local WordPress installation can replace the `wp-env` site; Docker is still needed for the container-based PHP test command.
@@ -32,9 +32,9 @@ composer install
 npm install
 ```
 
-All dependencies install from their public sources: `rtcamp/wp-primitives` and the coding standards from GitHub through Composer, and `@rtcamp/wp-tooling` and the lint configs from their GitHub distribution branches through npm. No token or sibling checkout is needed.
+All dependencies install from public registries: `rtcamp/wp-primitives` and the coding standards from Packagist, and `@rtcamp/wp-tooling` and the lint configs from npm. No token or sibling checkout is needed.
 
-`npm install` also installs the commit-message Git hook and runs `npm run sync-ai`, which copies the framework's review rules into `.github/instructions/`. Resolve installation errors before continuing; see [initialization troubleshooting](initialization.md#troubleshooting).
+`npm install` also installs two Git hooks (a commit-message check and a pre-commit hook that runs lint-staged) and runs `npm run sync-ai`, which copies the framework's review rules into `.github/instructions/`. Resolve installation errors before continuing; see [initialization troubleshooting](initialization.md#troubleshooting).
 
 ## 3. Personalize
 
@@ -78,7 +78,9 @@ npm run wp-env run cli -- wp plugin activate acme-content-features
 npm run build:dev
 ```
 
-The committed [`.wp-env.json`](../.wp-env.json) mounts this directory as a plugin in both the development and test sites. Open [the local site](http://localhost:8888) and [WordPress admin](http://localhost:8888/wp-admin/); a fresh `wp-env` install uses `admin` / `password`.
+`wp-env` activates the plugin when it starts, so on a fresh site the activate command reports that the plugin is already active. Keep it for a site where the plugin is not active yet.
+
+The committed [`.wp-env.json`](../.wp-env.json) mounts this directory as a plugin in the development site; the PHP tests use their own site from [`.wp-env.tests.json`](../.wp-env.tests.json). Open [the local site](http://localhost:8888) and [WordPress admin](http://localhost:8888/wp-admin/); a fresh `wp-env` install uses `admin` / `password`.
 
 Confirm the plugin is active under **Plugins**, then check two of the retained examples:
 

@@ -109,7 +109,7 @@ Code should read the same whoever, or whatever, writes it:
 
 - **The same standards, every run.** Generated code is checked against the gates a developer runs locally: [`phpcs.xml.dist`](../phpcs.xml.dist) (the shared `rtCampWP` ruleset: WPCS, VIP, docs, Slevomat), [`phpstan.neon.dist`](../phpstan.neon.dist) (the `rtcamp/wp-phpstan` level-5 baseline), [`eslint.config.mjs`](../eslint.config.mjs) and [`.stylelintrc.json`](../.stylelintrc.json).
 - **Verified, not just formatted.** The AI route writes the test first and runs it, then PHPCBF → PHPCS → PHPStan.
-- **No drift between developers.** Registration, wiring and lifecycle come from the [`rtcamp/wp-primitives`](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/abstracts.md) abstracts, so the structure is identical whoever generates it; review can focus on the logic.
+- **No drift between developers.** Registration, wiring and lifecycle come from the [`rtcamp/wp-primitives`](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/abstracts.md) abstracts, so the structure is identical whoever generates it; review can focus on the logic.
 
 The conventions these gates enforce are listed in [AGENTS.md](../AGENTS.md).
 
@@ -117,7 +117,7 @@ The conventions these gates enforce are listed in [AGENTS.md](../AGENTS.md).
 
 With the environment running, confirm `wp post-type list` includes `book`, the Book editor shows a Genre panel, and the REST route rejects a non-administrator and creates a draft for an administrator. Commit once the tests and checks pass.
 
-For other kinds, see the installed `list` output and the [upstream scaffold catalogue](https://github.com/rtCamp/wp-tooling/tree/main/node-packages/wp-tooling/scaffolds); each entry's `scaffold.json` lists its inputs and defaults, and the [engine reference](https://github.com/rtCamp/wp-tooling/blob/main/node-packages/wp-tooling/docs/ai-orchestration.md#2-the-engine-surface) documents invocation options. For the methods each generated class can override, see the framework's [abstracts reference](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/abstracts.md). For blocks, see [Blocks and assets](blocks-and-assets.md). To write a class by hand, see the [Development guide](../DEVELOPMENT.md).
+For other kinds, see the installed `list` output and the [upstream scaffold catalogue](https://github.com/rtCamp/wp-tooling/tree/main/node-packages/wp-tooling/scaffolds); each entry's `scaffold.json` lists its inputs and defaults, and the [engine reference](https://github.com/rtCamp/wp-tooling/blob/main/node-packages/wp-tooling/docs/ai-orchestration.md#2-the-engine-surface) documents invocation options. For the methods each generated class can override, see the framework's [abstracts reference](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/abstracts.md). For blocks, see [Blocks and assets](blocks-and-assets.md). To write a class by hand, see the [Development guide](../DEVELOPMENT.md).
 
 ## Troubleshooting
 
