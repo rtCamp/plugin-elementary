@@ -37,6 +37,7 @@ assets/build/
 
 # WP ENV
 /.wp-env.override.json
+/.wp-env.tests.override.json
 
 # Tests & Coverage
 /coverage/

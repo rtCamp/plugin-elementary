@@ -132,6 +132,28 @@ describe( 'dev-tools feature', () => {
 			expect( readJson( root, OVERRIDE ).env.tests ).toBeUndefined();
 		} );
 
+		it( 'reads a top-level plugins list from the committed config', () => {
+			write(
+				root,
+				WP_ENV,
+				`${ JSON.stringify(
+					{
+						core: null,
+						plugins: [ '.', 'team-plugin.zip' ],
+						testsEnvironment: false,
+					},
+					null,
+					'\t'
+				) }\n`
+			);
+
+			feature.onEnable( api );
+
+			expect(
+				readJson( root, OVERRIDE ).env.development.plugins
+			).toEqual( [ '.', 'team-plugin.zip', QM, ADAPTER ] );
+		} );
+
 		it( 'is idempotent -- no duplicate repository or plugin entries', () => {
 			feature.onEnable( api );
 			const composer = fs.readFileSync(
