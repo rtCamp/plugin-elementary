@@ -16,7 +16,7 @@
         "phpunit/phpunit": "^9.6",
         "rtcamp/wp-phpcs": "^1.0",
         "rtcamp/wp-phpstan": "^1.0",
-        "wp-cli/i18n-command": "^2.4",
+        "wp-cli/i18n-command": "^3.0",
         "wp-phpunit/wp-phpunit": "^7.1",
         "yoast/phpunit-polyfills": "^4.0"
     },
