@@ -26,8 +26,7 @@ The skeleton is a consumer of three shared repositories. Fix a problem where it 
 - **`source`**: the placeholder identity (`Project Name`, `Project_Name\Features`, `rtcamp/plugin-elementary`) the engine search-replaces. The engine never rewrites files under `bin/`, so placeholders there are safe.
 - **`versionFiles`**: where the version is written (main-file header, `package.json`).
 - **`examples.groups`**: one entry per example set, built with `capability( key, label, category, { module, strip, remove, tests } )`, plus one `workflow()` entry for the CI caller.
-- **`features`**: the toggleable features (`tailwind`, `hmr`, and `dev-tools` from `bin/features/dev-tools.js`).
-- **`cleanup.targets`**: paths deleted after setup (currently only `tests/js/scaffold-config.test.js`).
+- **`features`**: the toggleable features (`tailwind` and `hmr`).
 
 ### Markers
 
@@ -46,7 +45,6 @@ Rules that keep init working for every downstream project:
 - Keep marker pairs balanced and on their own lines. A broken pair breaks removal for everyone.
 - A capability's footprint must be complete: module file, class folder, test file, and every coupled region. Anything left behind references deleted classes.
 - Markers are consumed by the first run, so removal is one-shot by design.
-- [`tests/js/scaffold-config.test.js`](../../tests/js/scaffold-config.test.js) asserts the config's shape; run `npm run test:js` after editing it.
 
 ### Add an example set
 
@@ -68,7 +66,7 @@ Record `git rev-parse HEAD`, Node and PHP versions, the framework revision in `c
 1. Follow [Getting Started](../getting-started.md) in a fresh clone with a fresh dependency install from the declared sources. Do not substitute a local engine.
 2. Run interactive init and a separate non-interactive setup. Check identity, kept sets, `.wp-scaffold.json`, and the Git decision.
 3. Exercise each example-set removal in a fresh clone. Check deleted files and the remaining registration, then run `composer dump-autoload` and `php -l` on touched files before loading WordPress. The engine's own output (renamed, removed, toggled) is the primary signal; do not diff `inc/` by hand.
-4. Enable and disable each optional feature. Install the changed declarations before checking Tailwind output; run the [Dev Tools check](dev-tools-e2e.md) for `dev-tools`.
+4. Enable and disable each optional feature. Install the changed declarations before checking Tailwind output.
 5. Start WordPress, activate the plugin, build, and confirm a source edit on the frontend and in the editor.
 6. Follow the [scaffolding example](../scaffolding.md) and the [manual examples](../../DEVELOPMENT.md). Verify paths, registration, behaviour and focused tests.
 7. Run the [checks](#checks) and build the documentation (see [Documentation publishing](#documentation-publishing)).

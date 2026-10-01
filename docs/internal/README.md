@@ -15,7 +15,6 @@ The [maintenance guide](maintenance.md) covers:
 Related pages:
 
 - [Knowledge graph](knowledge-graph.md): installing graphify, querying the graph, and who refreshes the committed baseline.
-- [Dev Tools end-to-end check](dev-tools-e2e.md): the repeatable check for the optional Dev Tools feature.
 
 Documentation and validation results must identify the skeleton commit and the installed dependency revisions. The guides target `main` and changes built on it; do not assume a separately installed dependency checkout behaves the same.
 

@@ -12,7 +12,6 @@ The skeleton is a consumer of shared rtCamp libraries. It owns the plugin's stru
 | [`rtcamp/wp-primitives`](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/index.md) | `Registrable` + `Loader` + `Container`, the `Abstract*` base classes, asset/component/template loaders, `Cache`, `Transients`, `Encryptor`, `Logger` | Framework docs (linked from each guide) |
 | [`@rtcamp/wp-tooling`](https://github.com/rtCamp/wp-tooling/blob/main/node-packages/wp-tooling/README.md) | `npm run init` engine, `npx wp-tooling add` scaffolds, shared ESLint/Stylelint configs, release scripts | wp-tooling docs |
 | [`rtCamp/wp-shared-workflows`](https://github.com/rtCamp/wp-shared-workflows) | Reusable lint, test and build workflows | wp-shared-workflows docs |
-| [wp-devtools](https://github.com/rtCamp/wp-devtools/blob/release/v1.0.0/README.md) (optional) | Runtime telemetry over MCP | wp-devtools docs (repository access required) |
 
 ## Two ways to work
 
@@ -35,7 +34,7 @@ Both are valid: pick the CLI for full control over every input, or the AI skill 
 
 ## Further reading
 
-- [Live reload and block HMR](hmr.md), [Tailwind](tailwind.md), and the [Dev Tools demo](dev-tools-demo.md) cover the optional development features.
+- [Live reload and block HMR](hmr.md) and [Tailwind](tailwind.md) cover the optional development features.
 - [Contributing](../CONTRIBUTING.md) and the [maintainer guidance](internal/README.md) are for developers working on the skeleton itself.
 
 ## Command reference

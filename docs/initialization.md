@@ -39,7 +39,7 @@ Init rewrites and deletes files in place. A clean checkout is your only undo.
    `.wp-scaffold.json` stores these values. The generated code adds `-features`: plugin header `Acme Content Features`, text domain `acme-content-features`, prefixes `acme_content_features_` and `ACME_CONTENT_FEATURES_`, and main file `acme-content-features.php`.
 
 3. **Select capabilities.** One grouped prompt lists the twelve example sets, the CI workflow and the three optional features. Space toggles, Enter confirms. Unchecking an example set removes it entirely.
-4. **Apply.** Init rewrites the tokens, removes deselected sets, writes `.wp-scaffold.json`, regenerates the Composer autoloader, and runs cleanup. The wrapper then runs `npm run sync-ai`.
+4. **Apply.** Init rewrites the tokens, removes deselected sets, writes `.wp-scaffold.json`, and regenerates the Composer autoloader. The wrapper then runs `npm run sync-ai`.
 5. **Git and hooks.** A first run can start a new Git repository. This defaults to **No**; accepting deletes the existing `.git` and the skeleton's history, so decline it when keeping that history or working inside another repository. Non-interactive `--yes` skips optional Git setup.
 
 Defaults: every example set kept, HMR on, Tailwind and Dev Tools off.
@@ -60,7 +60,7 @@ npm run init -- --name="Acme Content" --version=1.0.0 --yes \
 | APIs & Automation | `rest`, `cli`, `cron` | |
 | Admin | `settings`, `admin`, `roles` | |
 | Utilities | `cache`, `transients` | |
-| Developer Tooling | `test-measure` (the CI caller workflow) | `hmr`, `dev-tools` |
+| Developer Tooling | `test-measure` (the CI caller workflow) | `hmr` |
 
 What each set contains is listed in [Included features](features.md).
 
@@ -72,9 +72,9 @@ What each set contains is listed in [Included features](features.md).
 | Version | Written to the main file's header and `package.json`. |
 | Removed example sets | The module file (`inc/Modules/<Module>.php`), its folder, its test (`tests/php/<Module>Test.php`), its `Main::CLASSES` line and any coupled region (for example the static block list in `inc/Core/Assets.php` for `blocks`, the unschedule call in `inc/Core/PluginSetup.php` for `cron`). |
 | Kept example sets | Stay as working references. Their `// wp:example:<key>` markers are removed. |
-| Optional features | `hmr` edits `.env.local`; `tailwind` adds `src/css/tailwind.css`, `postcss.config.js`, dependencies and flips the Tailwind constant; `dev-tools` adds Composer and npm script wiring plus a gitignored `.wp-env.override.json`. |
+| Optional features | `hmr` edits `.env.local`; `tailwind` adds `src/css/tailwind.css`, `postcss.config.js`, dependencies and flips the Tailwind constant. |
 | State | `.wp-scaffold.json` records identity and feature choices. Do not edit it by hand. |
-| Cleanup | Removes `tests/js/scaffold-config.test.js`, which only tests the skeleton's own init config. Copilot files, workflows and templates under `.github/` stay. |
+| Cleanup | Nothing is removed. Copilot files, workflows and templates under `.github/` stay. |
 | AI instructions | `sync-ai` refreshes `.github/instructions/framework-php.instructions.md` from the installed framework. |
 
 Init does not generate a translation template. Run `npm run pot` when preparing translations.
@@ -109,7 +109,6 @@ npm run init -- --help                   # options for your installed engine
 
 - **HMR:** toggling only flips `ENABLE_HMR` in `.env.local`, a per-developer file. See [Live reload](hmr.md).
 - **Tailwind:** enabling changes declarations and adds files; run `npm install` afterwards. See [Tailwind](tailwind.md).
-- **Dev Tools:** needs access to the private [wp-devtools](https://github.com/rtCamp/wp-devtools) repository (Composer package `rtcamp/wp-dev-tools`). Enable it, then follow init's printed steps: `composer update rtcamp/wp-dev-tools -W`, `npm run wp-env start`, `npm run dev:connect`. The override file holds this machine's paths, so each developer enables it locally. See the [Dev Tools demo](dev-tools-demo.md) and the [package guide](https://github.com/rtCamp/wp-devtools/blob/release/v1.0.0/README.md).
 
 ## Troubleshooting
 
