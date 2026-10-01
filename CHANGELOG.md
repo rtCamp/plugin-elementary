@@ -21,7 +21,7 @@ All notable changes to this project are documented in this file. The format is b
   The scaffold placeholder tokens (`Project_Name`, `project-name`) are unchanged. The
   Composer package is now `rtcamp/plugin-elementary`, matching the repository, and
   `npm run init` still replaces it with `rtcamp/<slug>-features`.
-- Updated the shared engine dependency from `rtcamp/wp-framework` to `rtcamp/wp-primitives ^2.0`.
+- Updated the shared engine dependency from `rtcamp/wp-framework` to `rtcamp/wp-primitives ^2.1`.
 - Adopted the rtCamp shared coding standards from the common packages (PHPCS, PHPStan, ESLint, Stylelint).
 - Rewrote `README.md` and `DEVELOPMENT.md` as entry points that link framework API detail to `rtcamp/wp-primitives`.
 - Installs `@rtcamp/eslint-config`, `@rtcamp/stylelint-config` and `@rtcamp/wp-tooling` from the npm registry, and `rtcamp/wp-primitives`, `rtcamp/wp-phpcs` and `rtcamp/wp-phpstan` from Packagist, instead of git branches and VCS repositories.
