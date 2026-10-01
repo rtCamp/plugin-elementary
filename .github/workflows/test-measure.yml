@@ -6,9 +6,8 @@ name: Test and Measure
 # orchestrator; every job there is gated on detected changes, so a docs-only
 # PR runs almost nothing. Replaces the seven per-check ci-*.yml callers,
 # which could express neither the test matrix nor private-repo tokens.
-# Pinned at release/v1.0.0 during the private pilot; bump to a stable @v1 tag
-# once the shared workflows are published.
-# Source: https://github.com/rtCamp/wp-shared-workflows/blob/release/v1.0.0/.github/workflows/wp-ci.yml
+# Pinned to @v1, which moves forward to compatible v1.x releases.
+# Source: https://github.com/rtCamp/wp-shared-workflows/blob/v1/.github/workflows/wp-ci.yml
 
 on:
   pull_request:
@@ -31,7 +30,7 @@ concurrency:
 
 jobs:
   ci:
-    uses: rtCamp/wp-shared-workflows/.github/workflows/wp-ci.yml@release/v1.0.0
+    uses: rtCamp/wp-shared-workflows/.github/workflows/wp-ci.yml@v1
     with:
       project-type: plugin
       php-versions: '["8.2", "8.3", "8.4"]'
