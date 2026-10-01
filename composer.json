@@ -1,5 +1,5 @@
 {
-    "name": "rtcamp/project-name-features",
+    "name": "rtcamp/plugin-elementary",
     "description": "All backend functionality: post types, taxonomies, blocks, REST endpoints, settings, shortcodes, and custom roles.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
@@ -52,23 +52,6 @@
             "Project_Name\\Features\\Tests\\": "tests/php/"
         }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/rtCamp/wp-primitives.git",
-            "no-api": true
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/rtCamp/wp-phpcs.git",
-            "no-api": true
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/rtCamp/wp-phpstan.git",
-            "no-api": true
-        }
-    ],
     "scripts": {
         "format": "phpcbf",
         "lint": "phpcs",

@@ -23,7 +23,7 @@ The skeleton is a consumer of three shared repositories. Fix a problem where it 
 
 [`bin/scaffold.config.js`](../../bin/scaffold.config.js) is the contract between the skeleton and the init engine. It declares:
 
-- **`source`**: the placeholder identity (`Project Name`, `Project_Name\Features`, `rtcamp/project-name-features`) the engine search-replaces. The engine never rewrites files under `bin/`, so placeholders there are safe.
+- **`source`**: the placeholder identity (`Project Name`, `Project_Name\Features`, `rtcamp/plugin-elementary`) the engine search-replaces. The engine never rewrites files under `bin/`, so placeholders there are safe.
 - **`versionFiles`**: where the version is written (main-file header, `package.json`).
 - **`examples.groups`**: one entry per example set, built with `capability( key, label, category, { module, strip, remove, tests } )`, plus one `workflow()` entry for the CI caller.
 - **`features`**: the toggleable features (`tailwind`, `hmr`, and `dev-tools` from `bin/features/dev-tools.js`).

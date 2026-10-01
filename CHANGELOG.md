@@ -15,9 +15,9 @@ All notable changes to this project are documented in this file. The format is b
 
 - **Renamed from `features-plugin-skeleton` to `plugin-elementary`** and moved to the
   `rtCamp/plugin-elementary` repository, aligning it with the sibling `theme-elementary`.
-  The scaffold placeholder tokens (`Project_Name`, `project-name`,
-  `rtcamp/project-name-features`) are unchanged; only the repository identity, URLs and
-  documentation moved.
+  The scaffold placeholder tokens (`Project_Name`, `project-name`) are unchanged. The
+  Composer package is now `rtcamp/plugin-elementary`, matching the repository, and
+  `npm run init` still replaces it with `rtcamp/<slug>-features`.
 - Updated the shared engine dependency from `rtcamp/wp-framework` to `rtcamp/wp-primitives ^2.0`.
 - Adopted the rtCamp shared coding standards from the common packages (PHPCS, PHPStan, ESLint, Stylelint).
 - Rewrote `README.md` and `DEVELOPMENT.md` as entry points that link framework API detail to `rtcamp/wp-primitives`.
