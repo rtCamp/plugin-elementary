@@ -1,0 +1,21 @@
+{
+  "core": null,
+  "env": {
+    "development": {
+      "plugins": [
+        "."
+      ]
+    },
+    "tests": {
+      "config": {
+        "WP_DEBUG": true
+      },
+      "themes": [
+        "https://downloads.wordpress.org/theme/twentytwentytwo.zip"
+      ],
+      "plugins": [
+        "."
+      ]
+    }
+  }
+}
