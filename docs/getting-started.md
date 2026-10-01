@@ -1,6 +1,6 @@
 # Getting started
 
-This guide turns the skeleton into a working plugin: you'll create a personalized **Acme Content** plugin, run it on a local WordPress site, and confirm a source edit shows up on the frontend. Run commands from the plugin directory unless a step says otherwise, and follow along on the `feature-plugin-skeleton-v2` branch.
+This guide turns the skeleton into a working plugin: you'll create a personalized **Acme Content** plugin, run it on a local WordPress site, and confirm a source edit shows up on the frontend. Run commands from the plugin directory unless a step says otherwise.
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@ An existing local WordPress installation can replace the `wp-env` site; Docker i
 Clone it into the folder that will become your plugin directory:
 
 ```bash
-git clone --branch feature-plugin-skeleton-v2 https://github.com/rtCamp/plugin-elementary.git acme-content-features
+git clone https://github.com/rtCamp/plugin-elementary.git acme-content-features
 cd acme-content-features
 nvm install
 nvm use

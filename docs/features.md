@@ -52,7 +52,7 @@ npm run wp-env run cli -- wp --user=admin eval \
   'echo wp_json_encode( rest_do_request( "/acme-content-features/v1/examples" )->get_data() );'
 ```
 
-After you remove an example, the original stays browsable in the [skeleton source](https://github.com/rtCamp/plugin-elementary/tree/feature-plugin-skeleton-v2/inc/Modules). To build your own version of any of these, use [Scaffolding](scaffolding.md) or the [Development guide](../DEVELOPMENT.md).
+After you remove an example, the original stays browsable in the [skeleton source](https://github.com/rtCamp/plugin-elementary/tree/main/inc/Modules). To build your own version of any of these, use [Scaffolding](scaffolding.md) or the [Development guide](../DEVELOPMENT.md).
 
 ## Optional development features
 

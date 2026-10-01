@@ -130,7 +130,7 @@ When done, restore only the dependency source lines and regenerate the affected 
 Markdown under `docs/` is rendered by the shared [Docusaurus action](https://github.com/rtCamp/action-docusaurus-build) through [`.github/workflows/documentation.yml`](../../.github/workflows/documentation.yml). `README.md`, `DEVELOPMENT.md` and `CONTRIBUTING.md` stay GitHub pages linked from the site. No Docusaurus dependencies or generated site files belong in this repository.
 
 - The workflow's `sidebar` input sets the main navigation order; pages need no front matter. `docs/internal/` is reached through Contributing and stays out of the sidebar.
-- Pull requests against `feature-plugin-skeleton-v2` build only. Pushes and manual runs on that branch also deploy to GitHub Pages. Maintainers set **Settings → Pages → Source** to **GitHub Actions** and allow the branch in the `github-pages` environment; no custom token is needed.
+- Pull requests against `main` build only. Pushes and manual runs on that branch also deploy to GitHub Pages. Maintainers set **Settings → Pages → Source** to **GitHub Actions** and allow the branch in the `github-pages` environment; no custom token is needed.
 - Keep the action pinned to a reviewed SHA, and test the site with a new SHA before moving it. Change the branch name and its triggers together when the supported branch changes.
 
 To build locally, clone the builder separately and run its CLI:
@@ -173,6 +173,6 @@ Keep implementation follow-ups out of documentation pull requests; record each w
 - **Lockfile URLs:** `package-lock.json` resolves `@rtcamp/*` over `git+ssh://`. Confirm a clean `npm ci` works for a developer without a GitHub SSH key.
 - **Plugin header:** `Tested up to: 6.8` while CI tests up to WordPress 7.0.
 - **CI trigger:** `test-measure.yml` runs on pushes to `master` only; client projects on `main` or `develop` must edit it.
-- **Downstream docs workflow:** `documentation.yml` ships into client projects. It is inert there (it only triggers for `feature-plugin-skeleton-v2`), but decide whether init cleanup should remove it.
+- **Downstream docs workflow:** `documentation.yml` ships into client projects. It is inert there (its jobs only run in `rtCamp/plugin-elementary`), but decide whether init cleanup should remove it.
 - **Multisite tests:** `composer test-multisite` has no `wp-env` wrapper.
 - **Tailwind lint:** with Tailwind on, Stylelint rejects `@source` in `src/css/tailwind.css` (`scss/at-rule-no-unknown`).

@@ -32,8 +32,6 @@ The skeleton documents what it provides and how to build on it. The framework's 
 
 Follow [Getting Started](docs/getting-started.md): prerequisites, cloning, installing, naming the plugin, and seeing it running in a local WordPress site. It takes about fifteen minutes.
 
-> **Current v2 path:** the guides follow the `feature-plugin-skeleton-v2` branch.
-
 ## What is included
 
 - **Infrastructure** that stays in every project: bootstrap and loader, asset registration, theme-overridable templates and components, a shared logger, an encryption service, activation and deactivation handling, and PHPUnit, PHPCS, PHPStan, ESLint and Stylelint setups.
