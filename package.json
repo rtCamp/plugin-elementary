@@ -31,7 +31,7 @@
     "@wordpress/env": "11.7.0",
     "@wordpress/eslint-plugin": "25.4.1",
     "@wordpress/i18n": "6.25.0",
-    "@wordpress/interactivity": "6.52.0",
+    "@wordpress/interactivity": "6.56.0",
     "@wordpress/jest-preset-default": "12.47.0",
     "@wordpress/scripts": "32.3.0",
     "@wordpress/server-side-render": "6.28.0",
