@@ -130,7 +130,10 @@ module.exports = {
 					},
 				],
 				devDependencies: {
-					'@rtcamp/tailwind-config': '^0.1.0',
+					// Not on npm: installed from wp-tooling's split branch, like the
+					// other @rtcamp/* configs in package.json.
+					'@rtcamp/tailwind-config':
+						'git+https://github.com/rtCamp/wp-tooling.git#npm/tailwind-config',
 					tailwindcss: '^4.3.0',
 					'@tailwindcss/postcss': '^4.3.0',
 				},
@@ -237,6 +240,6 @@ module.exports = {
 	cleanup: { targets: [ 'tests/js/scaffold-config.test.js' ] },
 
 	docsUrl:
-		'https://github.com/rtCamp/plugin-elementary/blob/feature-plugin-skeleton-v2/docs/index.md',
+		'https://github.com/rtCamp/plugin-elementary/blob/main/docs/index.md',
 	repoUrl: 'https://github.com/rtCamp/plugin-elementary',
 };

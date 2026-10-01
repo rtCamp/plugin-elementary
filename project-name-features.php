@@ -19,7 +19,7 @@
  * Domain Path:       /languages
  * Requires PHP:      8.2
  * Requires at least: 6.7
- * Tested up to:      6.8
+ * Tested up to:      7.1
  */
 
 declare( strict_types = 1 );
