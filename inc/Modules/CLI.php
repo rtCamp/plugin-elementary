@@ -30,9 +30,16 @@ final class CLI implements ConditionallyRegistrable {
 	/**
 	 * {@inheritDoc}
 	 *
-	 * @uses \WP_CLI::add_command() instead of a WordPress hook.
+	 * Commands are added on init because their descriptions are translated.
 	 */
 	public function register_hooks(): void {
+		add_action( 'init', [ $this, 'register_commands' ] );
+	}
+
+	/**
+	 * Add the plugin's commands to WP-CLI.
+	 */
+	public function register_commands(): void {
 		foreach ( $this->get_commands() as $name => $command ) {
 			\WP_CLI::add_command(
 				"project-name-features {$name}",
