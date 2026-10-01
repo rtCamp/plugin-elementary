@@ -102,7 +102,7 @@ module.exports = {
 		{ path: 'package.json', kind: 'json', key: 'version' },
 	],
 
-	steps: { composer: true, cleanup: true, git: true, hooks: true },
+	steps: { composer: true, cleanup: false, git: true, hooks: true },
 
 	// Dep/build-config-carrying capabilities. Toggling adds/removes their deps.
 	featuresDir: 'bin/features',
@@ -227,8 +227,6 @@ module.exports = {
 			),
 		],
 	},
-
-	cleanup: { targets: [ 'tests/js/scaffold-config.test.js' ] },
 
 	docsUrl:
 		'https://github.com/rtCamp/plugin-elementary/blob/main/docs/index.md',

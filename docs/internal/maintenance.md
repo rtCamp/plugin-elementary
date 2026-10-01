@@ -27,7 +27,6 @@ The skeleton is a consumer of three shared repositories. Fix a problem where it 
 - **`versionFiles`**: where the version is written (main-file header, `package.json`).
 - **`examples.groups`**: one entry per example set, built with `capability( key, label, category, { module, strip, remove, tests } )`, plus one `workflow()` entry for the CI caller.
 - **`features`**: the toggleable features (`tailwind` and `hmr`).
-- **`cleanup.targets`**: paths deleted after setup (currently only `tests/js/scaffold-config.test.js`).
 
 ### Markers
 
@@ -46,7 +45,6 @@ Rules that keep init working for every downstream project:
 - Keep marker pairs balanced and on their own lines. A broken pair breaks removal for everyone.
 - A capability's footprint must be complete: module file, class folder, test file, and every coupled region. Anything left behind references deleted classes.
 - Markers are consumed by the first run, so removal is one-shot by design.
-- [`tests/js/scaffold-config.test.js`](../../tests/js/scaffold-config.test.js) asserts the config's shape; run `npm run test:js` after editing it.
 
 ### Add an example set
 
