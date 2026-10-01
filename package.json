@@ -37,7 +37,7 @@
     "@wordpress/server-side-render": "6.28.0",
     "browser-sync": "3.0.4",
     "browser-sync-webpack-plugin": "2.4.0",
-    "browserslist": "4.28.2",
+    "browserslist": "4.29.2",
     "cross-env": "10.1.0",
     "css-minimizer-webpack-plugin": "8.0.0",
     "dotenv": "17.4.2",
