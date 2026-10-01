@@ -1,0 +1,25 @@
+{
+  "name": "rtcamp/project-name-features",
+  "description": "1.0.0",
+  "type": "wordpress-plugin",
+  "require-dev": {
+      "wp-coding-standards/wpcs": "^2.3",
+      "phpcompatibility/phpcompatibility-wp": "^2.1",
+      "automattic/vipwpcs": "^2.3",
+      "phpunit/phpunit": "^9.6",
+      "wp-phpunit/wp-phpunit": "^6.9",
+      "yoast/phpunit-polyfills": "^4.0",
+      "wp-cli/i18n-command": "^2.6"
+  },
+  "config": {
+      "allow-plugins": {
+          "dealerdirect/phpcodesniffer-composer-installer": true
+      }
+  },
+  "scripts": {
+    "pre-commit": [
+      "npm run lint:staged"
+    ],
+    "pot": "wp i18n make-pot . ./languages/project-name-features.pot --domain=project-name-features --include=\"inc,templates,assets/js,assets/build/blocks\""
+  }
+}
