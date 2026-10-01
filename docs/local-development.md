@@ -96,11 +96,11 @@ If your host deploys from a build step or a site repository instead, run the fir
 
 `release:zip` packs the working tree as it is on disk and never reads `.gitignore`. That is how the built `vendor/` and `assets/build/` get in, but it also means:
 
-- Without a `.distignore` (the skeleton ships none), only `.git/`, `dist/`, `tests/`, `node_modules/`, `bin/`, `.github/`, `*.config.js` and `package-lock.json` are left out.
-- Everything else is packed, including `src/`, `docs/`, `scripts/`, `coverage/`, `graphify-out/` and dotfiles such as the gitignored `.env.local` and `.wp-env.override.json`.
-- A `.distignore` replaces that default list rather than extending it, and does not support `!` negation, so it must list everything to leave out.
+- The plugin ships a `.distignore` that leaves out development files: dotfiles (including the gitignored `.env.local` and `.wp-env.override.json`), `src/`, `docs/`, `scripts/`, `tests/`, `bin/`, `graphify-out/`, build and lint configs, and the lock files.
+- A `.distignore` replaces the built-in default list rather than extending it, and does not support `!` negation, so it must list everything to leave out. Keep it up to date when you add files that should not ship.
+- Without a `.distignore`, only `.git/`, `dist/`, `tests/`, `node_modules/`, `bin/`, `.github/`, `*.config.js` and `package-lock.json` would be left out.
 
-Add a `.distignore` before relying on the zip. This one is a good starting point:
+The shipped `.distignore`:
 
 ```text
 # Dotfiles, including .env.local and .wp-env.override.json

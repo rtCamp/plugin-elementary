@@ -26,6 +26,9 @@ Thumbs.db
 # Build
 assets/build/
 
+# Release zips written by `npm run release:zip`
+/dist/
+
 # Cache
 .phpunit.result.cache
 
