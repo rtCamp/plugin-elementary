@@ -12,11 +12,11 @@ npm run wp-env run cli -- wp plugin activate acme-content-features
 | Site | URL | Used for |
 | --- | --- | --- |
 | Development | `http://localhost:8888` (`admin` / `password`) | Manual testing |
-| Tests | `http://localhost:8889` | The PHPUnit suite (`tests-cli` container) |
+| Tests | `http://localhost:8889` | The PHPUnit suite, in its own environment ([`.wp-env.tests.json`](../.wp-env.tests.json)); `npm run test:php` starts it |
 
-Both mount this directory as a plugin (see [`.wp-env.json`](../.wp-env.json)). Activation uses the **folder name**, not the plugin display name. Stop the environment with `npm run wp-env stop`.
+Both mount this directory as a plugin (see [`.wp-env.json`](../.wp-env.json) and [`.wp-env.tests.json`](../.wp-env.tests.json)), each with its own database. Activation uses the **folder name**, not the plugin display name. Stop the environments with `npm run wp-env stop` and `npm run wp-env -- stop --config=.wp-env.tests.json`.
 
-If those ports are taken, start on a free pair: `WP_ENV_PORT=8890 WP_ENV_TESTS_PORT=8891 npm run wp-env start`.
+If those ports are taken, set `WP_ENV_PORT`: `WP_ENV_PORT=8890 npm run wp-env start`, or `WP_ENV_PORT=8891 npm run test:php` for the test environment.
 
 For an existing WordPress installation (LocalWP, Lando, a site repository), use its own startup and activation, set `WP_HOST` in `.env.local` for live reload, and run the plugin-local commands below from this directory.
 
@@ -49,7 +49,7 @@ Copy `.env.local.example` to `.env.local` (gitignored) and set `WP_HOST` to your
 Run the focused test first, then the full set before opening a pull request.
 
 ```bash
-# PHP tests — run inside the wp-env tests container.
+# PHP tests — run inside the wp-env test environment (started on demand).
 npm run test:php -- --filter ShortcodesTest   # one test class
 npm run test:php                              # the whole suite
 
@@ -143,7 +143,7 @@ Run each with `-- --help` for the options your installed revision supports.
 
 | Symptom | Check and next action |
 | --- | --- |
-| `wp-env start` reports a port in use | Another site or the block dev server holds 8888/8889. Stop it or use `WP_ENV_PORT` / `WP_ENV_TESTS_PORT`. |
+| `wp-env start` reports a port in use | Another site or the block dev server holds 8888/8889. Stop it or set `WP_ENV_PORT` for the environment you start. |
 | `localhost:8888` shows a webpack 404 page instead of WordPress | `BLOCKS_DEV_SERVER_PORT` in `.env.local` is set to 8888, the `wp-env` site's port. Set it back to 8886 (or another free port) and restart `npm start`. |
 | `npm start` fails with `EADDRINUSE` | Another dev server already holds the block dev server's port; stop it or set `BLOCKS_DEV_SERVER_PORT` in `.env.local`. |
 | `npm run test:php` cannot connect | The environment is not running. Run `npm run wp-env start` and retry. |

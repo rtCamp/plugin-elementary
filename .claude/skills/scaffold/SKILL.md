@@ -203,9 +203,9 @@ Then report:
 
 **Test env (`wp-env`):**
 - Always use `npx wp-env` (or `node_modules/.bin/wp-env`), never bare `wp-env`.
-- If `wp-env start` reports a port already allocated, start on free alternates: `WP_ENV_PORT=8890 WP_ENV_TESTS_PORT=8891 npm run wp-env start` (find a free pair with `lsof -nP -iTCP:<port> -sTCP:LISTEN`).
-- `wp-env start` can flake on a transient image pull (TLS timeout); one retry is allowed, and exit 0 does not mean "up" - confirm `WordPress test site started` appears in the output.
-- `pretest:php` skips `composer install` when `vendor/` is already mounted; if `npm run test:php` still fails on it, run PHPUnit directly: `npx wp-env run tests-cli --env-cwd=wp-content/plugins/$(basename "$PWD") -- vendor/bin/phpunit -c phpunit.xml.dist`.
+- If `wp-env start` reports a port already allocated, start on a free alternate: `WP_ENV_PORT=8890 npm run wp-env start`, or `WP_ENV_PORT=8891 npm run test:php` for the test environment in `.wp-env.tests.json` (find a free port with `lsof -nP -iTCP:<port> -sTCP:LISTEN`).
+- `wp-env start` can flake on a transient image pull (TLS timeout); one retry is allowed, and exit 0 does not mean "up" - confirm `WordPress development site started` appears in the output.
+- `pretest:php` skips `composer install` when `vendor/` is already mounted; if `npm run test:php` still fails on it, run PHPUnit directly: `npx wp-env run --config=.wp-env.tests.json cli --env-cwd=wp-content/plugins/$(basename "$PWD") -- vendor/bin/phpunit -c phpunit.xml.dist`.
 
 **Generated-code quirks (write the code right up front; these survive `composer format`):**
 - **Fully-qualify WP global classes** (`\WP_Error`, `\WP_REST_Request`, `\WP_REST_Response`) everywhere they appear - in code AND docblocks - with NO `use` statement for them. Reason: `composer format` force-qualifies `WP_Error` (Slevomat `FullyQualifiedExceptions` treats `*Error` as an exception) and then strips the now-unused imports, including docblock-only ones like `WP_REST_Request` (`UnusedUses` runs without `searchAnnotations`); PHPStan (scanning `inc/`) then reports `class.notFound` / `return.type` for `<Namespace>\WP_Error`. Writing them fully-qualified avoids the format -> phpstan round-trip.
