@@ -9,7 +9,7 @@ const RemoveEmptyScriptsPlugin = require( 'webpack-remove-empty-scripts' );
 /**
  * WordPress dependencies
  */
-const { getAsBooleanFromENV } = require("@wordpress/scripts/utils");
+const { getAsBooleanFromENV } = require( '@wordpress/scripts/utils' );
 
 // BrowserSync runs only in watch mode. wp-scripts injects `watch` into argv for
 // `wp-scripts start` (without --no-watch), and --hot implies watching too.
@@ -83,11 +83,11 @@ const getBrowserSyncPlugins = () => {
 				...( process.env.WP_HOST ? { host: process.env.WP_HOST } : {} ),
 				...( process.env.WP_SSL_KEY && process.env.WP_SSL_CERT
 					? {
-						https: {
-							key: process.env.WP_SSL_KEY,
-							cert: process.env.WP_SSL_CERT,
-						},
-					}
+							https: {
+								key: process.env.WP_SSL_KEY,
+								cert: process.env.WP_SSL_CERT,
+							},
+					  }
 					: {} ),
 				files: BROWSER_SYNC_FILES,
 				notify: false,
@@ -97,23 +97,23 @@ const getBrowserSyncPlugins = () => {
 			},
 			{
 				injectCss: true,
-			},
+			}
 		),
 	];
 };
 
 const hasExperimentalModulesFlag = getAsBooleanFromENV(
-	"WP_EXPERIMENTAL_MODULES"
+	'WP_EXPERIMENTAL_MODULES'
 );
 let scriptConfig, moduleConfig;
 
-if (hasExperimentalModulesFlag) {
+if ( hasExperimentalModulesFlag ) {
 	[
 		scriptConfig,
 		moduleConfig,
-	] = require("@wordpress/scripts/config/webpack.config");
+	] = require( '@wordpress/scripts/config/webpack.config' );
 } else {
-	scriptConfig = require("@wordpress/scripts/config/webpack.config");
+	scriptConfig = require( '@wordpress/scripts/config/webpack.config' );
 }
 
 // The base @wordpress/scripts config adds copy-webpack-plugin (whose class is
@@ -145,17 +145,13 @@ const sharedConfig = {
 	},
 	plugins: [
 		...scriptConfig.plugins
-			.filter(
-				( plugin ) => 'CopyPlugin' !== plugin.constructor.name,
-			)
-			.map(
-				( plugin ) => {
-					if ( plugin.constructor.name === 'MiniCssExtractPlugin' ) {
-						plugin.options.filename = '../css/[name].css';
-					}
-					return plugin;
-				},
-			),
+			.filter( ( plugin ) => 'CopyPlugin' !== plugin.constructor.name )
+			.map( ( plugin ) => {
+				if ( plugin.constructor.name === 'MiniCssExtractPlugin' ) {
+					plugin.options.filename = '../css/[name].css';
+				}
+				return plugin;
+			} ),
 		new RemoveEmptyScriptsPlugin(),
 	],
 	optimization: {
@@ -163,7 +159,9 @@ const sharedConfig = {
 		splitChunks: {
 			...scriptConfig.optimization.splitChunks,
 		},
-		minimizer: scriptConfig.optimization.minimizer.concat( [ new CssMinimizerPlugin() ] ),
+		minimizer: scriptConfig.optimization.minimizer.concat( [
+			new CssMinimizerPlugin(),
+		] ),
 	},
 };
 
@@ -198,32 +196,37 @@ const collectEntries = ( dir, extensions, excludeDirs = [] ) => {
 	}
 
 	const walk = ( current ) => {
-		fs.readdirSync( current, { withFileTypes: true } ).forEach( ( entry ) => {
-			if ( entry.name.startsWith( '_' ) || entry.name.startsWith( '.' ) ) {
-				return;
-			}
-
-			const fullPath = path.join( current, entry.name );
-
-			if ( entry.isDirectory() ) {
-				if ( ! excludeDirs.includes( entry.name ) ) {
-					walk( fullPath );
+		fs.readdirSync( current, { withFileTypes: true } ).forEach(
+			( entry ) => {
+				if (
+					entry.name.startsWith( '_' ) ||
+					entry.name.startsWith( '.' )
+				) {
+					return;
 				}
-				return;
+
+				const fullPath = path.join( current, entry.name );
+
+				if ( entry.isDirectory() ) {
+					if ( ! excludeDirs.includes( entry.name ) ) {
+						walk( fullPath );
+					}
+					return;
+				}
+
+				if ( ! extensions.includes( path.extname( entry.name ) ) ) {
+					return;
+				}
+
+				const name = path
+					.relative( root, fullPath )
+					.replace( /\.[^/.]+$/, '' )
+					.split( path.sep )
+					.join( '/' );
+
+				entries[ name ] = fullPath;
 			}
-
-			if ( ! extensions.includes( path.extname( entry.name ) ) ) {
-				return;
-			}
-
-			const name = path
-				.relative( root, fullPath )
-				.replace( /\.[^/.]+$/, '' )
-				.split( path.sep )
-				.join( '/' );
-
-			entries[ name ] = fullPath;
-		} );
+		);
 	};
 
 	walk( root );
@@ -242,41 +245,55 @@ const styles = {
 	},
 	plugins: [
 		...sharedConfig.plugins.filter(
-			( plugin ) => plugin.constructor.name !== 'DependencyExtractionWebpackPlugin',
+			( plugin ) =>
+				plugin.constructor.name !== 'DependencyExtractionWebpackPlugin'
 		),
 	],
-
 };
 
 // Recursively scans src/js (including subfolders) for script entry points. The
 // `modules` directory is excluded — it is built separately as ES modules below.
 const scripts = {
 	...sharedConfig,
-	entry: () => collectEntries( './src/js', [ '.js', '.jsx', '.ts', '.tsx' ], [ 'modules' ] ),
-	plugins: [
-		...sharedConfig.plugins,
-		...getBrowserSyncPlugins(),
-	],
+	entry: () =>
+		collectEntries(
+			'./src/js',
+			[ '.js', '.jsx', '.ts', '.tsx' ],
+			[ 'modules' ]
+		),
+	plugins: [ ...sharedConfig.plugins, ...getBrowserSyncPlugins() ],
 };
 
 let moduleScripts = {};
-if (hasExperimentalModulesFlag) {
+if ( hasExperimentalModulesFlag ) {
 	moduleScripts = {
 		...moduleConfig,
-		entry: () => collectEntries( './src/js/modules', [ '.js', '.jsx', '.ts', '.tsx' ] ),
+		entry: () =>
+			collectEntries( './src/js/modules', [
+				'.js',
+				'.jsx',
+				'.ts',
+				'.tsx',
+			] ),
 		output: {
 			...moduleConfig.output,
-			path: path.resolve(process.cwd(), 'assets', 'build', 'js', 'modules'),
+			path: path.resolve(
+				process.cwd(),
+				'assets',
+				'build',
+				'js',
+				'modules'
+			),
 			filename: '[name].js',
 			chunkFilename: '[name].js',
 		},
 	};
 }
 
-const customExports = [scripts, styles];
+const customExports = [ scripts, styles ];
 
-if (hasExperimentalModulesFlag) {
-	customExports.push(moduleScripts);
+if ( hasExperimentalModulesFlag ) {
+	customExports.push( moduleScripts );
 }
 
 module.exports = customExports;

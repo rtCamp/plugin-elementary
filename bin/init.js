@@ -4,7 +4,7 @@
 
 /**
  * Plugin setup; thin wrapper that delegates to the shared init engine in
- * @rtcamp/wp-tooling, passing this plugin's bin/scaffold.config.js.
+ * `@rtcamp/wp-tooling`, passing this plugin's bin/scaffold.config.js.
  *
  * Requires `npm install`. Invoke with `npm run init`. Help and the flag list
  * are printed by the engine (single source of truth); run
@@ -59,7 +59,9 @@ for the full option list.`
 		);
 		process.exit( 0 );
 	}
-	console.error( '\nCould not load the init engine from @rtcamp/wp-tooling.' );
+	console.error(
+		'\nCould not load the init engine from @rtcamp/wp-tooling.'
+	);
 	console.error( 'Ensure dependencies are installed (`npm install`).\n' );
 	console.error( err.message );
 	process.exit( 1 );
@@ -85,9 +87,15 @@ run( config, { root: path.resolve( __dirname, '..' ) } )
 		// on the exit code so a failed init does not claim a successful sync.
 		if ( ! process.exitCode ) {
 			try {
-				execFileSync( process.execPath, [ path.join( __dirname, 'sync-ai.js' ) ], { stdio: 'inherit' } );
+				execFileSync(
+					process.execPath,
+					[ path.join( __dirname, 'sync-ai.js' ) ],
+					{ stdio: 'inherit' }
+				);
 			} catch ( err ) {
-				console.error( '\ninit succeeded but `sync-ai` failed; run `npm run sync-ai` manually.' );
+				console.error(
+					'\ninit succeeded but `sync-ai` failed; run `npm run sync-ai` manually.'
+				);
 				console.error( err.message );
 			}
 		}
