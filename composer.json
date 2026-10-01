@@ -52,23 +52,6 @@
             "Project_Name\\Features\\Tests\\": "tests/php/"
         }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/rtCamp/wp-primitives.git",
-            "no-api": true
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/rtCamp/wp-phpcs.git",
-            "no-api": true
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/rtCamp/wp-phpstan.git",
-            "no-api": true
-        }
-    ],
     "scripts": {
         "format": "phpcbf",
         "lint": "phpcs",
