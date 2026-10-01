@@ -15,6 +15,10 @@ declare(strict_types = 1);
  * @package Project_Name\Features
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 // Generate unique id for aria-controls.
 $unique_id = wp_unique_id( 'p-' );
 ?>

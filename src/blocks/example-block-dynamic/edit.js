@@ -7,6 +7,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
  */
+import { useBlockProps } from '@wordpress/block-editor';
 import ServerSideRender from '@wordpress/server-side-render';
 
 /**
@@ -32,9 +33,11 @@ import './editor.scss';
  */
 export default function Edit( { attributes } ) {
 	return (
-		<ServerSideRender
-			block="project-name-features/example-block-dynamic"
-			attributes={ attributes }
-		/>
+		<div { ...useBlockProps() }>
+			<ServerSideRender
+				block="project-name-features/example-block-dynamic"
+				attributes={ attributes }
+			/>
+		</div>
 	);
 }

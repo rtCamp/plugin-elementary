@@ -7,6 +7,10 @@
 
 declare( strict_types = 1 );
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 ?>
 <div>
 	<h2><?php esc_html_e( 'Example block dynamic', 'project-name-features' ); ?></h2>
