@@ -30,7 +30,7 @@ PYTHON=""
 
 # 2a. uv-managed tool environment.
 if [ -z "$PYTHON" ] && have uv; then
-  _UV_PY="$(uv tool run graphifyy python -c 'import sys; print(sys.executable)' 2>/dev/null || true)"
+  _UV_PY="$(uv tool run --from graphifyy python -c 'import sys; print(sys.executable)' 2>/dev/null || true)"
   if [ -n "$_UV_PY" ]; then PYTHON="$_UV_PY"; fi
 fi
 
