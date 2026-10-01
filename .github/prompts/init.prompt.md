@@ -45,15 +45,15 @@ Then verify a clean working tree (`git status`) - init rewrites files irreversib
 ### 3. Ask, confirm, run - one step
 `npm run init` is a single command; don't turn gathering its inputs into a multi-round-trip wizard.
 
-**Setup:** in ONE message ask for project name (required, e.g. `Acme Blog` → namespace `Acme_Blog\Features`, package `rtcamp/acme-blog-features`, text domain, prefixes, main file - show these back), version (default `1.0.0`), which capability sets to remove, and which features to enable (defaults: keep all sets, `hmr` on, `tailwind` and `dev-tools` off - see Capability model).
+**Setup:** in ONE message ask for project name (required, e.g. `Acme Blog` → namespace `Acme_Blog\Features`, package `rtcamp/acme-blog-features`, text domain, prefixes, main file - show these back), version (default `1.0.0`), which capability sets to remove, and which features to enable (defaults: keep all sets, `hmr` on, `tailwind` off - see Capability model).
 **Manage:** ask which of identity / features to change - it's a single flag on an existing project, no wizard needed.
 
 Get explicit consent on the resolved values (init is destructive), then run:
 ```bash
-npm run init -- --name="Acme Blog" --version=1.0.0 --yes --remove-examples=cron,rest --features=hmr,tailwind,dev-tools
+npm run init -- --name="Acme Blog" --version=1.0.0 --yes --remove-examples=cron,rest --features=hmr,tailwind
 # Manage:
 npm run init -- --list
-npm run init -- --enable=dev-tools --yes
+npm run init -- --enable=tailwind --yes
 npm run init -- --features=hmr --yes        # exact enabled set (empty = none)
 ```
 - `--keep-examples` keeps all; `--remove-examples` (no value) removes all; `--remove-examples=a,b` removes listed keys.
@@ -62,7 +62,6 @@ npm run init -- --features=hmr --yes        # exact enabled set (empty = none)
 
 ### 4. After init
 - Tailwind enabled → developer runs `npm install` (added `src/css/tailwind.css`, `postcss.config.js`, pinned `@rtcamp/tailwind-config`).
-- Dev Tools enabled → still a private package (`rtcamp/wp-dev-tools`, VCS-sourced): developer runs `composer update rtcamp/wp-dev-tools` (may need GitHub auth), then `npm run dev:connect`.
 - Suggest `composer dump-autoload`.
 - If you hand-edited PHP under `inc/`, run `composer format` → `composer lint` → `composer phpstan` and resolve every finding. Never silence a real issue; if unclear, STOP and ask.
 - Refresh the LOCAL knowledge graph with `graphify update .`. Never commit `graphify-out/graph.json`, and never run the cross-repo `/graphify . --update` or `merge-graphs`. If not installed, say so in one line; do not block. See `AGENTS.md` (graphify).
@@ -78,9 +77,9 @@ ONE keep-or-remove prompt; removing deletes the capability entirely (classes, `i
 | APIs & Automation | `rest`, `cli`, `cron` |
 | Admin | `settings`, `admin`, `roles` |
 | Utilities | `cache`, `transients` |
-| Developer Tooling | `test-measure` (CI workflow), `hmr` (feature), `dev-tools` (feature) |
+| Developer Tooling | `test-measure` (CI workflow), `hmr` (feature) |
 
-Sets kept by default; pass keys to `--remove-examples` to drop. Features: `hmr` on, `tailwind` and `dev-tools` off. `dev-tools` is the one feature still sourced from a private VCS repo (see step 4); everything else installs from public registries.
+Sets kept by default; pass keys to `--remove-examples` to drop. Features: `hmr` on, `tailwind` off. Everything installs from public registries.
 
 ## Hard rules
 - Package managers only with consent: `npm install`, `composer install` (step 2), and `npm run init`. Otherwise surface install commands as developer actions.

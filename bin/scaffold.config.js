@@ -19,11 +19,6 @@
  * `features` instead, so the engine can add/remove those deps on toggle.
  */
 
-/**
- * Internal dependencies
- */
-const devTools = require( './features/dev-tools' );
-
 const mainFile = ( api ) => `${ api.identity.package.split( '/' )[ 1 ] }.php`;
 const tailwindConst = ( api ) =>
 	`${ api.identity.constantPrefix }_FEATURES_ENABLE_TAILWIND`;
@@ -107,7 +102,7 @@ module.exports = {
 		{ path: 'package.json', kind: 'json', key: 'version' },
 	],
 
-	steps: { composer: true, cleanup: true, git: true, hooks: true },
+	steps: { composer: true, cleanup: false, git: true, hooks: true },
 
 	// Dep/build-config-carrying capabilities. Toggling adds/removes their deps.
 	featuresDir: 'bin/features',
@@ -164,7 +159,6 @@ module.exports = {
 				);
 			},
 		},
-		devTools,
 	],
 
 	// Keep/remove capabilities. Removing deletes the module + classes + its
@@ -233,8 +227,6 @@ module.exports = {
 			),
 		],
 	},
-
-	cleanup: { targets: [ 'tests/js/scaffold-config.test.js' ] },
 
 	docsUrl:
 		'https://github.com/rtCamp/plugin-elementary/blob/main/docs/index.md',

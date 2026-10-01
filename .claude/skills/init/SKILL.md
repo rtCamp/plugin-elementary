@@ -46,7 +46,7 @@ Then verify a clean working tree (`git status`) - init rewrites files irreversib
 ### 3. Ask, confirm, run - one step
 `npm run init` is a single command; don't turn gathering its inputs into a multi-round-trip wizard.
 
-**Setup:** in ONE message ask for project name (required, e.g. `Acme Blog` → namespace `Acme_Blog\Features`, package `rtcamp/acme-blog-features`, text domain, prefixes, main file - show these back), version (default `1.0.0`), which capability sets to remove, and which features to enable (defaults: keep all sets, `hmr` on, `tailwind` and `dev-tools` off - see Capability model). The engine derives the tokens itself; do not read the engine source (`identity.js` etc.) - the mapping above is the contract, and the graph answers any deeper question (see the graphify policy in `AGENTS.md`).
+**Setup:** in ONE message ask for project name (required, e.g. `Acme Blog` → namespace `Acme_Blog\Features`, package `rtcamp/acme-blog-features`, text domain, prefixes, main file - show these back), version (default `1.0.0`), which capability sets to remove, and which features to enable (defaults: keep all sets, `hmr` on, `tailwind` off - see Capability model). The engine derives the tokens itself; do not read the engine source (`identity.js` etc.) - the mapping above is the contract, and the graph answers any deeper question (see the graphify policy in `AGENTS.md`).
 
 **Manage:** ask which of identity / features to change. It's a single flag on an existing project - no wizard needed.
 
@@ -54,10 +54,10 @@ Get explicit consent on the resolved values (init is destructive), then run:
 ```bash
 # Setup:
 npm run init -- --name="Acme Blog" --version=1.0.0 --yes \
-  --remove-examples=cron,rest --features=hmr,tailwind,dev-tools
+  --remove-examples=cron,rest --features=hmr,tailwind
 # Manage:
 npm run init -- --list
-npm run init -- --enable=dev-tools --yes
+npm run init -- --enable=tailwind --yes
 npm run init -- --features=hmr --yes        # exact enabled set (empty = none)
 ```
 - `--keep-examples` keeps all; `--remove-examples` (no value) removes all; `--remove-examples=a,b` removes listed keys.
@@ -69,7 +69,6 @@ npm run init -- --features=hmr --yes        # exact enabled set (empty = none)
 
 ### 4. After init
 - Tailwind enabled → developer runs `npm install` (it added `src/css/tailwind.css`, `postcss.config.js`, and pinned `@rtcamp/tailwind-config`).
-- Dev Tools enabled → it's still a private package (`rtcamp/wp-dev-tools`, VCS-sourced): developer runs `composer update rtcamp/wp-dev-tools`, which may need GitHub auth, then `npm run dev:connect`.
 - `composer dump-autoload` (engine runs it when `composer.json` is present).
 - Trust the engine's own output to verify (it reports the removed sets, drops their `Main::CLASSES` lines and tests, and regenerates the autoloader). To confirm a symbol or reference, run a single `graphify query`/`affected` against the graph - never grep `Main.php`/`inc/` to check removal.
 - If you hand-edited PHP and are NOT handing off to scaffold (e.g. a manage-mode dangling `Main::CLASSES` cleanup), run `composer lint` on the change and fix it. When a brief follows (step 5), leave the lint/PHPStan/test gates to the scaffold skill - init does not run them.
@@ -97,9 +96,9 @@ ONE "Select the capabilities to include" prompt. Each is keep-or-remove; removin
 | APIs & Automation | `rest`, `cli`, `cron` |
 | Admin | `settings`, `admin`, `roles` |
 | Utilities | `cache`, `transients` |
-| Developer Tooling | `test-measure` (CI workflow), `hmr` (feature), `dev-tools` (feature) |
+| Developer Tooling | `test-measure` (CI workflow), `hmr` (feature) |
 
-Sets are kept by default; pass keys to `--remove-examples` to drop. Features: `hmr` on, `tailwind` and `dev-tools` off; toggle via `--features`/`--enable`/`--disable`. `dev-tools` (`rtcamp/wp-dev-tools`, runtime telemetry over MCP - Query Monitor + the MCP Adapter) is the one feature still sourced from a private VCS repo; enabling it needs GitHub auth on `composer update` (see step 4). Everything else here installs from public registries.
+Sets are kept by default; pass keys to `--remove-examples` to drop. Features: `hmr` on, `tailwind` off; toggle via `--features`/`--enable`/`--disable`. Everything here installs from public registries.
 
 ### Changing capabilities after setup
 Add later → scaffold skill / `npx wp-tooling add <category>/<slug>` (writes the class, wires the module). Remove later → delete its `inc/Modules/<X>/` classes + `Main::CLASSES` line by hand. Toggle a feature any time via `npm run init -- --enable=<key>`/`--disable=<key>`. Do not re-run init to change the capability set.
@@ -113,6 +112,6 @@ Add later → scaffold skill / `npx wp-tooling add <category>/<slug>` (writes th
 - Never invent flags. Supported: `--name`, `--version`, `--yes`, `--keep-examples`, `--remove-examples[=...]`, `--features`, `--enable`, `--disable`, `--reinit`, `--list`, `--clean`, `--help`. Run `npm run init -- --help` if unsure.
 
 ## Reference
-- Engine: `@rtcamp/wp-tooling/init` (via `bin/init.js`). Capability map: `bin/scaffold.config.js`. Dev Tools feature: `bin/features/dev-tools.js`.
+- Engine: `@rtcamp/wp-tooling/init` (via `bin/init.js`). Capability map: `bin/scaffold.config.js`.
 - Conventions renamed into: `AGENTS.md`, `.github/instructions/structure.instructions.md`.
 - Graphify policy: `AGENTS.md`.
