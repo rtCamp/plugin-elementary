@@ -48,8 +48,8 @@ final class TaxonomiesTest extends TestCase {
 	 * Each example is the expected concrete AbstractTaxonomy subtype.
 	 */
 	public function test_examples_are_taxonomy_instances(): void {
-		$this->assertInstanceOf( 'rtCamp\WPFramework\Contracts\Abstracts\AbstractTaxonomy', new ExampleTaxonomy() );
-		$this->assertInstanceOf( 'rtCamp\WPFramework\Contracts\Abstracts\AbstractTaxonomy', new ExampleTaxonomyTwo() );
+		$this->assertInstanceOf( 'rtCamp\WPPrimitives\Contracts\Abstracts\AbstractTaxonomy', new ExampleTaxonomy() );
+		$this->assertInstanceOf( 'rtCamp\WPPrimitives\Contracts\Abstracts\AbstractTaxonomy', new ExampleTaxonomyTwo() );
 	}
 
 	/**

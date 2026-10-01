@@ -48,8 +48,8 @@ final class PostTypesTest extends TestCase {
 	 * Each example is the expected concrete AbstractPostType subtype.
 	 */
 	public function test_examples_are_post_type_instances(): void {
-		$this->assertInstanceOf( 'rtCamp\WPFramework\Contracts\Abstracts\AbstractPostType', new ExamplePostType() );
-		$this->assertInstanceOf( 'rtCamp\WPFramework\Contracts\Abstracts\AbstractPostType', new ExamplePostTypeTwo() );
+		$this->assertInstanceOf( 'rtCamp\WPPrimitives\Contracts\Abstracts\AbstractPostType', new ExamplePostType() );
+		$this->assertInstanceOf( 'rtCamp\WPPrimitives\Contracts\Abstracts\AbstractPostType', new ExamplePostTypeTwo() );
 	}
 
 	/**

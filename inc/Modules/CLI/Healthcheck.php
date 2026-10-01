@@ -9,7 +9,7 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features\Modules\CLI;
 
-use rtCamp\WPFramework\Contracts\Interfaces\CLICommand;
+use rtCamp\WPPrimitives\Contracts\Interfaces\CLICommand;
 
 /**
  * Class - Healthcheck

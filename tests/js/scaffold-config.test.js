@@ -193,7 +193,7 @@ describe( 'dev-tools feature', () => {
 				json.repositories = [
 					{
 						type: 'vcs',
-						url: 'https://github.com/rtCamp/wp-framework.git',
+						url: 'https://github.com/rtCamp/wp-primitives.git',
 					},
 				];
 			} );
@@ -208,7 +208,7 @@ describe( 'dev-tools feature', () => {
 			expect( composer.repositories ).toEqual( [
 				{
 					type: 'vcs',
-					url: 'https://github.com/rtCamp/wp-framework.git',
+					url: 'https://github.com/rtCamp/wp-primitives.git',
 				},
 			] );
 		} );

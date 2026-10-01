@@ -17,7 +17,7 @@ An existing local WordPress installation can replace the `wp-env` site; Docker i
 Clone it into the folder that will become your plugin directory:
 
 ```bash
-git clone --branch feature-plugin-skeleton-v2 https://github.com/rtCamp/features-plugin-skeleton.git acme-content-features
+git clone --branch feature-plugin-skeleton-v2 https://github.com/rtCamp/plugin-elementary.git acme-content-features
 cd acme-content-features
 nvm install
 nvm use
@@ -32,7 +32,7 @@ composer install
 npm install
 ```
 
-All dependencies install from their public sources: `rtcamp/wp-framework` and the coding standards from GitHub through Composer, and `@rtcamp/wp-tooling` and the lint configs from their GitHub distribution branches through npm. No token or sibling checkout is needed.
+All dependencies install from their public sources: `rtcamp/wp-primitives` and the coding standards from GitHub through Composer, and `@rtcamp/wp-tooling` and the lint configs from their GitHub distribution branches through npm. No token or sibling checkout is needed.
 
 `npm install` also installs the commit-message Git hook and runs `npm run sync-ai`, which copies the framework's review rules into `.github/instructions/`. Resolve installation errors before continuing; see [initialization troubleshooting](initialization.md#troubleshooting).
 

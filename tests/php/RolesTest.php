@@ -83,7 +83,7 @@ final class RolesTest extends TestCase {
 	 */
 	public function test_example_is_user_role_instance(): void {
 		$this->assertInstanceOf(
-			'rtCamp\WPFramework\Contracts\Abstracts\AbstractUserRole',
+			'rtCamp\WPPrimitives\Contracts\Abstracts\AbstractUserRole',
 			new ExampleUserRole()
 		);
 	}

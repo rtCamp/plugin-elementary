@@ -11,8 +11,8 @@ namespace Project_Name\Features\Tests;
 
 use Project_Name\Features\Modules\Transients;
 use Project_Name\Features\Modules\Transients\ExampleTransients;
-use rtCamp\WPFramework\Contracts\Interfaces\Registrable;
-use rtCamp\WPFramework\Utils\Transients as FrameworkTransients;
+use rtCamp\WPPrimitives\Contracts\Interfaces\Registrable;
+use rtCamp\WPPrimitives\Utils\Transients as FrameworkTransients;
 
 /**
  * Class TransientsTest

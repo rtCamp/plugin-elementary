@@ -9,7 +9,7 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features\Modules\Blocks;
 
-use rtCamp\WPFramework\Contracts\Abstracts\AbstractBlock;
+use rtCamp\WPPrimitives\Contracts\Abstracts\AbstractBlock;
 
 /**
  * Class - ExampleDynamicBlock

@@ -1,4 +1,4 @@
-# Features Plugin Skeleton
+# Plugin Elementary
 
 Build a WordPress features plugin from this skeleton, then keep the examples and tools your project needs. Start with [Getting Started](getting-started.md).
 
@@ -9,7 +9,7 @@ The skeleton is a consumer of shared rtCamp libraries. It owns the plugin's stru
 | Piece | What it provides | Where it is documented |
 | --- | --- | --- |
 | This skeleton | Plugin layout, `Main::CLASSES`, modules, example classes, asset pipeline, tests, CI caller | These guides |
-| [`rtcamp/wp-framework`](https://github.com/rtCamp/wp-framework/blob/v1.0.1/docs/index.md) | `Registrable` + `Loader` + `Container`, the `Abstract*` base classes, asset/component/template loaders, `Cache`, `Transients`, `Encryptor`, `Logger` | Framework docs (linked from each guide) |
+| [`rtcamp/wp-primitives`](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/index.md) | `Registrable` + `Loader` + `Container`, the `Abstract*` base classes, asset/component/template loaders, `Cache`, `Transients`, `Encryptor`, `Logger` | Framework docs (linked from each guide) |
 | [`@rtcamp/wp-tooling`](https://github.com/rtCamp/wp-tooling/blob/main/node-packages/wp-tooling/README.md) | `npm run init` engine, `npx wp-tooling add` scaffolds, shared ESLint/Stylelint configs, release scripts | wp-tooling docs |
 | [`rtCamp/wp-shared-workflows`](https://github.com/rtCamp/wp-shared-workflows) | Reusable lint, test and build workflows | wp-shared-workflows docs |
 | [wp-devtools](https://github.com/rtCamp/wp-devtools/blob/release/v1.0.0/README.md) (optional) | Runtime telemetry over MCP | wp-devtools docs (repository access required) |

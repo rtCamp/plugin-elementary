@@ -1,4 +1,4 @@
-# Contributing to the Features Plugin Skeleton
+# Contributing to the Plugin Elementary
 
 Thanks for improving the skeleton. Changes here reach every client plugin created from it, so keep them general, tested and documented.
 
@@ -6,8 +6,8 @@ This guide is for work on the skeleton itself. If you are building a client plug
 
 ## Before you start
 
-- Open or find an [issue](https://github.com/rtCamp/features-plugin-skeleton/issues) describing the change.
-- Check where the change belongs. Framework behaviour belongs in [`wp-framework`](https://github.com/rtCamp/wp-framework), the init or scaffold engine in [`wp-tooling`](https://github.com/rtCamp/wp-tooling), and CI jobs in [`wp-shared-workflows`](https://github.com/rtCamp/wp-shared-workflows). See [what this repository owns](docs/internal/maintenance.md#what-this-repository-owns).
+- Open or find an [issue](https://github.com/rtCamp/plugin-elementary/issues) describing the change.
+- Check where the change belongs. Framework behaviour belongs in [`wp-primitives`](https://github.com/rtCamp/wp-primitives), the init or scaffold engine in [`wp-tooling`](https://github.com/rtCamp/wp-tooling), and CI jobs in [`wp-shared-workflows`](https://github.com/rtCamp/wp-shared-workflows). See [what this repository owns](docs/internal/maintenance.md#what-this-repository-owns).
 - Branch from `feature-plugin-skeleton-v2`, the supported v2 branch, and open your pull request against it.
 
 ## Development setup

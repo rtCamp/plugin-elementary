@@ -12,7 +12,7 @@ namespace Project_Name\Features\Tests;
 use Project_Name\Features\Core\Encryption;
 use Project_Name\Features\Helpers\Util;
 use Project_Name\Features\Main;
-use rtCamp\WPFramework\Utils\Encryptor;
+use rtCamp\WPPrimitives\Utils\Encryptor;
 
 /**
  * Class EncryptionTest

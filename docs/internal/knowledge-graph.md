@@ -4,7 +4,7 @@ The repository commits a queryable code graph so AI assistants can answer struct
 
 Committed artifacts (everything else in `graphify-out/` is gitignored):
 
-- `graphify-out/graph.json`: the graph, covering this plugin plus `wp-tooling`, `wp-framework` and `wp-shared-workflows`, with a per-node `repo` tag.
+- `graphify-out/graph.json`: the graph, covering this plugin plus `wp-tooling`, `wp-primitives` and `wp-shared-workflows`, with a per-node `repo` tag.
 - `graphify-out/GRAPH_REPORT.md`: a human-readable summary.
 
 ## Install (one time)
@@ -45,12 +45,12 @@ Only when this repository or a shared repository has changed enough to matter, w
 ROOT="$(cd .. && pwd)"
 graphify update .
 ( cd "$ROOT/wp-tooling"          && graphify update . )
-( cd "$ROOT/wp-framework"        && graphify update . )
+( cd "$ROOT/wp-primitives"       && graphify update . )
 ( cd "$ROOT/wp-shared-workflows" && graphify update . )
 graphify merge-graphs \
   graphify-out/graph.json \
   "$ROOT/wp-tooling/graphify-out/graph.json" \
-  "$ROOT/wp-framework/graphify-out/graph.json" \
+  "$ROOT/wp-primitives/graphify-out/graph.json" \
   "$ROOT/wp-shared-workflows/graphify-out/graph.json" \
   --out graphify-out/graph.json
 graphify cluster-only . --no-label --no-viz   # refresh GRAPH_REPORT.md

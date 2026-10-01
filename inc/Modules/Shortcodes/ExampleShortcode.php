@@ -9,7 +9,7 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features\Modules\Shortcodes;
 
-use rtCamp\WPFramework\Contracts\Abstracts\AbstractShortcode;
+use rtCamp\WPPrimitives\Contracts\Abstracts\AbstractShortcode;
 
 /**
  * Class - ExampleShortcode

@@ -6,12 +6,12 @@ Use a disposable clone, outside the maintained checkout, for every init test, so
 
 ## What this repository owns
 
-The skeleton is a consumer of three shared repositories. Fix a problem where it lives: a framework bug belongs in `wp-framework`, an engine bug in `wp-tooling`, and a CI job bug in `wp-shared-workflows`. Missing upstream documentation belongs upstream too; do not grow a duplicate manual here.
+The skeleton is a consumer of three shared repositories. Fix a problem where it lives: a framework bug belongs in `wp-primitives`, an engine bug in `wp-tooling`, and a CI job bug in `wp-shared-workflows`. Missing upstream documentation belongs upstream too; do not grow a duplicate manual here.
 
 | Concern | Owner | In this repo |
 | --- | --- | --- |
-| Registration system, `Abstract*` classes, loaders, utilities | [`rtcamp/wp-framework`](https://github.com/rtCamp/wp-framework) | Consumed through `vendor/`. `inc/Core/*` are thin subclasses. |
-| PHP review rules (`framework-php.instructions.md`) | `wp-framework` | Generated into `.github/instructions/` by `npm run sync-ai`. Never edit the generated copy. |
+| Registration system, `Abstract*` classes, loaders, utilities | [`rtcamp/wp-primitives`](https://github.com/rtCamp/wp-primitives) | Consumed through `vendor/`. `inc/Core/*` are thin subclasses. |
+| PHP review rules (`framework-php.instructions.md`) | `wp-primitives` | Generated into `.github/instructions/` by `npm run sync-ai`. Never edit the generated copy. |
 | Plugin structure rules (`structure.instructions.md`), `AGENTS.md` | This repo | Edit here. |
 | Init engine, scaffold catalogue, release scripts, Git hooks | [`@rtcamp/wp-tooling`](https://github.com/rtCamp/wp-tooling) | `bin/init.js` wraps the engine; `bin/scaffold.config.js` configures it. |
 | PHPCS / PHPStan / ESLint / Stylelint rules | `rtcamp/wp-phpcs`, `rtcamp/wp-phpstan`, `@rtcamp/eslint-config`, `@rtcamp/stylelint-config` (all from wp-tooling) | `phpcs.xml.dist`, `phpstan.neon.dist`, `eslint.config.mjs`, `.stylelintrc.json` extend them. |
@@ -87,7 +87,7 @@ Put journey and link-check results in the pull request description or release ha
 
 | Dependency | Where it is declared | When bumping |
 | --- | --- | --- |
-| `rtcamp/wp-framework` | `composer.json` (`^1.0`), `composer.lock` | Run `composer update rtcamp/wp-framework -W`, then `npm run sync-ai` to refresh the generated instructions. Update every pinned docs link (`grep -rn "wp-framework/blob/v" README.md DEVELOPMENT.md docs`) to the new tag, and review the framework's changelog for anything the examples or docs must follow. |
+| `rtcamp/wp-primitives` | `composer.json` (`^1.0`), `composer.lock` | Run `composer update rtcamp/wp-primitives -W`, then `npm run sync-ai` to refresh the generated instructions. Update every pinned docs link (`grep -rn "wp-primitives/blob/v" README.md DEVELOPMENT.md docs`) to the new tag, and review the framework's changelog for anything the examples or docs must follow. |
 | `@rtcamp/wp-tooling`, lint configs | `package.json` (`github:` / `git+https:` refs to `npm/*` branches), `package-lock.json` | Run `npm update @rtcamp/wp-tooling` (and the configs) to move the lock, then re-run init and scaffold validation. |
 | Coding standards | `composer.json` (`rtcamp/wp-phpcs`, `rtcamp/wp-phpstan`) | `composer update rtcamp/wp-phpcs rtcamp/wp-phpstan`; fix or baseline new findings in a separate commit. |
 | Shared CI | `.github/workflows/test-measure.yml` (`@release/v1.0.0`) | Move the ref once a stable tag exists; check the input names against the new `wp-ci.yml`. |
@@ -101,10 +101,10 @@ When deliberately testing an unreleased change to a shared package, use a separa
 
 ```bash
 git clone https://github.com/rtCamp/wp-tooling.git '/absolute/path/to/wp-tooling'
-git clone https://github.com/rtCamp/wp-framework.git '/absolute/path/to/wp-framework'
+git clone https://github.com/rtCamp/wp-primitives.git '/absolute/path/to/wp-primitives'
 ```
 
-Check out and record the revision under test. The tooling override needs the source monorepo's `node-packages/` layout, not the `npm/*` distribution branches. Follow the [wp-tooling](https://github.com/rtCamp/wp-tooling) or [wp-framework contributing guide](https://github.com/rtCamp/wp-framework/blob/v1.0.1/CONTRIBUTING.md#development-setup) for that package's own setup and checks.
+Check out and record the revision under test. The tooling override needs the source monorepo's `node-packages/` layout, not the `npm/*` distribution branches. Follow the [wp-tooling](https://github.com/rtCamp/wp-tooling) or [wp-primitives contributing guide](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/CONTRIBUTING.md#development-setup) for that package's own setup and checks.
 
 From the disposable clone, point only the declarations you need at the checkout:
 
@@ -113,7 +113,7 @@ npm pkg set 'devDependencies.@rtcamp/wp-tooling=file:/absolute/path/to/wp-toolin
 npm install --install-links     # copies the package so its peer dependencies resolve
 ```
 
-For framework work, replace the framework entry in `composer.json`'s `repositories` with a `path` repository (`"url": "/absolute/path/to/wp-framework", "options": { "symlink": false }`) and run `composer update rtcamp/wp-framework -W`. The checkout's version must satisfy `^1.0`. Use the same pattern for `wp-tooling/composer-packages/phpcs` and `phpstan`; `symlink: false` is required for PHPStan to resolve its baseline.
+For framework work, replace the framework entry in `composer.json`'s `repositories` with a `path` repository (`"url": "/absolute/path/to/wp-primitives", "options": { "symlink": false }`) and run `composer update rtcamp/wp-primitives -W`. The checkout's version must satisfy `^1.0`. Use the same pattern for `wp-tooling/composer-packages/phpcs` and `phpstan`; `symlink: false` is required for PHPStan to resolve its baseline.
 
 When done, restore only the dependency source lines and regenerate the affected lockfile. Keep identity changes made by init. Never commit absolute paths or `file:` / `path` overrides, and recheck a clean install from the declared sources.
 
@@ -137,9 +137,9 @@ To build locally, clone the builder separately and run its CLI:
 
 ```bash
 node /path/to/action-docusaurus-build/cli.mjs build \
-  --source /path/to/features-plugin-skeleton \
-  --repository rtCamp/features-plugin-skeleton \
-  --out-dir /tmp/features-plugin-skeleton-docs
+  --source /path/to/plugin-elementary \
+  --repository rtCamp/plugin-elementary \
+  --out-dir /tmp/plugin-elementary-docs
 ```
 
 The builder fails on broken internal links and missing repository files. Also check external links, anchors and the root Markdown pages, which it does not fully cover. Update incoming links whenever a page moves.

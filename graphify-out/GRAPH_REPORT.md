@@ -1,4 +1,4 @@
-# Graph Report - /Users/anurag/Work/github/rtCamp/features-plugin-skeleton  (2026-06-23)
+# Graph Report - /Users/anurag/Work/github/rtCamp/plugin-elementary  (2026-06-23)
 
 ## Corpus Check
 - cluster-only mode — file stats not available
@@ -1053,7 +1053,7 @@ Nodes (10): Decisions made, Files changed so far, ← Handoff IN · YYYY-MM-DD �
 
 ### Community 212 - "Community 212"
 Cohesion: 0.18
-Nodes (11): Adding a feature, Commands, Contributing, Does this interest you?, Features Plugin Skeleton [![Project Status: Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active), Local testing now (sibling checkouts), Once published, Private packages (pilot) (+3 more)
+Nodes (11): Adding a feature, Commands, Contributing, Does this interest you?, Plugin Elementary [![Project Status: Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active), Local testing now (sibling checkouts), Once published, Private packages (pilot) (+3 more)
 
 ### Community 214 - "Community 214"
 Cohesion: 0.18
@@ -1168,7 +1168,7 @@ Nodes (8): Error handling, Hard prohibitions, PHPCS standard reference, Referenc
 
 ### Community 251 - "Community 251"
 Cohesion: 0.25
-Nodes (5): AGENTS.md — wp-framework, Authoritative rules, Key principles (full detail in the files above), Structure, This repo also ships tooling for consumers
+Nodes (5): AGENTS.md — wp-primitives, Authoritative rules, Key principles (full detail in the files above), Structure, This repo also ships tooling for consumers
 
 ### Community 252 - "Community 252"
 Cohesion: 0.32
@@ -1208,7 +1208,7 @@ Nodes (7): Architecture — how a class becomes a live hook, Modules: loaders th
 
 ### Community 263 - "Community 263"
 Cohesion: 0.29
-Nodes (7): Development, Documentation, Install (consumer side), License, What's inside, What's NOT here (intentional), wp-framework
+Nodes (7): Development, Documentation, Install (consumer side), License, What's inside, What's NOT here (intentional), wp-primitives
 
 ### Community 266 - "Community 266"
 Cohesion: 0.29
@@ -1244,7 +1244,7 @@ Nodes (4): COMMANDS, main(), PKG, usage()
 
 ### Community 279 - "Community 279"
 Cohesion: 0.40
-Nodes (4): Copilot instructions — wp-framework, Review conduct, Stack, Universal rules
+Nodes (4): Copilot instructions — wp-primitives, Review conduct, Stack, Universal rules
 
 ### Community 281 - "Community 281"
 Cohesion: 0.40
@@ -1272,7 +1272,7 @@ Nodes (4): devDependencies, eslint, jest, @wordpress/eslint-plugin
 
 ### Community 290 - "Community 290"
 Cohesion: 0.50
-Nodes (4): How a skeleton uses it (the one-paragraph version), Map of the docs, What's in here, wp-framework
+Nodes (4): How a skeleton uses it (the one-paragraph version), Map of the docs, What's in here, wp-primitives
 
 ### Community 292 - "Community 292"
 Cohesion: 0.50

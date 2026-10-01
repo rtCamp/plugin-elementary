@@ -9,7 +9,7 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features\Modules\PostTypes;
 
-use rtCamp\WPFramework\Contracts\Abstracts\AbstractPostType;
+use rtCamp\WPPrimitives\Contracts\Abstracts\AbstractPostType;
 
 /**
  * Class - ExamplePostTypeTwo

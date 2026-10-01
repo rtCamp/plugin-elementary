@@ -9,7 +9,7 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features\Modules;
 
-use rtCamp\WPFramework\Contracts\Interfaces\ConditionallyRegistrable;
+use rtCamp\WPPrimitives\Contracts\Interfaces\ConditionallyRegistrable;
 
 /**
  * Class - CLI

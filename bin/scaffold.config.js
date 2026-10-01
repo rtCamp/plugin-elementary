@@ -1,5 +1,5 @@
 /**
- * Scaffold config for features-plugin-skeleton, consumed by bin/init.js and
+ * Scaffold config for plugin-elementary, consumed by bin/init.js and
  * handed to the @rtcamp/wp-tooling init engine.
  *
  * The `Project_Name` / `project-name` tokens already cover the composer package
@@ -212,7 +212,7 @@ module.exports = {
 			capability( 'admin', 'Admin Pages', 'Admin', { module: 'Admin' } ),
 			capability( 'roles', 'User Roles', 'Admin', { module: 'Roles' } ),
 
-			// Utilities - usage examples for the wp-framework utility services.
+			// Utilities - usage examples for the wp-primitives utility services.
 			// (Logger is demonstrated in always-loaded inc/Core/PluginSetup.php, not here,
 			// since it is cross-cutting and should survive any capability selection.)
 			capability( 'cache', 'Cache', 'Utilities', { module: 'Cache' } ),
@@ -237,6 +237,6 @@ module.exports = {
 	cleanup: { targets: [ 'tests/js/scaffold-config.test.js' ] },
 
 	docsUrl:
-		'https://github.com/rtCamp/features-plugin-skeleton/blob/feature-plugin-skeleton-v2/docs/index.md',
-	repoUrl: 'https://github.com/rtCamp/features-plugin-skeleton',
+		'https://github.com/rtCamp/plugin-elementary/blob/feature-plugin-skeleton-v2/docs/index.md',
+	repoUrl: 'https://github.com/rtCamp/plugin-elementary',
 };

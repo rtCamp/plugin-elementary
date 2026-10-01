@@ -1,7 +1,7 @@
 {
   "name": "project-name-features",
   "version": "1.0.0",
-  "description": "Features plugin skeleton for internal use.",
+  "description": "Starter plugin for rtCamp WordPress projects.",
   "private": true,
   "author": "rtCamp",
   "license": "GPL-2.0-or-later",
@@ -10,13 +10,13 @@
     "wp-plugin",
     "feature-plugin"
   ],
-  "homepage": "https://github.com/rtCamp/features-plugin-skeleton#readme",
+  "homepage": "https://github.com/rtCamp/plugin-elementary#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rtCamp/features-plugin-skeleton.git"
+    "url": "https://github.com/rtCamp/plugin-elementary.git"
   },
   "bugs": {
-    "url": "https://github.com/rtCamp/features-plugin-skeleton/issues"
+    "url": "https://github.com/rtCamp/plugin-elementary/issues"
   },
   "devDependencies": {
     "@babel/core": "7.29.7",

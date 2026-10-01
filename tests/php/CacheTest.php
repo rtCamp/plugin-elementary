@@ -11,7 +11,7 @@ namespace Project_Name\Features\Tests;
 
 use Project_Name\Features\Modules\Cache;
 use Project_Name\Features\Modules\Cache\ExampleCache;
-use rtCamp\WPFramework\Contracts\Interfaces\Registrable;
+use rtCamp\WPPrimitives\Contracts\Interfaces\Registrable;
 
 /**
  * Class CacheTest

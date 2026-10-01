@@ -13,7 +13,7 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features\Modules\Cron;
 
-use rtCamp\WPFramework\Contracts\Interfaces\Registrable;
+use rtCamp\WPPrimitives\Contracts\Interfaces\Registrable;
 
 /**
  * Class - ExampleCronJob

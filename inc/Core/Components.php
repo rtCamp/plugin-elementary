@@ -10,9 +10,9 @@ declare( strict_types = 1 );
 namespace Project_Name\Features\Core;
 
 use Project_Name\Features\Main;
-use rtCamp\WPFramework\AssetLoader;
-use rtCamp\WPFramework\ComponentLoader;
-use rtCamp\WPFramework\Contracts\Interfaces\Shareable;
+use rtCamp\WPPrimitives\AssetLoader;
+use rtCamp\WPPrimitives\ComponentLoader;
+use rtCamp\WPPrimitives\Contracts\Interfaces\Shareable;
 
 /**
  * Class Components

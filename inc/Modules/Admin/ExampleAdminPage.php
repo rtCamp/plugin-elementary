@@ -16,7 +16,7 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features\Modules\Admin;
 
-use rtCamp\WPFramework\Contracts\Abstracts\AbstractAdminPage;
+use rtCamp\WPPrimitives\Contracts\Abstracts\AbstractAdminPage;
 
 /**
  * Class ExampleAdminPage

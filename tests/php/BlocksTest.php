@@ -52,7 +52,7 @@ final class BlocksTest extends TestCase {
 	 */
 	public function test_extends_framework_abstract_block(): void {
 		$this->assertInstanceOf(
-			'rtCamp\WPFramework\Contracts\Abstracts\AbstractBlock',
+			'rtCamp\WPPrimitives\Contracts\Abstracts\AbstractBlock',
 			new ExampleDynamicBlock()
 		);
 	}

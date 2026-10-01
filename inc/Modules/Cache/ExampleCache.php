@@ -2,7 +2,7 @@
 /**
  * Example: cache an expensive query with the framework Cache utility.
  *
- * Demonstrates {@see \rtCamp\WPFramework\Utils\Cache}: a per-plugin namespaced
+ * Demonstrates {@see \rtCamp\WPPrimitives\Utils\Cache}: a per-plugin namespaced
  * cache, `remember()` to compute-once-and-reuse, and group invalidation on
  * content changes. Swap the query for your own expensive work.
  *
@@ -13,8 +13,8 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features\Modules\Cache;
 
-use rtCamp\WPFramework\Contracts\Interfaces\Registrable;
-use rtCamp\WPFramework\Utils\Cache;
+use rtCamp\WPPrimitives\Contracts\Interfaces\Registrable;
+use rtCamp\WPPrimitives\Utils\Cache;
 
 /**
  * Class - ExampleCache

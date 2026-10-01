@@ -11,7 +11,7 @@ namespace Project_Name\Features\Modules\REST;
 
 use WP_REST_Response;
 use WP_REST_Server;
-use rtCamp\WPFramework\Contracts\Abstracts\AbstractRESTController;
+use rtCamp\WPPrimitives\Contracts\Abstracts\AbstractRESTController;
 
 /**
  * Class - ExampleRESTController

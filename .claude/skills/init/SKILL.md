@@ -1,6 +1,6 @@
 ---
 name: init
-description: Set up this cloned features-plugin-skeleton into a named project, or manage its identity and capabilities later. Installs dependencies (`npm install`, `composer install`), then drives `npm run init`. Always confirms before destructive or install steps; expects a clean working tree.
+description: Set up this cloned plugin-elementary into a named project, or manage its identity and capabilities later. Installs dependencies (`npm install`, `composer install`), then drives `npm run init`. Always confirms before destructive or install steps; expects a clean working tree.
 ---
 
 # init

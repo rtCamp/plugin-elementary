@@ -10,7 +10,7 @@ declare( strict_types = 1 );
 namespace Project_Name\Features\Modules\Taxonomies;
 
 use Project_Name\Features\Modules\PostTypes\ExamplePostType;
-use rtCamp\WPFramework\Contracts\Abstracts\AbstractTaxonomy;
+use rtCamp\WPPrimitives\Contracts\Abstracts\AbstractTaxonomy;
 
 /**
  * Class - ExampleTaxonomy

@@ -13,7 +13,7 @@ declare( strict_types = 1 );
 namespace Project_Name\Features\Modules;
 
 use Project_Name\Features\Modules\REST\ExampleRESTController;
-use rtCamp\WPFramework\Contracts\Abstracts\AbstractModule;
+use rtCamp\WPPrimitives\Contracts\Abstracts\AbstractModule;
 
 /**
  * Class - REST

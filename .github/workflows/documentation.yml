@@ -55,7 +55,7 @@ jobs:
         id: docs
         uses: rtCamp/action-docusaurus-build@b671d6800c68a74da8913edb9321422fe8afaedc
         with:
-          site-title: Features Plugin Skeleton
+          site-title: Plugin Elementary
           site-url: ${{ steps.pages.outputs.origin }}
           base-url: ${{ steps.pages.outputs.base_url && format('{0}/', steps.pages.outputs.base_path) || '' }}
           sidebar: >-

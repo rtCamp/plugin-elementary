@@ -28,14 +28,14 @@ final class ComponentsTest extends TestCase {
 	 * The class extends the framework ComponentLoader.
 	 */
 	public function test_extends_framework_component_loader(): void {
-		$this->assertInstanceOf( 'rtCamp\WPFramework\ComponentLoader', new Components() );
+		$this->assertInstanceOf( 'rtCamp\WPPrimitives\ComponentLoader', new Components() );
 	}
 
 	/**
 	 * It is shareable, so the container hands out a single instance.
 	 */
 	public function test_is_shareable(): void {
-		$this->assertInstanceOf( 'rtCamp\WPFramework\Contracts\Interfaces\Shareable', new Components() );
+		$this->assertInstanceOf( 'rtCamp\WPPrimitives\Contracts\Interfaces\Shareable', new Components() );
 	}
 
 	/**

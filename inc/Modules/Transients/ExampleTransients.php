@@ -2,7 +2,7 @@
 /**
  * Example: cache an expensive remote request with the framework Transients utility.
  *
- * Demonstrates {@see \rtCamp\WPFramework\Utils\Transients}: prefix-namespaced
+ * Demonstrates {@see \rtCamp\WPPrimitives\Utils\Transients}: prefix-namespaced
  * transients for caching slow or external work. The canonical use case is a
  * remote HTTP call you do not want to repeat on every request. Call
  * get_remote_payload() from a block, shortcode, or REST route in your project.
@@ -14,8 +14,8 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features\Modules\Transients;
 
-use rtCamp\WPFramework\Contracts\Interfaces\Registrable;
-use rtCamp\WPFramework\Utils\Transients;
+use rtCamp\WPPrimitives\Contracts\Interfaces\Registrable;
+use rtCamp\WPPrimitives\Utils\Transients;
 
 /**
  * Class - ExampleTransients

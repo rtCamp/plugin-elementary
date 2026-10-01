@@ -9,8 +9,8 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features;
 
-use rtCamp\WPFramework\Contracts\Traits\Loader;
-use rtCamp\WPFramework\Contracts\Traits\Singleton;
+use rtCamp\WPPrimitives\Contracts\Traits\Loader;
+use rtCamp\WPPrimitives\Contracts\Traits\Singleton;
 
 /**
  * Class - Main

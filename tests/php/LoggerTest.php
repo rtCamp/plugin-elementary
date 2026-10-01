@@ -12,8 +12,8 @@ namespace Project_Name\Features\Tests;
 use Project_Name\Features\Core\Logger;
 use Project_Name\Features\Helpers\Util;
 use Project_Name\Features\Main;
-use rtCamp\WPFramework\Contracts\Interfaces\Shareable;
-use rtCamp\WPFramework\Utils\Logger as FrameworkLogger;
+use rtCamp\WPPrimitives\Contracts\Interfaces\Shareable;
+use rtCamp\WPPrimitives\Utils\Logger as FrameworkLogger;
 
 /**
  * Class LoggerTest

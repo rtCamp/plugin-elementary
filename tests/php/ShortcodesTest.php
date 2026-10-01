@@ -49,7 +49,7 @@ final class ShortcodesTest extends TestCase {
 	 */
 	public function test_extends_framework_abstract_shortcode(): void {
 		$this->assertInstanceOf(
-			'rtCamp\WPFramework\Contracts\Abstracts\AbstractShortcode',
+			'rtCamp\WPPrimitives\Contracts\Abstracts\AbstractShortcode',
 			new ExampleShortcode()
 		);
 	}

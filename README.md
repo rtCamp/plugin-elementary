@@ -1,4 +1,4 @@
-<h1 align="center">Features Plugin Skeleton</h1>
+<h1 align="center">Plugin Elementary</h1>
 
 <p align="center">
   <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active"></a>
@@ -20,11 +20,11 @@ This skeleton gives a new client plugin its structure, working examples, asset p
 
 It builds on two shared rtCamp libraries and uses a third for CI:
 
-- [`rtcamp/wp-framework`](https://github.com/rtCamp/wp-framework) (Composer, runtime): the registration system, `Abstract*` base classes, loaders and utilities that every class in `inc/` extends.
+- [`rtcamp/wp-primitives`](https://github.com/rtCamp/wp-primitives) (Composer, runtime): the registration system, `Abstract*` base classes, loaders and utilities that every class in `inc/` extends.
 - [`@rtcamp/wp-tooling`](https://github.com/rtCamp/wp-tooling) (npm, development): the `npm run init` setup wizard, the `npx wp-tooling add` feature scaffolder, the shared lint configs and release scripts.
 - [`rtCamp/wp-shared-workflows`](https://github.com/rtCamp/wp-shared-workflows): the reusable lint, test and build CI that `.github/workflows/test-measure.yml` calls.
 
-The skeleton documents what it provides and how to build on it. The framework's API and lifecycle are documented in [its own docs](https://github.com/rtCamp/wp-framework/blob/v1.0.1/docs/index.md), and these guides link there where needed.
+The skeleton documents what it provides and how to build on it. The framework's API and lifecycle are documented in [its own docs](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/index.md), and these guides link there where needed.
 
 > This is a **template**. `Project Name` / `project-name` / `Project_Name` are placeholders; `npm run init` renames them to your project.
 
@@ -86,7 +86,7 @@ tests/{php,js}/             # PHPUnit (mirrors inc/) and Jest
 bin/                        # init wrapper, scaffold config, block scaffolder, helper scripts
 docs/                       # these guides; docs/internal/ is for skeleton maintainers
 .github/                    # CI caller, issue/PR templates, Copilot instructions and prompts
-vendor/rtcamp/wp-framework/ # the framework (Composer-managed; never edit)
+vendor/rtcamp/wp-primitives/ # the framework (Composer-managed; never edit)
 ```
 
 Some of these folders hold examples that initialization can remove; see [Included features](docs/features.md#supplied-examples).

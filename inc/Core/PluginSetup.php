@@ -13,7 +13,7 @@ use Project_Name\Features\Helpers\Util;
 // wp:example:cron
 use Project_Name\Features\Modules\Cron\ExampleCronJob;
 // wp:example:cron:end
-use rtCamp\WPFramework\Contracts\Interfaces\Registrable;
+use rtCamp\WPPrimitives\Contracts\Interfaces\Registrable;
 
 /**
  * Class PluginSetup

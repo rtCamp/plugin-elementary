@@ -8,7 +8,7 @@ Claude Code skills live in [`.claude/skills/`](.claude/skills/):
 
 ## Knowledge graph (Graphify)
 
-A cross-repo knowledge graph of this plugin plus `wp-tooling`, `wp-framework`, and `wp-shared-workflows` is committed at [`graphify-out/graph.json`](graphify-out/graph.json) (human summary in [`graphify-out/GRAPH_REPORT.md`](graphify-out/GRAPH_REPORT.md)), built with the official [Graphify](https://graphify.net) utility.
+A cross-repo knowledge graph of this plugin plus `wp-tooling`, `wp-primitives`, and `wp-shared-workflows` is committed at [`graphify-out/graph.json`](graphify-out/graph.json) (human summary in [`graphify-out/GRAPH_REPORT.md`](graphify-out/GRAPH_REPORT.md)), built with the official [Graphify](https://graphify.net) utility.
 
 Before reading source files to answer questions about architecture, symbols, call paths, or how the four repos fit together, query the graph first to save tokens:
 

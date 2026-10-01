@@ -73,7 +73,7 @@ final class AdminTest extends TestCase {
 	 */
 	public function test_example_is_admin_page_instance(): void {
 		$this->assertInstanceOf(
-			'rtCamp\WPFramework\Contracts\Abstracts\AbstractAdminPage',
+			'rtCamp\WPPrimitives\Contracts\Abstracts\AbstractAdminPage',
 			new ExampleAdminPage()
 		);
 	}

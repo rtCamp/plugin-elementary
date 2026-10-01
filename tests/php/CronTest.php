@@ -15,7 +15,7 @@ namespace Project_Name\Features\Tests;
 use Project_Name\Features\Modules\Cron;
 use Project_Name\Features\Modules\Cron\ExampleCronJob;
 use ReflectionMethod;
-use rtCamp\WPFramework\Contracts\Interfaces\Registrable;
+use rtCamp\WPPrimitives\Contracts\Interfaces\Registrable;
 
 /**
  * Class CronTest

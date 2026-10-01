@@ -1,12 +1,12 @@
-# AGENTS.md: Features Plugin
+# AGENTS.md: Plugin Elementary
 
 Source of truth for this project's conventions, shared across all AI coding tools (Claude Code, GitHub Copilot, Codex, Cursor). [`CLAUDE.md`](CLAUDE.md) and [`.github/copilot-instructions.md`](.github/copilot-instructions.md) are thin pointers to this file. Path-scoped detail lives in [`.github/instructions/`](.github/instructions/).
 
-A custom WordPress plugin built on `rtcamp/wp-framework` (`rtCamp\WPFramework`, in the gitignored `vendor/`, not visible at review). This is the **skeleton/template**: names are placeholders (`Project Name` / `project-name` / `Project_Name`) that `npm run init` rewrites per project. Do not assume a specific project name, and never flag a placeholder as an error.
+A custom WordPress plugin built on `rtcamp/wp-primitives` (`rtCamp\WPPrimitives`, in the gitignored `vendor/`, not visible at review). This is the **skeleton/template**: names are placeholders (`Project Name` / `project-name` / `Project_Name`) that `npm run init` rewrites per project. Do not assume a specific project name, and never flag a placeholder as an error.
 
 ## Path-scoped rules (full detail)
 
-- `.github/instructions/framework-php.instructions.md`: framework architecture, security, testing, and the do/don't review flags. Shipped from `rtcamp/wp-framework`, generated locally by `npm run sync-ai` (absent until then).
+- `.github/instructions/primitives-php.instructions.md`: framework architecture, security, testing, and the do/don't review flags. Shipped from `rtcamp/wp-primitives`, generated locally by `npm run sync-ai` (absent until then).
 - `.github/instructions/structure.instructions.md`: plugin layout and wiring.
 
 The review rules ARE the coding rules: the files Copilot reviews against are the ones you write to.
@@ -47,7 +47,7 @@ To add a feature: write the test, create the concrete class extending the right 
 - Setup / features: `npm run init` (setup + manage wizard) · `npx wp-tooling add <category>/<slug>` (add a feature).
 - Dev tools (opt-in): `npm run init -- --enable=dev-tools` then `npm run dev:connect` exposes runtime telemetry over MCP — [demo](docs/dev-tools-demo.md) · [e2e check](docs/internal/dev-tools-e2e.md).
 
-Human documentation: [README.md](README.md) → [docs/index.md](docs/index.md) (developer guides), [DEVELOPMENT.md](DEVELOPMENT.md) (extending by hand), [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/internal/](docs/internal/README.md) (skeleton maintainers). Framework API detail is linked, not copied, from the `rtcamp/wp-framework` docs at the locked tag.
+Human documentation: [README.md](README.md) → [docs/index.md](docs/index.md) (developer guides), [DEVELOPMENT.md](DEVELOPMENT.md) (extending by hand), [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/internal/](docs/internal/README.md) (skeleton maintainers). Framework API detail is linked, not copied, from the `rtcamp/wp-primitives` docs at the locked tag.
 
 ## AI tooling
 
@@ -59,7 +59,7 @@ The two core tasks, **init** (set up / manage the project) and **scaffold** (add
 
 ## Knowledge graph (graphify)
 
-The repo keeps a queryable code graph in `graphify-out/` (`graph.json` + `GRAPH_REPORT.md`) covering this plugin plus `wp-tooling`, `wp-framework`, and `wp-shared-workflows`. Use it to understand the codebase, and keep it current. Tell the user each graphify step in <=30 words (50 max). Only the `init`/`scaffold` agentic tools run these commands; Copilot review does not.
+The repo keeps a queryable code graph in `graphify-out/` (`graph.json` + `GRAPH_REPORT.md`) covering this plugin plus `wp-tooling`, `wp-primitives`, and `wp-shared-workflows`. Use it to understand the codebase, and keep it current. Tell the user each graphify step in <=30 words (50 max). Only the `init`/`scaffold` agentic tools run these commands; Copilot review does not.
 
 **Graph-first: do not read source files to understand them when the graph can answer.** Before opening a file to learn what a symbol does, how a subsystem works, or how the repos connect - including `wp-tooling` engine internals (token derivation in `identity.js`, capability removal in `examples.js`, etc.) - query the graph (`/graphify query "<q>"`, `explain "<symbol>"`, `path "A" "B"`). You almost never need to read engine source: the engine is a black box these skills invoke, and the skill already documents the outcome (e.g. how a project name becomes namespace/package/prefixes). Read a file only when the graph does not answer.
 
@@ -74,7 +74,7 @@ The repo keeps a queryable code graph in `graphify-out/` (`graph.json` + `GRAPH_
 ## Guardrails (all AI tools) - BASE, non-negotiable
 
 - **Never run history- or remote-affecting `git`/`gh`.** No `commit`, `push`, `branch -D`, `reset --hard`, `rebase`, `tag`, `git add` for a commit, PR create/merge, issue/PR comment, `gh secret set`, or any write to a remote or to git history. Surface every one of those as a developer action: print the exact command for the developer to run. Read/setup git is allowed: `git clone`, `git checkout`, `git status`, `git diff` (e.g. the pilot bootstrap's sibling clones) may run with consent.
-- **Never do a destructive operation outside this plugin directory.** Do not delete or overwrite existing files in sibling repos (`../wp-tooling`, `../wp-framework`, ...) or anywhere else on disk. Cloning a NEW sibling that does not already exist is additive and allowed; modifying or removing existing out-of-repo content is not.
+- **Never do a destructive operation outside this plugin directory.** Do not delete or overwrite existing files in sibling repos (`../wp-tooling`, `../wp-primitives`, ...) or anywhere else on disk. Cloning a NEW sibling that does not already exist is additive and allowed; modifying or removing existing out-of-repo content is not.
 - Never run a package manager (`npm install`, `composer require/update`) or `npm run build` without explicit consent; print the command instead. The one consented exception is `npm run init` (the project's own setup script, on a clean tree). In-repo install steps and the pilot bootstrap (sibling clones + `file:`/`path` ref edits + installs) may run with consent.
 - Never read, log, or transmit secret values.
 - Never apply cross-file wiring without showing the diff and getting consent.

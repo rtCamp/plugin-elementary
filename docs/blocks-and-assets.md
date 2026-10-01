@@ -1,6 +1,6 @@
 # Blocks and assets
 
-How the plugin builds scripts, styles and blocks, and how each output reaches WordPress. For running the watchers see [Local development](local-development.md#edit-source-and-see-the-result); for the loader API see the framework's [`AssetLoader` reference](https://github.com/rtCamp/wp-framework/blob/v1.0.1/docs/loaders.md#assetloader).
+How the plugin builds scripts, styles and blocks, and how each output reaches WordPress. For running the watchers see [Local development](local-development.md#edit-source-and-see-the-result); for the loader API see the framework's [`AssetLoader` reference](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/loaders.md#assetloader).
 
 Names below use an initialized **Acme Content** project (`acme-content-features` text domain and handle prefix).
 
@@ -66,7 +66,7 @@ There are two ways a block reaches WordPress, and the difference decides where y
 
 Choose a class when rendering needs plugin services, several templates, or unit tests of the render logic; `render.php` is enough for simple markup. Both kinds build from `src/blocks/<block>/` into `assets/build/blocks/<block>/`. Because rendered templates go through the template loader, a theme can override them from `<theme>/acme-content-features/block-templates/`.
 
-`AbstractBlock`'s lifecycle and overridable methods (`get_block_dir()`, `get_block_args()`) are in the framework's [block reference](https://github.com/rtCamp/wp-framework/blob/v1.0.1/docs/abstracts.md#abstractblock).
+`AbstractBlock`'s lifecycle and overridable methods (`get_block_dir()`, `get_block_args()`) are in the framework's [block reference](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/abstracts.md#abstractblock).
 
 ### Create a block
 

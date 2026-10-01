@@ -14,7 +14,7 @@ namespace Project_Name\Features\Modules;
 
 use Project_Name\Features\Modules\PostTypes\ExamplePostType;
 use Project_Name\Features\Modules\PostTypes\ExamplePostTypeTwo;
-use rtCamp\WPFramework\Contracts\Abstracts\AbstractModule;
+use rtCamp\WPPrimitives\Contracts\Abstracts\AbstractModule;
 
 /**
  * Class - PostTypes

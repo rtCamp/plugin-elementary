@@ -1,6 +1,6 @@
 ---
 applyTo: "inc/**"
-description: "Plugin structure. Merges with framework-php.instructions.md and copilot-instructions.md."
+description: "Plugin structure. Merges with primitives-php.instructions.md and copilot-instructions.md."
 ---
 
 # Plugin structure

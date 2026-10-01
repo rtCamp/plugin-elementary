@@ -82,7 +82,7 @@ final class SettingsTest extends TestCase {
 	 */
 	public function test_example_is_settings_page_instance(): void {
 		$this->assertInstanceOf(
-			'rtCamp\WPFramework\Contracts\Abstracts\AbstractSettingsPage',
+			'rtCamp\WPPrimitives\Contracts\Abstracts\AbstractSettingsPage',
 			new ExampleSettingsPage()
 		);
 	}

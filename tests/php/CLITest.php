@@ -16,7 +16,7 @@ namespace Project_Name\Features\Tests;
 use Project_Name\Features\Modules\CLI;
 use Project_Name\Features\Modules\CLI\Healthcheck;
 use ReflectionMethod;
-use rtCamp\WPFramework\Contracts\Interfaces\CLICommand;
+use rtCamp\WPPrimitives\Contracts\Interfaces\CLICommand;
 
 /**
  * Class CLITest

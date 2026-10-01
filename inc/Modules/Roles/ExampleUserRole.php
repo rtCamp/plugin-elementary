@@ -9,7 +9,7 @@ declare( strict_types = 1 );
 
 namespace Project_Name\Features\Modules\Roles;
 
-use rtCamp\WPFramework\Contracts\Abstracts\AbstractUserRole;
+use rtCamp\WPPrimitives\Contracts\Abstracts\AbstractUserRole;
 
 /**
  * Class - ExampleUserRole

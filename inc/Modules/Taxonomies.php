@@ -14,7 +14,7 @@ namespace Project_Name\Features\Modules;
 
 use Project_Name\Features\Modules\Taxonomies\ExampleTaxonomy;
 use Project_Name\Features\Modules\Taxonomies\ExampleTaxonomyTwo;
-use rtCamp\WPFramework\Contracts\Abstracts\AbstractModule;
+use rtCamp\WPPrimitives\Contracts\Abstracts\AbstractModule;
 
 /**
  * Class - Taxonomies
