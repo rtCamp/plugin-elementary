@@ -87,10 +87,10 @@ Put journey and link-check results in the pull request description or release ha
 
 | Dependency | Where it is declared | When bumping |
 | --- | --- | --- |
-| `rtcamp/wp-primitives` | `composer.json` (`^1.0`), `composer.lock` | Run `composer update rtcamp/wp-primitives -W`, then `npm run sync-ai` to refresh the generated instructions. Update every pinned docs link (`grep -rn "wp-primitives/blob/v" README.md DEVELOPMENT.md docs`) to the new tag, and review the framework's changelog for anything the examples or docs must follow. |
-| `@rtcamp/wp-tooling`, lint configs | `package.json` (`github:` / `git+https:` refs to `npm/*` branches), `package-lock.json` | Run `npm update @rtcamp/wp-tooling` (and the configs) to move the lock, then re-run init and scaffold validation. |
+| `rtcamp/wp-primitives` | `composer.json` (`^2.0`), `composer.lock` | Run `composer update rtcamp/wp-primitives -W`, then `npm run sync-ai` to refresh the generated instructions. Update every pinned docs link (`grep -rn "wp-primitives/blob/v" README.md DEVELOPMENT.md docs`) to the new tag, and review the framework's changelog for anything the examples or docs must follow. |
+| `@rtcamp/wp-tooling`, lint configs | `package.json` (`^` ranges on the npm registry), `package-lock.json` | Run `npm update @rtcamp/wp-tooling` (and the configs) to move the lock, then re-run init and scaffold validation. |
 | Coding standards | `composer.json` (`rtcamp/wp-phpcs`, `rtcamp/wp-phpstan`) | `composer update rtcamp/wp-phpcs rtcamp/wp-phpstan`; fix or baseline new findings in a separate commit. |
-| Shared CI | `.github/workflows/test-measure.yml` (`@release/v1.0.0`) | Move the ref once a stable tag exists; check the input names against the new `wp-ci.yml`. |
+| Shared CI | `.github/workflows/test-measure.yml` (`@v1`) | `@v1` moves to compatible v1.x releases on its own. For a new major version, move the ref and check the input names against the new `wp-ci.yml`. |
 | Docs builder | `.github/workflows/documentation.yml` (pinned SHA) | See [Documentation publishing](#documentation-publishing). |
 
 Also keep the plugin header's `Tested up to` in step with the newest WordPress version in the CI matrix.
