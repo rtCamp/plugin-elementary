@@ -130,10 +130,7 @@ module.exports = {
 					},
 				],
 				devDependencies: {
-					// Not on npm: installed from wp-tooling's split branch, like the
-					// other @rtcamp/* configs in package.json.
-					'@rtcamp/tailwind-config':
-						'git+https://github.com/rtCamp/wp-tooling.git#npm/tailwind-config',
+					'@rtcamp/tailwind-config': '^1.1.0',
 					tailwindcss: '^4.3.0',
 					'@tailwindcss/postcss': '^4.3.0',
 				},
