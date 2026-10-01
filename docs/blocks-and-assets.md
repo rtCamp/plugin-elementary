@@ -25,7 +25,7 @@ Names below use an initialized **Acme Content** project (`acme-content-features`
 | `tailwind` | `src/css/tailwind.css` | Enqueued on the frontend when the Tailwind feature is on; see [Tailwind](tailwind.md). |
 | `@acme-content-features/module` | `src/js/modules/module.js` | Script module with an `@wordpress/interactivity` dependency, enqueued on the frontend. |
 
-`register_script()` and `register_style()` return `false` when the built file is missing, so a missing build fails quietly rather than printing a broken tag.
+`register_script()` and `register_style()` return `false` when the built file is missing, so a missing build never prints a broken tag. They also raise a `_doing_it_wrong` notice (visible with `WP_DEBUG`), which is why `Assets` checks `has_asset()` before registering optional entries such as `editor`.
 
 ### Add a script for one screen
 

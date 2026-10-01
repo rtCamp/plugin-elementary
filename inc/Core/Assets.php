@@ -247,10 +247,20 @@ final class Assets extends AssetLoader implements Registrable, Shareable {
 
 	/**
 	 * Register assets for the block editor.
+	 *
+	 * The editor entry is optional: webpack only emits `js/editor` and
+	 * `css/editor` once `src/js/editor.js` / `src/css/editor.scss` exist. Register
+	 * only what the build produced, so a project without an editor entry does
+	 * not raise an "Asset file is missing" notice on every editor load.
 	 */
 	public function register_editor_assets(): void {
-		$this->register_script( $this->handle( 'editor' ), 'js/editor' );
-		$this->register_style( $this->handle( 'editor' ), 'css/editor' );
+		if ( $this->has_asset( 'js/editor', 'js' ) ) {
+			$this->register_script( $this->handle( 'editor' ), 'js/editor' );
+		}
+
+		if ( $this->has_asset( 'css/editor', 'css' ) ) {
+			$this->register_style( $this->handle( 'editor' ), 'css/editor' );
+		}
 	}
 
 	/**
