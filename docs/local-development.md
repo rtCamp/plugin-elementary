@@ -9,6 +9,8 @@ npm run wp-env start
 npm run wp-env run cli -- wp plugin activate acme-content-features
 ```
 
+`wp-env` activates the plugin when it starts; the activate command is for a site where it is not active yet.
+
 | Site | URL | Used for |
 | --- | --- | --- |
 | Development | `http://localhost:8888` (`admin` / `password`) | Manual testing |
@@ -58,7 +60,7 @@ composer lint          # PHPCS (rtCampWP ruleset)
 composer format        # PHPCBF: auto-fix what PHPCS can
 composer phpstan       # PHPStan level 5
 
-# JavaScript, CSS and package.json.
+# JavaScript, CSS and package.json. An initialized plugin has no Jest tests until you add one.
 npm run test:js
 npm run lint:js
 npm run lint:css
@@ -78,7 +80,7 @@ npm run test:php:coverage
 
 CI runs the same checks through [`.github/workflows/test-measure.yml`](../.github/workflows/test-measure.yml): lint, JS tests, the PHP × WordPress test matrix (edit `php-versions` / `wp-versions` there) and the build, each gated on which files changed. The jobs themselves live in [wp-shared-workflows](https://github.com/rtCamp/wp-shared-workflows).
 
-A commit-message hook installed by `npm install` enforces [Conventional Commits](https://www.conventionalcommits.org/).
+The Git hooks installed by `npm install` enforce [Conventional Commits](https://www.conventionalcommits.org/) on commit messages and run lint-staged on staged files before each commit.
 
 ## Build for delivery
 

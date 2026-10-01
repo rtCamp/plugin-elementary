@@ -4,7 +4,7 @@ This guide shows how to extend the plugin by hand: where new code belongs, which
 
 Run commands from the plugin directory. The examples use an initialized project named **Acme Content**: namespace `Acme_Content\Features`, tests namespace `Acme_Content\Features\Tests`, text domain `acme-content-features`. Replace them with the values in your own `composer.json` and plugin header.
 
-The plugin sits on two layers. `vendor/rtcamp/wp-primitives/` is the upstream [framework](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/index.md): the registration system, abstract base classes, loaders and utilities, installed by Composer. `inc/` is everything project-specific. Never edit `vendor/`; it is overwritten on the next `composer install`, and framework changes belong in the framework repository.
+The plugin sits on two layers. `vendor/rtcamp/wp-primitives/` is the upstream [framework](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/index.md): the registration system, abstract base classes, loaders and utilities, installed by Composer. `inc/` is everything project-specific. Never edit `vendor/`; it is overwritten on the next `composer install`, and framework changes belong in the framework repository.
 
 ## Before adding code
 
@@ -30,9 +30,9 @@ Every PHP file starts with `declare( strict_types = 1 );`, uses full parameter a
 3. The `Loader` instantiates each class. If it implements `Registrable`, it calls `register_hooks()`; a `ConditionallyRegistrable` class is skipped when `can_register()` returns false. If it implements `Shareable`, the instance is kept in `Main`'s container for `get_shared()`.
 4. A module is itself `Registrable`: its `register_hooks()` loads the classes from its `get_classes()` the same way.
 
-A class that is not reachable from `Main::CLASSES` never runs, even if it autoloads. The framework's [architecture overview](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/architecture.md) explains the loop and [when hooks actually fire](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/architecture.md#when-hooks-actually-fire).
+A class that is not reachable from `Main::CLASSES` never runs, even if it autoloads. The framework's [architecture overview](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/architecture.md) explains the loop and [when hooks actually fire](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/architecture.md#when-hooks-actually-fire).
 
-**Do not default to `Singleton`.** It is for `Main` only. Use a plain `Registrable` loaded by a module; add `Shareable` only when another class must retrieve the instance (see [sharing vs. singletons](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/architecture.md#sharing-vs-singletons)).
+**Do not default to `Singleton`.** It is for `Main` only. Use a plain `Registrable` loaded by a module; add `Shareable` only when another class must retrieve the instance (see [sharing vs. singletons](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/architecture.md#sharing-vs-singletons)).
 
 ## The module pattern
 
@@ -58,21 +58,21 @@ final class PostTypes extends AbstractModule {
 
 | Feature | Extends / implements | Framework reference |
 | --- | --- | --- |
-| Custom post type | `AbstractPostType` | [abstracts](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/abstracts.md#abstractposttype) |
-| Taxonomy | `AbstractTaxonomy` | [abstracts](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/abstracts.md#abstracttaxonomy) |
-| Dynamic block rendered by a class | `AbstractBlock` (see [Blocks and assets](docs/blocks-and-assets.md#blocks)) | [abstracts](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/abstracts.md#abstractblock) |
-| Shortcode | `AbstractShortcode` | [abstracts](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/abstracts.md#abstractshortcode) |
-| REST controller | `AbstractRESTController` | [abstracts](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/abstracts.md#abstractrestcontroller) |
-| Settings page | `AbstractSettingsPage` | [abstracts](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/abstracts.md#abstractsettingspage) |
-| Other admin page | `AbstractAdminPage` | [abstracts](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/abstracts.md#abstractadminpage) |
-| User role | `AbstractUserRole` | [abstracts](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/abstracts.md#abstractuserrole) |
-| Behaviour behind a runtime feature flag | `AbstractFeature` (not used by the skeleton yet) | [abstracts](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/abstracts.md#abstractfeature) |
-| WP-CLI command | `CLICommand` interface, listed in `CLI::get_commands()` | [contracts](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/contracts.md#clicommand) |
-| Cron job, cache or transient wrapper, integration — anything that just wires hooks | `Registrable` interface (see `ExampleCronJob`, `ExampleCache`) | [contracts](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/contracts.md#registrable) |
-| Same, but only in some contexts | `ConditionallyRegistrable` interface | [contracts](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/contracts.md#conditionallyregistrable) |
-| A service other classes retrieve | `Registrable` + `Shareable`, listed in `Main::CLASSES` | [contracts](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/contracts.md#shareable) |
+| Custom post type | `AbstractPostType` | [abstracts](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/abstracts.md#abstractposttype) |
+| Taxonomy | `AbstractTaxonomy` | [abstracts](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/abstracts.md#abstracttaxonomy) |
+| Dynamic block rendered by a class | `AbstractBlock` (see [Blocks and assets](docs/blocks-and-assets.md#blocks)) | [abstracts](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/abstracts.md#abstractblock) |
+| Shortcode | `AbstractShortcode` | [abstracts](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/abstracts.md#abstractshortcode) |
+| REST controller | `AbstractRESTController` | [abstracts](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/abstracts.md#abstractrestcontroller) |
+| Settings page | `AbstractSettingsPage` | [abstracts](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/abstracts.md#abstractsettingspage) |
+| Other admin page | `AbstractAdminPage` | [abstracts](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/abstracts.md#abstractadminpage) |
+| User role | `AbstractUserRole` | [abstracts](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/abstracts.md#abstractuserrole) |
+| Behaviour behind a runtime feature flag | `AbstractFeature` (not used by the skeleton yet) | [abstracts](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/abstracts.md#abstractfeature) |
+| WP-CLI command | `CLICommand` interface, listed in `CLI::get_commands()` | [contracts](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/contracts.md#clicommand) |
+| Cron job, cache or transient wrapper, integration — anything that just wires hooks | `Registrable` interface (see `ExampleCronJob`, `ExampleCache`) | [contracts](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/contracts.md#registrable) |
+| Same, but only in some contexts | `ConditionallyRegistrable` interface | [contracts](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/contracts.md#conditionallyregistrable) |
+| A service other classes retrieve | `Registrable` + `Shareable`, listed in `Main::CLASSES` | [contracts](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/contracts.md#shareable) |
 
-Never call `register_post_type()`, `register_taxonomy()`, `register_rest_route()` outside a controller, `add_menu_page()`, `add_shortcode()` or `register_block_type()` directly from a feature class: extend the matching abstract. The framework's [hook table](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/abstracts.md#which-hook-each-one-uses) shows which WordPress hook each abstract uses.
+Never call `register_post_type()`, `register_taxonomy()`, `register_rest_route()` outside a controller, `add_menu_page()`, `add_shortcode()` or `register_block_type()` directly from a feature class: extend the matching abstract. The framework's [hook table](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/abstracts.md#which-hook-each-one-uses) shows which WordPress hook each abstract uses.
 
 ## Add a post type
 
@@ -191,7 +191,7 @@ protected function get_classes(): array {
 }
 ```
 
-Rerun the test, then check the site: `npm run wp-env run cli -- wp post-type list` includes `book`, and **Books** appears in the admin menu. `AbstractPostType` registers on `init`; override `get_editor_supports()`, `get_custom_options()` and the other methods listed in the [post type reference](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/abstracts.md#abstractposttype) to change its behaviour.
+Rerun the test, then check the site: `npm run wp-env run cli -- wp post-type list` includes `book`, and **Books** appears in the admin menu. `AbstractPostType` registers on `init`; override `get_editor_supports()`, `get_custom_options()` and the other methods listed in the [post type reference](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/abstracts.md#abstractposttype) to change its behaviour.
 
 ## Add a taxonomy
 
@@ -282,7 +282,7 @@ $html   = Util::templates()->get( 'content/book-card', null, [ 'book' => $post ]
 
 Anything shared without an accessor (`Assets`, `Components`) is retrieved with `Main::get_instance()->get_shared( Assets::class )`.
 
-To add a shared service, create `inc/Core/<Service>.php` implementing `Shareable` (and `Registrable` if it hooks WordPress), add it to `Main::CLASSES` under the core services, and add a one-line accessor to `Util`. The framework utilities you can wrap this way are documented in [utilities](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/utilities.md): `Cache`, `Transients`, `Encryptor`, `Logger`, `FeatureSelector`, `Timer`.
+To add a shared service, create `inc/Core/<Service>.php` implementing `Shareable` (and `Registrable` if it hooks WordPress), add it to `Main::CLASSES` under the core services, and add a one-line accessor to `Util`. The framework utilities you can wrap this way are documented in [utilities](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/utilities.md): `Cache`, `Transients`, `Encryptor`, `Logger`, `FeatureSelector`, `Timer`.
 
 ## Conditional registration
 
@@ -321,9 +321,9 @@ Run the focused test, then the full checks in [Local development](docs/local-dev
 | --- | --- |
 | Class autoloads but nothing happens | Is it in its module's `get_classes()`, and is that module in `Main::CLASSES`? For CLI commands, is it in `CLI::get_commands()`? |
 | `Class not found` | The namespace must match the directory and the file name the class. Run `composer dump-autoload` after moving files. |
-| Hook callback never runs | Check `register_hooks()` adds it, and that the hook has not already fired when the class loads (see [when hooks fire](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/architecture.md#when-hooks-actually-fire)). |
+| Hook callback never runs | Check `register_hooks()` adds it, and that the hook has not already fired when the class loads (see [when hooks fire](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/architecture.md#when-hooks-actually-fire)). |
 | `get_shared()` fails | The class must implement `Shareable` and be listed in `Main::CLASSES` (a module's classes are not shared through `Main`). |
 | Post type or taxonomy missing | Run `wp post-type list` / `wp taxonomy list`; confirm registration and that the plugin is active. |
 | Composer dependencies not installed | The plugin shows an admin notice instead of a fatal error. Run `composer install` and reload. |
 
-Keep framework API details in the [framework docs](https://github.com/rtCamp/wp-primitives/blob/v1.0.1/docs/index.md), and see [Included features](docs/features.md) for what the skeleton already provides.
+Keep framework API details in the [framework docs](https://github.com/rtCamp/wp-primitives/blob/v2.0.0/docs/index.md), and see [Included features](docs/features.md) for what the skeleton already provides.
