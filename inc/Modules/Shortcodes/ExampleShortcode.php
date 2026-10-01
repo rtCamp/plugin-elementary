@@ -50,7 +50,7 @@ final class ExampleShortcode extends AbstractShortcode {
 		ob_start();
 		?>
 		<div class="project-name-example-shortcode">
-			<?php if ( $title ) : ?>
+			<?php if ( '' !== $title ) : ?>
 				<h2><?php echo esc_html( $title ); ?></h2>
 			<?php endif; ?>
 			<p>
@@ -64,7 +64,7 @@ final class ExampleShortcode extends AbstractShortcode {
 				);
 				?>
 			</p>
-			<?php if ( $content ) : ?>
+			<?php if ( null !== $content && '' !== $content ) : ?>
 				<div class="project-name-example-shortcode__content">
 					<?php echo wp_kses_post( $content ); ?>
 				</div>
