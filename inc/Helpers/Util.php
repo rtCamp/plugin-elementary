@@ -87,12 +87,18 @@ final class Util {
 	/**
 	 * Load a plugin data file from the /inc/data/ directory.
 	 *
-	 * @param string $slug          File slug (no .php extension).
-	 * @param mixed  $default_value Default value if the file is not found.
+	 * @param string $slug          File slug (no .php extension): letters, digits, hyphens
+	 *                              and underscores only.
+	 * @param mixed  $default_value Default value if the slug is invalid or the file is not found.
 	 *
 	 * @return mixed File contents or $default_value.
 	 */
 	public static function get_data( string $slug, mixed $default_value = [] ): mixed {
+		// The slug becomes part of a require path, so refuse anything that could leave inc/data/.
+		if ( 1 !== preg_match( '/^[A-Za-z0-9_-]+$/', $slug ) ) {
+			return $default_value;
+		}
+
 		$data_file = sprintf( PROJECT_NAME_FEATURES_PATH . 'inc/data/%s.php', $slug );
 
 		if ( file_exists( $data_file ) ) {
