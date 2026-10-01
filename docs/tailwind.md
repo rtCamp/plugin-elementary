@@ -43,6 +43,3 @@ This sets the constant back to `false`, deletes `src/css/tailwind.css` and `post
 
 Tailwind itself is documented at [tailwindcss.com](https://tailwindcss.com/docs); the shared PostCSS preset lives in [wp-tooling](https://github.com/rtCamp/wp-tooling).
 
-## Known check failures
-
-With Tailwind on, `npm run lint:css` fails: the shared Stylelint rules reject the `@source` directive in `src/css/tailwind.css` (`scss/at-rule-no-unknown`). Report such failures separately rather than turning the feature off to hide them; see [maintenance known gaps](internal/maintenance.md#known-gaps).

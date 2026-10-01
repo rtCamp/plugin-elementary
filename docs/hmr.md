@@ -82,7 +82,7 @@ Copy `.env.local.example` to `.env.local` and set your local site hostname:
 WP_HOST=yoursite.local
 ```
 
-`WP_HOST` is your local site's hostname (without protocol or port). Set it to match your local hostname exactly. For the bundled `wp-env` site it is `localhost`, and `wp-env` already defines `WP_ENVIRONMENT_TYPE` as `local`. With `wp-env`, also change `BLOCKS_DEV_SERVER_PORT` from the example's `8888` (see [Block dev server port](#block-dev-server-port)).
+`WP_HOST` is your local site's hostname (without protocol or port). Set it to match your local hostname exactly. For the bundled `wp-env` site it is `localhost`, and `wp-env` already defines `WP_ENVIRONMENT_TYPE` as `local`.
 
 `.env.local` is gitignored.
 
