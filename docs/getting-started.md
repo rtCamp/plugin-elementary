@@ -14,10 +14,10 @@ An existing local WordPress installation can replace the `wp-env` site; Docker i
 
 ## 1. Get the skeleton
 
-Download it into the folder that will become your plugin directory. Composer gives you a copy without the skeleton's Git history:
+Download it into the folder that will become your plugin directory. Composer gives you a copy without the skeleton's Git history and installs the Composer dependencies:
 
 ```bash
-composer create-project --no-install rtcamp/plugin-elementary acme-content-features
+composer create-project rtcamp/plugin-elementary acme-content-features
 cd acme-content-features
 git init
 git add .
@@ -35,7 +35,7 @@ nvm install
 nvm use
 ```
 
-`--no-install` only downloads the skeleton, so step 2 installs the dependencies with the selected Node version. The first commit gives the Composer copy a baseline to review init's changes against, and the repository lets `npm install` set up the Git hooks.
+The first commit gives the Composer copy a baseline to review init's changes against, and the repository lets `npm install` in step 2 set up the Git hooks.
 
 The folder name is the plugin's directory in WordPress and is what you pass to `wp plugin activate`. Name it after the main plugin file init will create (`acme-content-features`), so the local copy matches the release zip.
 

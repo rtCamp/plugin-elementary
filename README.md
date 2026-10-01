@@ -33,7 +33,7 @@ The skeleton documents what it provides and how to build on it. The framework's 
 Create a new plugin with Composer, or clone this repository:
 
 ```bash
-composer create-project --no-install rtcamp/plugin-elementary my-plugin
+composer create-project rtcamp/plugin-elementary my-plugin
 ```
 
 Then follow [Getting Started](docs/getting-started.md): prerequisites, getting the skeleton, installing, naming the plugin, and seeing it running in a local WordPress site. It takes about fifteen minutes.
