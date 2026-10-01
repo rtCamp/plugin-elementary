@@ -7,9 +7,7 @@ This document explains how live reload and hot module replacement work in the pl
 Running `npm start` runs two scripts in parallel, each with a complementary tool:
 
 - **`start:assets` → BrowserSync** (port 3003) — live reload for the frontend via snippet mode. Your site URL stays unchanged.
-- **`start:blocks` → webpack-dev-server / Fast Refresh** (port 8888 by default, configurable via `BLOCKS_DEV_SERVER_PORT`) — hot module replacement for block editor React components. Block state is preserved across updates; no full page reload needed.
-
-> Port 8888 is also the default `wp-env` development site. When you run the site with `wp-env`, set `BLOCKS_DEV_SERVER_PORT` to a free port (for example `8887`) in `.env.local`; see [Block dev server port](#block-dev-server-port).
+- **`start:blocks` → webpack-dev-server / Fast Refresh** (port 8887 by default, configurable via `BLOCKS_DEV_SERVER_PORT`) — hot module replacement for block editor React components. Block state is preserved across updates; no full page reload needed.
 
 For BrowserSync:
 
@@ -106,10 +104,10 @@ define( 'PROJECT_NAME_FEATURES_BROWSER_SYNC_URL', 'https://yoursite.local:3002/b
 
 ### Block dev server port
 
-The block Fast Refresh dev server runs on port 8888 by default, the same port as the `wp-env` development site. When using `wp-env`, or when that port is already in use, set a free port such as 8887 in `.env.local`:
+The block Fast Refresh dev server runs on port 8887 by default, next to the `wp-env` sites on 8888 and 8889. If 8887 is already in use, for example by the starter theme's dev server, set another free port in `.env.local`:
 
 ```
-BLOCKS_DEV_SERVER_PORT=8887
+BLOCKS_DEV_SERVER_PORT=8886
 ```
 
 `webpack.blocks.config.js` reads this value and applies it to the dev server. No matching `wp-config.php` constant is needed — the editor loads block scripts from disk, and the HMR client connects to the dev server directly.
@@ -180,7 +178,7 @@ This takes precedence over the auto-detected URL.
 
 **BrowserSync port**: BrowserSync requires its own port (3003) separate from your local site. Snippet mode keeps the site URL unchanged — proxy mode would change the URL and break WordPress redirects and cookie domains.
 
-**WDS host validation**: WDS runs on `localhost:8888` by default. For custom local hostnames (e.g. `yoursite.local`), `webpack.blocks.config.js` sets `devServer.allowedHosts` to `localhost` plus your `WP_HOST` (rather than the blanket `all`) so the HMR WebSocket connection is accepted without exposing the dev server to DNS-rebinding.
+**WDS host validation**: WDS runs on `localhost:8887` by default. For custom local hostnames (e.g. `yoursite.local`), `webpack.blocks.config.js` sets `devServer.allowedHosts` to `localhost` plus your `WP_HOST` (rather than the blanket `all`) so the HMR WebSocket connection is accepted without exposing the dev server to DNS-rebinding.
 
 ## Related
 

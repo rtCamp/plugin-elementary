@@ -40,8 +40,6 @@ Treat `assets/build/` as generated output; never edit it. [Blocks and assets](bl
 | `npm run start:blocks` | Block dev server with Fast Refresh for block editor components. |
 | `npm run build:dev` | One-off development build of assets and blocks. |
 
-> **Port clash with `wp-env`:** the block dev server defaults to port 8888, which is also the `wp-env` development site. When using `wp-env`, set `BLOCKS_DEV_SERVER_PORT=8887` (or any free port) in `.env.local` before `npm start` or `npm run start:blocks`. `.env.local.example` sets 8888, so change it after copying.
-
 ### Automatic reload
 
 Copy `.env.local.example` to `.env.local` (gitignored) and set `WP_HOST` to your site's hostname. For `wp-env`, use `WP_HOST=localhost` and `BLOCKS_DEV_SERVER_PORT=8887`. HMR is on by default and needs `WP_ENVIRONMENT_TYPE` to be `local` (the `wp-env` default). Block Fast Refresh also needs `SCRIPT_DEBUG`. See [Live reload and block HMR](hmr.md) for HTTPS, custom ports and turning it off.
@@ -146,7 +144,7 @@ Run each with `-- --help` for the options your installed revision supports.
 | Symptom | Check and next action |
 | --- | --- |
 | `wp-env start` reports a port in use | Another site or the block dev server holds 8888/8889. Stop it or use `WP_ENV_PORT` / `WP_ENV_TESTS_PORT`. |
-| `localhost:8888` shows a webpack 404 page instead of WordPress | The block dev server is on 8888 alongside `wp-env`; both can start without a port error on macOS. Set `BLOCKS_DEV_SERVER_PORT=8887` in `.env.local` and restart `npm start`. |
+| `localhost:8888` shows a webpack 404 page instead of WordPress | `BLOCKS_DEV_SERVER_PORT` in `.env.local` is set to 8888, the `wp-env` site's port. Set it back to 8887 (or another free port) and restart `npm start`. |
 | `npm start` fails with `EADDRINUSE` | Another dev server already holds the block dev server's port; stop it or set `BLOCKS_DEV_SERVER_PORT` in `.env.local`. |
 | `npm run test:php` cannot connect | The environment is not running. Run `npm run wp-env start` and retry. |
 | Admin notice: "The Composer autoloader was not found" | `vendor/autoload.php` is missing. Run `composer install`; the plugin shows this notice instead of a fatal error and loads nothing else. |

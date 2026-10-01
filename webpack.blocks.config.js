@@ -27,7 +27,7 @@ require( 'dotenv' ).config( { path: '.env.local', quiet: true } );
  */
 const config = require( '@wordpress/scripts/config/webpack.config' );
 
-const DEFAULT_DEV_SERVER_PORT = 8888;
+const DEFAULT_DEV_SERVER_PORT = 8887;
 
 /**
  * Parse a TCP port from an env value, falling back when it is missing or not a
@@ -38,7 +38,7 @@ const DEFAULT_DEV_SERVER_PORT = 8888;
  * @return {number} A valid port.
  */
 const toPort = ( value, fallback ) => {
-	const port = parseInt( value, 10 );
+	const port = Number( value );
 	return Number.isInteger( port ) && port >= 1 && port <= 65535
 		? port
 		: fallback;
