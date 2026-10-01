@@ -81,7 +81,7 @@ module.exports = {
 	source: {
 		name: 'Project Name',
 		namespace: 'Project_Name\\Features',
-		package: 'rtcamp/project-name-features',
+		package: 'rtcamp/plugin-elementary',
 	},
 
 	namespace: ( id ) => `${ id.pascalSnake }\\Features`,

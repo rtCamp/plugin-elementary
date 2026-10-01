@@ -1,5 +1,5 @@
 {
-    "name": "rtcamp/project-name-features",
+    "name": "rtcamp/plugin-elementary",
     "description": "All backend functionality: post types, taxonomies, blocks, REST endpoints, settings, shortcodes, and custom roles.",
     "type": "wordpress-plugin",
     "license": "GPL-2.0-or-later",
