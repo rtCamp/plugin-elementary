@@ -40,8 +40,6 @@
 				<element value="default"/>
 			</property>
 		</properties>
-		<!-- Block render files carry their own text domain from @wordpress/create-block. -->
-		<exclude-pattern>src/blocks/*/render.php</exclude-pattern>
 	</rule>
 
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">

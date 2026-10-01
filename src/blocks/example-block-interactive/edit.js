@@ -31,7 +31,7 @@ export default function Edit() {
 		<p { ...blockProps }>
 			{ __(
 				'Example Block Interactive – hello from the editor!',
-				'example-block-interactive'
+				'project-name-features'
 			) }
 		</p>
 	);

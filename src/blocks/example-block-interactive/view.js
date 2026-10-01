@@ -3,7 +3,7 @@
  */
 import { store, getContext } from '@wordpress/interactivity';
 
-store( 'create-block', {
+store( 'project-name-features/example-block-interactive', {
 	actions: {
 		toggle: () => {
 			const context = getContext();

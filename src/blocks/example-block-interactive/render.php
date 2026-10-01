@@ -21,7 +21,7 @@ $unique_id = wp_unique_id( 'p-' );
 
 <div
 	<?php echo get_block_wrapper_attributes(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Core API returns safe HTML attributes. ?>
-	data-wp-interactive="create-block"
+	data-wp-interactive="project-name-features/example-block-interactive"
 	<?php echo wp_interactivity_data_wp_context( [ 'isOpen' => false ] ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Core API returns safe HTML attributes. ?>
 	data-wp-watch="callbacks.logIsOpen"
 >
@@ -30,7 +30,7 @@ $unique_id = wp_unique_id( 'p-' );
 		data-wp-bind--aria-expanded="context.isOpen"
 		aria-controls="<?php echo esc_attr( $unique_id ); ?>"
 	>
-		<?php esc_html_e( 'Toggle', 'example-block-interactive' ); ?>
+		<?php esc_html_e( 'Toggle', 'project-name-features' ); ?>
 	</button>
 
 	<p
@@ -38,7 +38,7 @@ $unique_id = wp_unique_id( 'p-' );
 		data-wp-bind--hidden="!context.isOpen"
 	>
 		<?php
-			esc_html_e( 'Example Block Interactive - hello from an interactive block!', 'example-block-interactive' );
+			esc_html_e( 'Example Block Interactive - hello from an interactive block!', 'project-name-features' );
 		?>
 	</p>
 </div>
