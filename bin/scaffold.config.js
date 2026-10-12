@@ -19,6 +19,11 @@
  * `features` instead, so the engine can add/remove those deps on toggle.
  */
 
+/**
+ * Internal dependencies
+ */
+const devTools = require( './features/dev-tools' );
+
 const mainFile = ( api ) => `${ api.identity.package.split( '/' )[ 1 ] }.php`;
 const tailwindConst = ( api ) =>
 	`${ api.identity.constantPrefix }_FEATURES_ENABLE_TAILWIND`;
@@ -102,7 +107,7 @@ module.exports = {
 		{ path: 'package.json', kind: 'json', key: 'version' },
 	],
 
-	steps: { composer: true, cleanup: false, git: true, hooks: true },
+	steps: { composer: true, cleanup: true, git: true, hooks: true },
 
 	// Dep/build-config-carrying capabilities. Toggling adds/removes their deps.
 	featuresDir: 'bin/features',
@@ -159,6 +164,7 @@ module.exports = {
 				);
 			},
 		},
+		devTools,
 	],
 
 	// Keep/remove capabilities. Removing deletes the module + classes + its
@@ -225,6 +231,20 @@ module.exports = {
 				'CI: Test & Measure (all checks)',
 				'test-measure.yml'
 			),
+		],
+	},
+
+	// Skeleton-only files a generated plugin should not inherit. `languages` goes
+	// because its .pot still lists strings from removed example sets; `npm run
+	// pot` recreates it.
+	cleanup: {
+		targets: [
+			'tests/js/scaffold-config.test.js',
+			'.github/workflows/documentation.yml',
+			'.github/CODEOWNERS',
+			'.claude/skills/scaffold/evals',
+			'.claude/skills/setup/evals',
+			'languages',
 		],
 	},
 

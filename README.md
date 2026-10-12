@@ -42,7 +42,7 @@ Then follow [Getting Started](docs/getting-started.md): prerequisites, getting t
 
 - **Infrastructure** that stays in every project: bootstrap and loader, asset registration, theme-overridable templates and components, a shared logger, an encryption service, activation and deactivation handling, and PHPUnit, PHPCS, PHPStan, ESLint and Stylelint setups.
 - **Twelve example sets**, one per feature domain (post types, taxonomies, blocks, REST, WP-CLI, cron, settings pages, admin pages, user roles, shortcodes, cache, transients). Each is a working, tested reference you keep or remove at setup.
-- **Optional development features**: HMR live reload (on by default), Tailwind CSS, and Dev Tools runtime telemetry over MCP.
+- **Optional development features**: HMR live reload (on by default), Tailwind CSS, and DevTools runtime telemetry over MCP.
 
 See [Included features](docs/features.md) for where each one lives and how to see it working.
 

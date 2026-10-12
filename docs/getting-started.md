@@ -59,7 +59,7 @@ git status --short
 npm run init
 ```
 
-Use **Acme Content** as the plugin name. For this first walkthrough, keep every example set and the default features: HMR on, Tailwind and Dev Tools off. [Initialization](initialization.md) explains each prompt.
+Use **Acme Content** as the plugin name. For this first walkthrough, keep every example set and the default features: HMR on, Tailwind and DevTools off. [Initialization](initialization.md) explains each prompt.
 
 Alternatively, open the clone in Claude Code and ask:
 
