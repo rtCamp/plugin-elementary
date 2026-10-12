@@ -45,6 +45,7 @@ To add a feature: write the test, create the concrete class extending the right 
 - PHP: `composer lint` (PHPCS) · `composer format` (phpcbf) · `composer phpstan`; the PHPUnit suite runs under `wp-env` via `npm run test:php`.
 - JS/build: `npm run build:dev` · `npm run build:prod` · `npm run lint` · `npm run test`.
 - Setup / features: `npm run init` (setup + manage wizard) · `npx wp-tooling add <category>/<slug>` (add a feature).
+- DevTools (opt-in): `npm run init -- --enable=dev-tools` then `npm run dev:connect` exposes runtime telemetry over MCP — [demo](docs/dev-tools-demo.md) · `bash bin/dev-tools-e2e.sh` checks the setup.
 
 Human documentation: [README.md](README.md) → [docs/index.md](docs/index.md) (developer guides), [DEVELOPMENT.md](DEVELOPMENT.md) (extending by hand), [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/internal/](docs/internal/README.md) (skeleton maintainers). Framework API detail is linked, not copied, from the `rtcamp/wp-primitives` docs at the locked tag.
 

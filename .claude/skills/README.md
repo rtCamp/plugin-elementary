@@ -4,7 +4,7 @@ Skills for AI assistants (Claude Code, Cursor, and any tool that reads the Claud
 
 | Skill | Invoke | What it does |
 |---|---|---|
-| [`init/`](init/SKILL.md) | `/init` | Turn this cloned skeleton into a named project and manage it afterwards: rename the starter tokens, keep/remove the example sets, toggle optional features (Tailwind, HMR, Dev Tools). Drives `npm run init`. |
+| [`init/`](init/SKILL.md) | `/init` | Turn this cloned skeleton into a named project and manage it afterwards: rename the starter tokens, keep/remove the example sets, toggle optional features (Tailwind, HMR, DevTools). Drives `npm run init`. |
 | [`scaffold/`](scaffold/SKILL.md) | `/scaffold` | Add one feature (CPT, taxonomy, block, REST controller, shortcode, cron, CLI, settings page, user role, service, CI workflow) via `npx wp-tooling add`, TDD-first. |
 | [`setup/`](setup/SKILL.md) | `/setup` | Generic tooling bootstrap for plugins and themes, shipped with `@rtcamp/wp-tooling`. Not a personalization path for this skeleton; use `/init`. |
 
