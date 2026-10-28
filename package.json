@@ -100,7 +100,7 @@
     "test": "npm-run-all --parallel test:js test:php",
     "test:js": "wp-scripts test-unit-jest --config=tests/js/jest.config.js --passWithNoTests",
     "test:js:watch": "npm run test:js -- --watch",
-    "pretest:php": "wp-env start --config=.wp-env.tests.json && wp-env run --config=.wp-env.tests.json cli --env-cwd=wp-content/plugins/$(basename \"$PWD\") -- sh -c 'test -f vendor/autoload.php || composer install --no-interaction'",
+    "pretest:php": "(wp-env run --config=.wp-env.tests.json cli true >/dev/null 2>&1 || wp-env start --config=.wp-env.tests.json) && ([ vendor/autoload.php -nt composer.lock ] || wp-env run --config=.wp-env.tests.json cli --env-cwd=wp-content/plugins/$(basename \"$PWD\") -- composer install --no-interaction)",
     "test:php": "wp-env run --config=.wp-env.tests.json cli --env-cwd=wp-content/plugins/$(basename \"$PWD\") -- vendor/bin/phpunit -c phpunit.xml.dist",
     "pretest:php:coverage": "echo \"\\e[1m\\e[32mMake sure you have run npm run wp-env start -- --config=.wp-env.tests.json --xdebug=coverage before using this command\\e[0m\" && wp-env run --config=.wp-env.tests.json cli --env-cwd=wp-content/plugins/$(basename \"$PWD\") -- sh -c 'test -f vendor/autoload.php || composer install --no-interaction'",
     "test:php:coverage": "wp-env run --config=.wp-env.tests.json cli --env-cwd=wp-content/plugins/$(basename \"$PWD\") -- vendor/bin/phpunit -c phpunit.xml.dist --coverage-html coverage",
