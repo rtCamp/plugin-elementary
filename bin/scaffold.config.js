@@ -228,11 +228,20 @@ module.exports = {
 		],
 	},
 
-	// The skeleton's own release workflow, config and manifest. Cleanup also runs
-	// on re-init and --clean, so both paths are named for the skeleton: a
-	// project's own release-please files never live there.
+	// Skeleton-only repository files. A composer create-project copy never has them
+	// (.gitattributes export-ignores each one); a git clone does, so init removes them.
+	// Cleanup also runs on re-init and --clean, so the release paths are named for the
+	// skeleton: a project's own release-please files never live there.
 	cleanup: {
 		targets: [
+			'.gitattributes',
+			'.github/CODEOWNERS',
+			'.github/ISSUE_TEMPLATE/bug.yml',
+			'.github/ISSUE_TEMPLATE/config.yml',
+			'.github/ISSUE_TEMPLATE/feature.yml',
+			'.github/labels.yml',
+			'.github/release.yml',
+			'SECURITY.md',
 			'.github/release-starter',
 			'.github/workflows/release-starter.yml',
 		],
