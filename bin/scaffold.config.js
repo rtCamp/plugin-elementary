@@ -102,7 +102,7 @@ module.exports = {
 		{ path: 'package.json', kind: 'json', key: 'version' },
 	],
 
-	steps: { composer: true, cleanup: false, git: true, hooks: true },
+	steps: { composer: true, cleanup: true, git: true, hooks: true },
 
 	// Dep/build-config-carrying capabilities. Toggling adds/removes their deps.
 	featuresDir: 'bin/features',
@@ -225,6 +225,16 @@ module.exports = {
 				'CI: Test & Measure (all checks)',
 				'test-measure.yml'
 			),
+		],
+	},
+
+	// Starter-only files init removes from a new project. The release automation
+	// cuts plugin-elementary's own versions; a project starts at its own version.
+	cleanup: {
+		targets: [
+			'release-please-config.json',
+			'.release-please-manifest.json',
+			'.github/workflows/release.yml',
 		],
 	},
 

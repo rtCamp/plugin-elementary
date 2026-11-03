@@ -81,6 +81,18 @@ Use the explicit commands in [Local development](../local-development.md#check-a
 
 Put journey and link-check results in the pull request description or release hand-off: the date, skeleton commit (and any uncommitted changes), dependency revisions, Node/PHP versions, environment and local overrides. Record one row per route, init mode, removal or feature selection, scaffold or manual example, build and check: the command, the expected result, the actual result, and **pass / fail / blocked** with evidence.
 
+## Releasing the skeleton
+
+Releases of the skeleton itself are cut by [release-please](https://github.com/googleapis/release-please) (`.github/workflows/release.yml`). Projects made from it do not inherit this: init removes the release workflow and config, and projects release with `npm run release:bump` and `npm run release:changelog`.
+
+1. Pull requests are squash-merged, so each PR title becomes one Conventional Commit on `main`. release-please reads those subjects and keeps a release pull request open that bumps the version in `package.json`, `package-lock.json` and the plugin header in `project-name-features.php` (between the `x-release-please-start-version` and `x-release-please-end` lines), and writes the next `CHANGELOG.md` section.
+2. The title's type decides the version: `fix:` is a patch, `feat:` a minor, and `feat!:` (or a `BREAKING CHANGE:` footer) a major. Anything that changes what init generates, renames a script or a file a project relies on, or raises a minimum version is a `feat!:`. `docs:`, `test:`, `ci:`, `chore:` and `refactor:` cut no release. Dependabot pull requests are prefixed `chore` (see `.github/dependabot.yml`), so they cut no release on their own. Keep it that way: release-please cuts a release for any type with a visible changelog section, `build` included.
+3. When you want to release, run the [release validation](#release-validation) against the release pull request's branch, reword its entries if a title reads badly, then squash-merge it. release-please tags `vX.Y.Z` and publishes the GitHub release with that section as the notes.
+
+The release pull request is opened with `GITHUB_TOKEN`, so GitHub starts no workflow runs on it, and the PR title check is not a required status check for that reason. A GitHub App token in the workflow would give the release pull request its own runs. Never push a `v*` tag or edit `.release-please-manifest.json` by hand.
+
+`PROJECT_NAME_FEATURES_VERSION` stays at `1.0.0` on purpose. Init rewrites the header and `package.json` to a new project's version but not the constant, so a starter release that moved it would give every new project a constant that disagrees with its header.
+
 ## Dependency updates
 
 | Dependency | Where it is declared | When bumping |

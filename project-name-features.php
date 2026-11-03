@@ -10,7 +10,9 @@
  * Plugin Name:       Project Name Features
  * Plugin URI:        https://rtcamp.com
  * Description:       All backend functionality: post types, taxonomies, blocks, REST endpoints, settings, shortcodes, and custom roles.
+ * x-release-please-start-version
  * Version:           1.0.0
+ * x-release-please-end
  * Author:            rtCamp
  * Author URI:        https://rtcamp.com
  * License:           GPL-2.0-or-later
