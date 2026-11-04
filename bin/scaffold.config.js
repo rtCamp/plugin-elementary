@@ -228,12 +228,12 @@ module.exports = {
 		],
 	},
 
-	// The skeleton's own release workflow, config and manifest. Projects don't
-	// release with them, and the skeleton-only paths keep a re-init from removing
-	// a project's own release files.
+	// The skeleton's own release workflow, config and manifest. Cleanup also runs
+	// on re-init and --clean, so both paths are named for the skeleton: a
+	// project's own release-please files never live there.
 	cleanup: {
 		targets: [
-			'.github/release-please',
+			'.github/release-starter',
 			'.github/workflows/release-starter.yml',
 		],
 	},
