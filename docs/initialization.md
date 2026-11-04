@@ -69,12 +69,12 @@ What each set contains is listed in [Included features](features.md).
 | Area | Result |
 | --- | --- |
 | Identity | `Project Name` / `project-name` / `Project_Name` / `PROJECT_NAME` tokens are replaced across source, config, tests and docs. The main file is renamed. |
-| Version | Written to the main file's header and `package.json`. |
+| Version | Written to the main file's header and `package.json`. With the release feature on, it also becomes `initial-version` in `release-please-config.json`, the version of the project's first release. |
 | Removed example sets | The module file (`inc/Modules/<Module>.php`), its folder, its test (`tests/php/<Module>Test.php`), its `Main::CLASSES` line and any coupled region (for example the static block list in `inc/Core/Assets.php` for `blocks`, the unschedule call in `inc/Core/PluginSetup.php` for `cron`). |
 | Kept example sets | Stay as working references. Their `// wp:example:<key>` markers are removed. |
-| Optional features | `hmr` edits `.env.local`; `tailwind` adds `src/css/tailwind.css`, `postcss.config.js`, dependencies and flips the Tailwind constant. |
+| Optional features | `hmr` edits `.env.local`; `tailwind` adds `src/css/tailwind.css`, `postcss.config.js`, dependencies and flips the Tailwind constant; `release` (on by default) adds `.github/workflows/release.yml`, `release-please-config.json` and `.release-please-manifest.json`, and removes the skeleton's `CHANGELOG.md`. See [Releases](#releases). |
 | State | `.wp-scaffold.json` records identity and feature choices. Do not edit it by hand. |
-| Cleanup | Only the skeleton's own release automation is removed: `.github/workflows/release.yml`, `release-please-config.json` and `.release-please-manifest.json`. Copilot files, the other workflows and templates under `.github/` stay. |
+| Cleanup | Only the skeleton's own release automation is removed: `.github/workflows/release-starter.yml` and `.github/release-please/`. Copilot files, the other workflows and templates under `.github/` stay. |
 | AI instructions | `sync-ai` refreshes `.github/instructions/framework-php.instructions.md` from the installed framework. |
 
 Init does not generate a translation template. Run `npm run pot` when preparing translations.
@@ -99,11 +99,30 @@ npm run init -- --list                   # read-only status
 npm run init -- --list --json            # one machine-readable line
 npm run init -- --enable=tailwind --yes  # change one feature
 npm run init -- --disable=hmr --yes
-npm run init -- --features=hmr --yes     # set the exact enabled set
+npm run init -- --features=hmr,release --yes  # set the exact enabled set
 npm run init -- --help                   # options for your installed engine
 ```
 
 `--features` replaces the whole enabled set; `--enable` and `--disable` change one feature at a time. Do not combine them. For JSON without npm's banner, run `node bin/init.js --list --json`. Do not use `--reinit` to restore examples.
+
+### Releases
+
+The `release` feature is on by default. It sets the project up for [release-please](https://github.com/googleapis/release-please):
+
+- `.github/workflows/release.yml` keeps one release pull request open on `main`, built from the Conventional Commit pull request titles merged since the last release. Merging it bumps `package.json`, `package-lock.json` and the main file's `Version:` header line (between the `x-release-please-start-version` and `x-release-please-end` lines), writes the `CHANGELOG.md` section, tags `vX.Y.Z` and publishes the GitHub release. The `PR Title` workflow checks the title format. The `_VERSION` constant in the main file is not bumped; keep it in step by hand or read it from the header.
+- `release-please-config.json` carries `initial-version`, the version init wrote, so the first release is exactly that version. It also carries `bootstrap-sha` when init ran in a git repository, so commits from before init stay out of the first changelog entry.
+- `.release-please-manifest.json` records the last released version. It starts at `0.0.0`, which release-please reads as "nothing released yet". Don't edit it, `CHANGELOG.md` or `v*` tags by hand once releases start.
+- The skeleton's `CHANGELOG.md` is removed during setup; release-please writes a fresh one on the first release.
+
+Before the first release:
+
+- Allow GitHub Actions to create pull requests (repository or organisation settings, Actions, General, Workflow permissions). Client organisations often switch this off.
+- Allow only squash merges, with the pull request title as the commit subject.
+- If you deploy on tags: the tag and release are created with `GITHUB_TOKEN`, and GitHub starts no workflow runs for events `GITHUB_TOKEN` causes, so a workflow triggered `on: push: tags` never runs for them. Deploy from `release.yml` in a job with `needs: release-please` and `if: needs.release-please.outputs.release-created == 'true'`, or switch the workflow to a GitHub App token. The same limit means the release pull request gets no CI runs, so don't make checks on it required unless you switch tokens.
+
+A project that does not release versions (a site deployed from a branch, for example) can turn it off with `npm run init -- --disable=release --yes`; that removes the workflow and config and keeps the manifest. Then release by hand with `npm run release:bump` and `npm run release:changelog`, which need a `CHANGELOG.md` with an `## Unreleased` heading. If an existing project that already tags releases turns the feature on, set `.release-please-manifest.json` to its latest released version before the first run.
+
+rtCamp/wp-shared-workflows is adding a reusable `cd-release-please.yml`. Once it is released, the project workflow can shrink to a caller of it; the skeleton does not use it yet.
 
 ### Optional dependencies
 

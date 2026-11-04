@@ -23,6 +23,66 @@ const mainFile = ( api ) => `${ api.identity.package.split( '/' )[ 1 ] }.php`;
 const tailwindConst = ( api ) =>
 	`${ api.identity.constantPrefix }_FEATURES_ENABLE_TAILWIND`;
 
+// Release automation (release-please). The "release" feature copies the workflow
+// and config from bin/features/release/; seedRelease then gives a new project a
+// release history of its own. The skeleton's own workflow, config and manifest
+// live at skeleton-only paths, which cleanup removes.
+const RELEASE_MANIFEST = '.release-please-manifest.json';
+const RELEASE_CONFIG = 'release-please-config.json';
+
+// HEAD of the repository init runs in, or null without git or commits.
+const gitHead = ( root ) => {
+	try {
+		return require( 'child_process' )
+			.execFileSync( 'git', [ 'rev-parse', '--verify', '-q', 'HEAD' ], {
+				cwd: root,
+				encoding: 'utf8',
+				stdio: [ 'ignore', 'pipe', 'ignore' ],
+			} )
+			.trim();
+	} catch {
+		return null;
+	}
+};
+
+const seedRelease = ( api ) => {
+	// The manifest records the last released version, so a project that turns the
+	// feature off and on again keeps its history. "0.0.0" tells release-please
+	// nothing is released yet.
+	const fresh = ! api.exists( RELEASE_MANIFEST );
+	if ( fresh ) {
+		api.editJson(
+			RELEASE_MANIFEST,
+			( manifest ) => {
+				manifest[ '.' ] = '0.0.0';
+			},
+			{ create: true, indentFrom: RELEASE_CONFIG }
+		);
+	}
+	const released = JSON.parse( api.read( RELEASE_MANIFEST ) )[ '.' ];
+	api.editJson( RELEASE_CONFIG, ( config ) => {
+		const pkg = config.packages[ '.' ];
+		// The template names the skeleton's main file; the engine never rewrites
+		// files under bin/, so point release-please at the renamed one.
+		pkg[ 'extra-files' ] = [ { type: 'generic', path: mainFile( api ) } ];
+		// Until the first release, that release is the version init wrote.
+		if ( '0.0.0' === released ) {
+			pkg[ 'initial-version' ] = api.identity.version;
+		}
+		// Commits up to this one (the skeleton's history, when the clone keeps it)
+		// stay out of the first changelog entry.
+		const head = fresh ? gitHead( api.root ) : null;
+		if ( head ) {
+			config[ 'bootstrap-sha' ] = head;
+		}
+	} );
+	// During first setup (no .wp-scaffold.json yet) CHANGELOG.md is still the
+	// skeleton's. Drop it: release-please writes a fresh one on the first release.
+	if ( fresh && ! api.exists( '.wp-scaffold.json' ) ) {
+		api.remove( 'CHANGELOG.md' );
+	}
+};
+
 // One keep/remove capability. inc/Main.php is always a strip target (the
 // Main::CLASSES line); `module` adds the module file + its class dir to the
 // removal set. `strip`/`remove` add any extra files/globs (e.g. a Core file
@@ -159,6 +219,30 @@ module.exports = {
 				);
 			},
 		},
+		{
+			key: 'release',
+			label: 'Release automation (release-please)',
+			category: 'Developer Tooling',
+			defaultOn: true,
+			description:
+				'A release pull request kept up to date from Conventional Commit PR titles; merging it bumps the plugin header and package.json, writes CHANGELOG.md, tags vX.Y.Z and publishes the GitHub release. Default on. Needs squash merges with the PR title as the commit subject, and Actions allowed to create pull requests.',
+			apply: {
+				files: [
+					{
+						from: 'release/release.yml',
+						to: '.github/workflows/release.yml',
+					},
+					{
+						from: 'release/release-please-config.json',
+						to: RELEASE_CONFIG,
+					},
+				],
+			},
+			onEnable: seedRelease,
+			// Disabling removes the workflow and config (apply.files) and keeps the
+			// manifest, the record of what was released.
+			onDisable: () => {},
+		},
 	],
 
 	// Keep/remove capabilities. Removing deletes the module + classes + its
@@ -228,13 +312,13 @@ module.exports = {
 		],
 	},
 
-	// Starter-only files init removes from a new project. The release automation
-	// cuts plugin-elementary's own versions; a project starts at its own version.
+	// Skeleton-only files init removes from a new project: the release workflow,
+	// config and manifest that cut plugin-elementary's own versions. A project
+	// gets its own from the "release" feature.
 	cleanup: {
 		targets: [
-			'release-please-config.json',
-			'.release-please-manifest.json',
-			'.github/workflows/release.yml',
+			'.github/release-please',
+			'.github/workflows/release-starter.yml',
 		],
 	},
 
