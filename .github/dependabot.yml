@@ -6,7 +6,7 @@ updates:
       interval: weekly
     open-pull-requests-limit: 10
     commit-message:
-      prefix: chore
+      prefix: build
       include: scope
     labels:
       - Dependencies
@@ -17,7 +17,7 @@ updates:
       interval: weekly
     open-pull-requests-limit: 10
     commit-message:
-      prefix: chore
+      prefix: build
       include: scope
     versioning-strategy: increase
     labels:
@@ -29,7 +29,7 @@ updates:
       interval: weekly
     open-pull-requests-limit: 10
     commit-message:
-      prefix: chore
+      prefix: build
       include: scope
     versioning-strategy: increase
     labels:
