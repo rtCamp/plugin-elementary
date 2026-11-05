@@ -74,7 +74,7 @@ What each set contains is listed in [Included features](features.md).
 | Kept example sets | Stay as working references. Their `// wp:example:<key>` markers are removed. |
 | Optional features | `hmr` edits `.env.local`; `tailwind` adds `src/css/tailwind.css`, `postcss.config.js`, dependencies and flips the Tailwind constant. |
 | State | `.wp-scaffold.json` records identity and feature choices. Do not edit it by hand. |
-| Cleanup | The skeleton's own repository files are removed: `.gitattributes`, `.github/CODEOWNERS`, the bug and feature issue forms and their `config.yml`, `.github/labels.yml`, `.github/release.yml`, `SECURITY.md`, and its release workflow, config and manifest (`.github/workflows/release-starter.yml`, `.github/release-starter/`). A `composer create-project` copy never contains them; a git clone does until init runs. Copilot files, the other workflows and templates under `.github/` stay. |
+| Cleanup | The skeleton's own repository files are removed: `.gitattributes`, `.github/CODEOWNERS`, the bug and feature issue forms and their `config.yml`, `.github/labels.yml`, `SECURITY.md`, and its release workflow, config and manifest (`.github/workflows/release-starter.yml`, `.github/release-starter/`). A `composer create-project` copy never contains them; a git clone does until init runs. Copilot files, the other workflows and templates under `.github/` stay. |
 | AI instructions | `sync-ai` refreshes `.github/instructions/framework-php.instructions.md` from the installed framework. |
 
 Init does not generate a translation template. Run `npm run pot` when preparing translations.

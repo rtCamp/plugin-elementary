@@ -240,7 +240,6 @@ module.exports = {
 			'.github/ISSUE_TEMPLATE/config.yml',
 			'.github/ISSUE_TEMPLATE/feature.yml',
 			'.github/labels.yml',
-			'.github/release.yml',
 			'SECURITY.md',
 			'.github/release-starter',
 			'.github/workflows/release-starter.yml',
