@@ -102,7 +102,7 @@ module.exports = {
 		{ path: 'package.json', kind: 'json', key: 'version' },
 	],
 
-	steps: { composer: true, cleanup: false, git: true, hooks: true },
+	steps: { composer: true, cleanup: true, git: true, hooks: true },
 
 	// Dep/build-config-carrying capabilities. Toggling adds/removes their deps.
 	featuresDir: 'bin/features',
@@ -225,6 +225,16 @@ module.exports = {
 				'CI: Test & Measure (all checks)',
 				'test-measure.yml'
 			),
+		],
+	},
+
+	// The skeleton's own release workflow, config and manifest. Cleanup also runs
+	// on re-init and --clean, so both paths are named for the skeleton: a
+	// project's own release-please files never live there.
+	cleanup: {
+		targets: [
+			'.github/release-starter',
+			'.github/workflows/release-starter.yml',
 		],
 	},
 

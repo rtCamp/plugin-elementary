@@ -32,16 +32,16 @@ npm run lint:css
 Then:
 
 - If you changed an example, a module, `Main::CLASSES` or `bin/scaffold.config.js`, validate init in a disposable clone (see [release validation](docs/internal/maintenance.md#release-validation)).
-- If you changed behaviour a developer sees, update the guide that describes it, and `CHANGELOG.md` under **Unreleased**.
+- If you changed behaviour a developer sees, update the guide that describes it. Don't edit `CHANGELOG.md`: release-please writes it from the PR title.
 - If you changed the `init` or `scaffold` workflow, update both the Claude skill and the Copilot prompt.
 
 ## Pull request checklist
 
 - [ ] Tests cover new or changed behaviour (written first).
 - [ ] The checks above pass.
-- [ ] Documentation and `CHANGELOG.md` are updated.
+- [ ] Documentation is updated.
 - [ ] Placeholders (`Project Name` / `project-name` / `Project_Name`) are intact.
-- [ ] Commits follow [Conventional Commits](https://www.conventionalcommits.org/) (enforced by the commit-message hook).
+- [ ] Commits follow [Conventional Commits](https://www.conventionalcommits.org/) (enforced by the commit-message hook), and so does the PR title (checked by `pr-title.yml`): pull requests are squash-merged, and the title becomes the commit on `main` and the changelog entry.
 - [ ] `graphify-out/graph.json` is not part of the change unless the pull request is a deliberate baseline refresh.
 
 Use the pull request template and describe how you verified the change.

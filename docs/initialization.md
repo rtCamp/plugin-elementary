@@ -74,7 +74,7 @@ What each set contains is listed in [Included features](features.md).
 | Kept example sets | Stay as working references. Their `// wp:example:<key>` markers are removed. |
 | Optional features | `hmr` edits `.env.local`; `tailwind` adds `src/css/tailwind.css`, `postcss.config.js`, dependencies and flips the Tailwind constant. |
 | State | `.wp-scaffold.json` records identity and feature choices. Do not edit it by hand. |
-| Cleanup | Nothing is removed. Copilot files, workflows and templates under `.github/` stay. |
+| Cleanup | Only the skeleton's own release automation is removed: `.github/workflows/release-starter.yml` and `.github/release-starter/`. Copilot files, the other workflows and templates under `.github/` stay. |
 | AI instructions | `sync-ai` refreshes `.github/instructions/framework-php.instructions.md` from the installed framework. |
 
 Init does not generate a translation template. Run `npm run pot` when preparing translations.
