@@ -6,6 +6,14 @@ All notable changes to this project are documented in this file. The format is b
 
 ## Unreleased
 
+## [1.0.1](https://github.com/rtCamp/plugin-elementary/compare/v1.0.0...v1.0.1) (2026-11-05)
+
+
+### Fixed
+
+* **ci:** separate file and project lint commands ([#65](https://github.com/rtCamp/plugin-elementary/issues/65)) ([2c4c7b9](https://github.com/rtCamp/plugin-elementary/commit/2c4c7b92f149a23b267f6e881a536f6d68b69e64))
+* **deps:** require patched Node for CVE-2026-111497 ([#60](https://github.com/rtCamp/plugin-elementary/issues/60)) ([22532ef](https://github.com/rtCamp/plugin-elementary/commit/22532efe109ce4dd158d11e6d21698b6fd88f068))
+
 ## 1.0.0 - 2026-10-01
 
 ### Added
