@@ -4,7 +4,7 @@
   <a href="https://www.repostatus.org/#active"><img src="https://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active"></a>
   <a href="LICENSE.md"><img src="https://img.shields.io/badge/license-GPL--2.0--or--later-blue.svg" alt="License: GPL-2.0-or-later"></a>
   <img src="https://img.shields.io/badge/PHP-8.2%2B-777bb4.svg" alt="PHP 8.2+">
-  <img src="https://img.shields.io/badge/Node-22-5fa04e.svg" alt="Node 22">
+  <img src="https://img.shields.io/badge/Node-24-5fa04e.svg" alt="Node 24">
 </p>
 
 <p align="center">
