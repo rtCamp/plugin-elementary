@@ -88,7 +88,7 @@ const getBrowserSyncPlugins = () => {
 								key: process.env.WP_SSL_KEY,
 								cert: process.env.WP_SSL_CERT,
 							},
-					  }
+						}
 					: {} ),
 				files: BROWSER_SYNC_FILES,
 				notify: false,

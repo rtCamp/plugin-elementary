@@ -36,5 +36,7 @@ jobs:
       php-versions: '["8.2", "8.3", "8.4"]'
       wp-versions: '["6.7", "6.8", "6.9", "7.0", "7.1"]'
       test-php-exclude: '[]'
+      lint-js-files-command: npm run lint:js:files
+      lint-css-files-command: npm run lint:css:files
     # No tokens: every rtCamp dependency is public and the shared workflow falls
     # back to GITHUB_TOKEN. A PAT here breaks all dist downloads once it expires.

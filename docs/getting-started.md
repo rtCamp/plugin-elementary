@@ -7,7 +7,7 @@ This guide turns the skeleton into a working plugin: you'll create a personalize
 - **Git**
 - **Composer 2**
 - **PHP 8.2+** (for Composer and the host-side PHPCS/PHPStan checks)
-- **Node and npm** matching [`.nvmrc`](../.nvmrc) (Node 22.22.2 or later) — use `nvm` or another version manager
+- **Node and npm** matching [`.nvmrc`](../.nvmrc) (Node 22.23.4; 24.22.1+ and 26.12.1+ also meet `engines` in `package.json`) — use `nvm` or another version manager
 - **Docker**, running, for the bundled `wp-env` site and the PHP test suite
 
 An existing local WordPress installation can replace the `wp-env` site; Docker is still needed for the container-based PHP test command.
