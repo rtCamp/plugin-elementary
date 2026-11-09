@@ -69,6 +69,29 @@ const workflow = ( key, label, file ) => ( {
 	remove: [ `.github/workflows/${ file }` ],
 } );
 
+const fs = require( 'fs' );
+const path = require( 'path' );
+
+// plugin-elementary's own repository files, kept out of new projects. Cleanup also runs on
+// --reinit, "Re-run full setup" and --clean, and a project's own CODEOWNERS,
+// SECURITY.md, .gitattributes or issue forms live at these same paths, so they
+// are removed on first setup only: before init writes .wp-scaffold.json.
+// .gitattributes export-ignores the same paths; tests/js/starter-files.test.js
+// keeps the two lists in step.
+const SKELETON_REPO_FILES = [
+	'tests/js/starter-files.test.js',
+	'.gitattributes',
+	'.github/CODEOWNERS',
+	'.github/ISSUE_TEMPLATE/bug.yml',
+	'.github/ISSUE_TEMPLATE/config.yml',
+	'.github/ISSUE_TEMPLATE/feature.yml',
+	'.github/labels.yml',
+	'SECURITY.md',
+];
+const firstSetup = ! fs.existsSync(
+	path.join( __dirname, '..', '.wp-scaffold.json' )
+);
+
 module.exports = {
 	kind: 'plugin',
 	vendor: 'rtcamp',
@@ -228,11 +251,13 @@ module.exports = {
 		],
 	},
 
-	// The skeleton's own release workflow, config and manifest. Cleanup also runs
-	// on re-init and --clean, so both paths are named for the skeleton: a
-	// project's own release-please files never live there.
+	// Skeleton-only repository files. A composer create-project copy never has them
+	// (.gitattributes export-ignores each one); a git clone does, so init removes them.
+	// Cleanup also runs on re-init and --clean, so the release paths are named for the
+	// skeleton: a project's own release-please files never live there.
 	cleanup: {
 		targets: [
+			...( firstSetup ? SKELETON_REPO_FILES : [] ),
 			'.github/release-starter',
 			'.github/workflows/release-starter.yml',
 		],
