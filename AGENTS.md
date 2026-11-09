@@ -15,7 +15,7 @@ The review rules ARE the coding rules: the files Copilot reviews against are the
 
 - **PHP 8.2+**, Composer, PSR-4: `Project_Name\Features\` → `inc/`; tests `Project_Name\Features\Tests\` → `tests/php/` (namespace === directory, filename === class).
 - **PHPUnit + `wp-phpunit`** in `tests/php/` (mirrors `inc/`), run under `wp-env`. **PHPCS** (the shared `rtCampWP` ruleset from `rtcamp/wp-phpcs`: WPCS + VIP + Docs + Slevomat) and **PHPStan** (level 5, the `rtcamp/wp-phpstan` baseline): zero errors before merge.
-- **Node 22**, build via `@wordpress/scripts` + a custom `webpack.config.js`. Source in `src/{blocks,css,js}`, output in `assets/build/`.
+- **Node 24**, build via `@wordpress/scripts` + a custom `webpack.config.js`. Source in `src/{blocks,css,js}`, output in `assets/build/`.
 
 ## Structure
 
