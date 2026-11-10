@@ -101,6 +101,7 @@ The release pull request is opened with `GITHUB_TOKEN`, so GitHub starts no work
 | `@rtcamp/wp-tooling`, lint configs | `package.json` (`^` ranges on the npm registry), `package-lock.json` | Run `npm update @rtcamp/wp-tooling` (and the configs) to move the lock, then re-run init and scaffold validation. |
 | Coding standards | `composer.json` (`rtcamp/wp-phpcs`, `rtcamp/wp-phpstan`) | `composer update rtcamp/wp-phpcs rtcamp/wp-phpstan`; fix or baseline new findings in a separate commit. |
 | Shared CI | `.github/workflows/test-measure.yml` (`@v1`) | `@v1` moves to compatible v1.x releases on its own. For a new major version, move the ref and check the input names against the new `wp-ci.yml`. |
+| `@wordpress/theme` | `package.json` (`4.0.0`, dev dependency) | It is there only as the peer `@wordpress/stylelint-config` needs (`^3.0.0 \|\| ^4.0.0`). `legacy-peer-deps` in `.npmrc` skips peers, so without this entry Stylelint loads the 2.3.0 the editor packages hoist and crashes reading its design tokens. The editor packages keep their own nested copies. Bump it together with `@wordpress/stylelint-config`, inside that package's peer range, and run `npm run lint:css`. |
 | Docs builder | `.github/workflows/documentation.yml` (pinned SHA) | See [Documentation publishing](#documentation-publishing). |
 
 Also keep the plugin header's `Tested up to` in step with the newest WordPress version in the CI matrix.
