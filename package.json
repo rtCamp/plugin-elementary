@@ -52,6 +52,7 @@
     "jest-silent-reporter": "0.6.0",
     "lint-staged": "17.6.0",
     "npm-run-all": "4.1.5",
+    "webpack-dev-server": "6.0.0",
     "webpack-remove-empty-scripts": "1.1.1"
   },
   "overrides": {
@@ -71,7 +72,8 @@
     },
     "@wp-playground/storage": {
       "isomorphic-git": "1.38.6"
-    }
+    },
+    "webpack-dev-server": "$webpack-dev-server"
   },
   "scripts": {
     "build:dev": "cross-env NODE_ENV=development npm-run-all 'build:!(dev|prod)'",
