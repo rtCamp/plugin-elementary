@@ -30,7 +30,7 @@ Every set is kept by default. Removing a set at init deletes its module, classes
 | Init key | Source | What it demonstrates | How to see it |
 | --- | --- | --- | --- |
 | `post-types` | `Modules/PostTypes/ExamplePostType.php`, `ExamplePostTypeTwo.php` | `AbstractPostType`: slug, labels, menu icon | Admin menu **Post Type Labels**; `wp post-type list` includes `post-type-slug`. |
-| `taxonomies` | `Modules/Taxonomies/ExampleTaxonomy.php`, `ExampleTaxonomyTwo.php` | `AbstractTaxonomy` attached to the example post types via `get_object_types()` | `wp taxonomy list` includes `taxonomy-slug`; it appears on the example post type's editor. |
+| `taxonomies` | `Modules/Taxonomies/ExampleTaxonomy.php`, `ExampleTaxonomyTwo.php` | `AbstractTaxonomy` attached to the example post types via `get_object_types()`; removing `post-types` drops that link | `wp taxonomy list` includes `taxonomy-slug`; it appears on the example post type's editor. |
 | `blocks` | `Modules/Blocks/ExampleDynamicBlock.php`, `src/blocks/example-block*`, `templates/block-templates/example-block-dynamic.php` | A static block, a dynamic block (`AbstractBlock` rendering a template) and an Interactivity API block (`render.php` + `view.js`) | After `npm run build:dev`, insert **Example Block**, **Example Dynamic Block** or **Example Block Interactive** in the editor. |
 | `shortcodes` | `Modules/Shortcodes/ExampleShortcode.php` | `AbstractShortcode` with default attributes, sanitized input and escaped output | Add `[acme_content_example title="Hello" count="3"]` to a post. |
 | `rest` | `Modules/REST/ExampleRESTController.php` | `AbstractRESTController` with a real `permission_callback` (`manage_options`) | `GET /wp-json/acme-content-features/v1/examples` as an administrator (see below). |

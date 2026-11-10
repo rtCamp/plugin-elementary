@@ -58,10 +58,14 @@ final class TaxonomiesTest extends TestCase {
 	 */
 	public function test_static_accessors_are_accessible(): void {
 		$this->assertSame( 'taxonomy-slug', ExampleTaxonomy::get_slug() );
+		// wp:example:post-types.
 		$this->assertSame( [ 'post-type-slug' ], ExampleTaxonomy::get_object_types() );
+		// wp:example:post-types:end.
 
 		$this->assertSame( 'taxonomy-slug-two', ExampleTaxonomyTwo::get_slug() );
+		// wp:example:post-types.
 		$this->assertSame( [ 'post-type-slug-two' ], ExampleTaxonomyTwo::get_object_types() );
+		// wp:example:post-types:end.
 	}
 
 	/**
@@ -78,7 +82,9 @@ final class TaxonomiesTest extends TestCase {
 		$this->assertTrue( $object->public );
 		$this->assertTrue( $object->show_in_rest );
 		$this->assertTrue( $object->hierarchical );
+		// wp:example:post-types.
 		$this->assertContains( 'post-type-slug', $object->object_type );
+		// wp:example:post-types:end.
 		$this->assertSame( 'Taxonomy Label', $object->labels->singular_name );
 		$this->assertSame( 'Taxonomy Labels', $object->labels->name );
 	}
@@ -95,7 +101,9 @@ final class TaxonomiesTest extends TestCase {
 		$object = get_taxonomy( 'taxonomy-slug-two' );
 		$this->assertNotFalse( $object );
 		$this->assertFalse( $object->hierarchical );
+		// wp:example:post-types.
 		$this->assertContains( 'post-type-slug-two', $object->object_type );
+		// wp:example:post-types:end.
 		$this->assertSame( 'Taxonomy Two Label', $object->labels->singular_name );
 		$this->assertSame( 'Taxonomy Two Labels', $object->labels->name );
 	}
