@@ -68,6 +68,9 @@
     },
     "@wordpress/scripts": {
       "adm-zip": "0.6.1"
+    },
+    "@wp-playground/storage": {
+      "isomorphic-git": "1.38.6"
     }
   },
   "scripts": {
