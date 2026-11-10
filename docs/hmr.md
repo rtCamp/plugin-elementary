@@ -60,7 +60,7 @@ Without `SCRIPT_DEBUG`, WordPress does not support Fast Refresh.
 5. `start:blocks` runs `wp-scripts start --hot`, which starts webpack-dev-server, using `webpack.blocks.config.js`.
 6. JS/JSX changes to block components hot-swap in the editor without a full reload; block state is preserved.
 
-`webpack.blocks.config.js` is a thin wrapper over `@wordpress/scripts`' default config. It exists only to strip the `devServer.proxy` option: webpack-dev-server v5 (pinned via the `overrides` block in `package.json`) requires `proxy` to be an array, while wp-scripts still emits the v4 object form, which v5 rejects with `options.proxy should be an array`. The wrapper also sets the dev-server port from `BLOCKS_DEV_SERVER_PORT`.
+`webpack.blocks.config.js` is a thin wrapper over `@wordpress/scripts`' default config, which runs webpack-dev-server 6. It removes the `/build` proxy that wp-scripts adds: block HMR doesn't use it, and its target is hardcoded to `localhost:8887`, so with a custom port it would point at another server. The wrapper also sets the dev-server port from `BLOCKS_DEV_SERVER_PORT` and limits `allowedHosts` to `localhost` and `WP_HOST`.
 
 BrowserSync watches the following:
 
