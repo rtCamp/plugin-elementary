@@ -36,7 +36,7 @@
     "@wordpress/i18n": "6.25.0",
     "@wordpress/interactivity": "8.0.0",
     "@wordpress/scripts": "37.0.0",
-    "@wordpress/server-side-render": "7.0.0",
+    "@wordpress/server-side-render": "7.1.0",
     "@wordpress/theme": "4.0.0",
     "browser-sync": "3.0.4",
     "browser-sync-webpack-plugin": "2.4.0",
