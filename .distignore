@@ -10,7 +10,9 @@
 /graphify-out/
 /node_modules/
 /scripts/
-/src/
+/src/blocks/
+/src/css/
+/src/js/
 /tests/
 /*.config.js
 /*.config.mjs
