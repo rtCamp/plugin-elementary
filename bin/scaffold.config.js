@@ -190,8 +190,15 @@ module.exports = {
 		marker: 'wp:example',
 		groups: [
 			// Content modeling.
+			// The example taxonomies attach to the example post types, so removing
+			// post types also strips that link from the kept taxonomies.
 			capability( 'post-types', 'Post Types', 'Content', {
 				module: 'PostTypes',
+				strip: [
+					'inc/Modules/Taxonomies/ExampleTaxonomy.php',
+					'inc/Modules/Taxonomies/ExampleTaxonomyTwo.php',
+					'tests/php/TaxonomiesTest.php',
+				],
 			} ),
 			capability( 'taxonomies', 'Taxonomies', 'Content', {
 				module: 'Taxonomies',
