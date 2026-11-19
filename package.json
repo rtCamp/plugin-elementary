@@ -111,6 +111,7 @@
     "test:php:coverage": "wp-env run --config=.wp-env.tests.json cli --env-cwd=wp-content/plugins/$(basename \"$PWD\") -- vendor/bin/phpunit -c phpunit.xml.dist --coverage-html coverage",
     "posttest:php:coverage": "echo \"\\e[1m\\e[32mIf you have run this command with xdbug coverage enabled, you can view the coverage report at /coverage path\\e[0m\"",
     "wp-env": "wp-env",
+    "prepot": "npm run build:prod",
     "pot": "composer run pot"
   }
 }

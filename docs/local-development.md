@@ -137,9 +137,11 @@ Related scripts from `@rtcamp/wp-tooling`:
 | --- | --- |
 | `npm run release:bump` | Bump the version in the plugin header and `package.json`. |
 | `npm run release:changelog` | Generate `CHANGELOG.md` entries from Conventional Commits. |
-| `npm run pot` | Regenerate `languages/<text-domain>.pot` (runs WP-CLI's `i18n make-pot` through Composer). |
+| `npm run pot` | Build the production assets, then regenerate `languages/<text-domain>.pot` from the PHP and the built JS (WP-CLI's `i18n make-pot` through Composer; a bare `composer pot` skips the build). JS translations ship as JSON: run `wp i18n make-json languages --no-purge` after updating a `.po`. |
 
 Run each with `-- --help` for the options your installed revision supports.
+
+Classic scripts read their JSON from `languages/` on every supported WordPress version. Block scripts registered from `block.json` find it there from WordPress 6.9; on 6.7 and 6.8, copy their JSON files to `wp-content/languages/plugins/`.
 
 ## Troubleshooting
 
