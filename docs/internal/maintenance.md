@@ -16,7 +16,7 @@ The skeleton is a consumer of three shared repositories. Fix a problem where it 
 | Init engine, scaffold catalogue, release scripts, Git hooks | [`@rtcamp/wp-tooling`](https://github.com/rtCamp/wp-tooling) | `bin/init.js` wraps the engine; `bin/scaffold.config.js` configures it. |
 | PHPCS / PHPStan / ESLint / Stylelint rules | `rtcamp/wp-phpcs`, `rtcamp/wp-phpstan`, `@rtcamp/eslint-config`, `@rtcamp/stylelint-config` (all from wp-tooling) | `phpcs.xml.dist`, `phpstan.neon.dist`, `eslint.config.mjs`, `.stylelintrc.json` extend them. |
 | CI jobs | [`rtCamp/wp-shared-workflows`](https://github.com/rtCamp/wp-shared-workflows) | `.github/workflows/test-measure.yml` is a thin caller pinned to a ref. |
-| Documentation site builder | [`rtCamp/action-docusaurus-build`](https://github.com/rtCamp/action-docusaurus-build) | `.github/workflows/documentation.yml` calls it. |
+| Documentation site builder | [`rtCamp/action-docusaurus-build`](https://github.com/rtCamp/action-docusaurus-build) | `.github/workflows/documentation.yml` calls it (skeleton only; init removes it from generated plugins). |
 | Examples, modules, asset pipeline, tests, docs | This repo | Everything else. |
 
 ## How init reads this repository
@@ -103,7 +103,7 @@ The release pull request is opened with `GITHUB_TOKEN`, so GitHub starts no work
 | Coding standards | `composer.json` (`rtcamp/wp-phpcs`, `rtcamp/wp-phpstan`) | `composer update rtcamp/wp-phpcs rtcamp/wp-phpstan`; fix or baseline new findings in a separate commit. |
 | Shared CI | `.github/workflows/test-measure.yml` (`@v1`) | `@v1` moves to compatible v1.x releases on its own. For a new major version, move the ref and check the input names against the new `wp-ci.yml`. |
 | `@wordpress/theme` | `package.json` (`4.0.0`, dev dependency) | It is there only as the peer `@wordpress/stylelint-config` needs (`^3.0.0 \|\| ^4.0.0`). `legacy-peer-deps` in `.npmrc` skips peers, so without this entry Stylelint loads the 2.3.0 the editor packages hoist and crashes reading its design tokens. The editor packages keep their own nested copies. Bump it together with `@wordpress/stylelint-config`, inside that package's peer range, and run `npm run lint:css`. |
-| Docs builder | `.github/workflows/documentation.yml` (pinned SHA) | See [Documentation publishing](#documentation-publishing). |
+| Docs builder | `.github/workflows/documentation.yml` (pinned SHA, skeleton only) | See [Documentation publishing](#documentation-publishing). |
 
 Also keep the plugin header's `Tested up to` in step with the newest WordPress version in the CI matrix.
 
@@ -139,7 +139,7 @@ When done, restore only the dependency source lines and regenerate the affected 
 
 ## Documentation publishing
 
-Markdown under `docs/` is rendered by the shared [Docusaurus action](https://github.com/rtCamp/action-docusaurus-build) through [`.github/workflows/documentation.yml`](../../.github/workflows/documentation.yml). `README.md`, `DEVELOPMENT.md` and `CONTRIBUTING.md` stay GitHub pages linked from the site. No Docusaurus dependencies or generated site files belong in this repository.
+Markdown under `docs/` is rendered by the shared [Docusaurus action](https://github.com/rtCamp/action-docusaurus-build) through [`.github/workflows/documentation.yml`](../../.github/workflows/documentation.yml). `README.md`, `DEVELOPMENT.md` and `CONTRIBUTING.md` stay GitHub pages linked from the site. No Docusaurus dependencies or generated site files belong in this repository. The workflow is skeleton-only: init removes it on first setup and `.gitattributes` export-ignores it, so generated plugins never get it.
 
 - The workflow's `sidebar` input sets the main navigation order; pages need no front matter. `docs/internal/` is reached through Contributing and stays out of the sidebar.
 - Pull requests against `main` build only. Pushes and manual runs on that branch also deploy to GitHub Pages. Maintainers set **Settings → Pages → Source** to **GitHub Actions** and allow the branch in the `github-pages` environment; no custom token is needed.
@@ -176,5 +176,5 @@ Keep implementation follow-ups out of documentation pull requests; record each w
 - **Dangling references:** `PluginSetup::deactivate()` mentions a root `uninstall.php` and `Util::get_data()` reads `inc/data/`; neither ships.
 - **Stale wording:** `.npmrc` still calls `wp-tooling` a private repository, and `bin/init.js` suggests the pilot `npm install --install-links`.
 - **Lockfile URLs:** `package-lock.json` resolves `@rtcamp/*` over `git+ssh://`. Confirm a clean `npm ci` works for a developer without a GitHub SSH key.
-- **Downstream docs workflow:** `documentation.yml` ships into client projects. It is inert there (its jobs only run in `rtCamp/plugin-elementary`), but decide whether init cleanup should remove it.
+- **Starter install commands after init:** `README.md`, `docs/getting-started.md` and this file name the starter's Composer package, which is also the init identity token `source.package`, so a generated plugin's `composer create-project` commands name its own `<slug>-features` package, which does not exist on Packagist. Capitalised `rtCamp/plugin-elementary` links (`docs/getting-started.md`, `CHANGELOG.md`) are not rewritten and keep pointing at the starter. Decide whether init should drop these starter-only sections.
 - **Multisite tests:** `composer test-multisite` has no `wp-env` wrapper.

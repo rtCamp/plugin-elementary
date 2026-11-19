@@ -32,7 +32,7 @@ concurrency:
 
 jobs:
   build:
-    # Generated plugins inherit this file; only the skeleton repository builds its docs site.
+    # Skeleton-only: init removes this file from generated plugins. The guard keeps forks from building the site.
     if: github.repository == 'rtCamp/plugin-elementary'
     name: Build documentation
     runs-on: ubuntu-latest
