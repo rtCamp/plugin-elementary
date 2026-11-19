@@ -170,7 +170,6 @@ None at the moment.
 
 Keep implementation follow-ups out of documentation pull requests; record each with a reproduction and revision when it is picked up.
 
-- **Release zip:** no `.distignore` ships, so `release:zip` includes `src/`, `docs/`, `graphify-out/`, AI files and dotfiles.
 - **Scaffold wiring targets:** `wp/rest` and `wp/cli` suggest `inc/Modules/Rest.php` and `inc/Modules/Cli.php`, but this skeleton's modules are `REST.php` and `CLI.php`, which are different files on case-sensitive filesystems. Keep the uppercase names (they match WordPress acronym style and the framework's `AbstractRESTController` / `CLICommand`); the skill adapts, and CLI users edit the existing file. Fix upstream in wp-tooling.
 - **Block scaffolder:** `npm run create:block` writes meta blocks to `src/blocks/meta-blocks/`, which `Assets::STATIC_BLOCKS` cannot register.
 - **Dangling references:** `PluginSetup::deactivate()` mentions a root `uninstall.php` and `Util::get_data()` reads `inc/data/`; neither ships.

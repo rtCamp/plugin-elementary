@@ -22,3 +22,7 @@ parameters:
         # Optional: absent until `npm install` runs (a Composer-only checkout).
         - node_modules (?)
         - tests
+    ignoreErrors:
+        - identifier: foreach.emptyArray
+          path: inc/Core/Assets.php
+          reportUnmatched: false

@@ -32,6 +32,7 @@ final class Assets extends AssetLoader implements Registrable, Shareable {
 	 * Dynamic blocks are registered via their own AbstractBlock subclasses.
 	 */
 	private const STATIC_BLOCKS = [
+		// Directory names under assets/build/blocks/.
 		// wp:example:blocks
 		'example-block',
 		'example-block-interactive',
