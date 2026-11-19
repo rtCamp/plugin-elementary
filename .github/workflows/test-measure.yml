@@ -38,5 +38,8 @@ jobs:
       test-php-exclude: '[]'
       lint-js-files-command: npm run lint:js:files
       lint-css-files-command: npm run lint:css:files
+      # The defaults add Jest's --ci and --cacheDirectory, which Vitest rejects.
+      test-js-command: npm run test:js
+      test-js-cache: false
     # No tokens: every rtCamp dependency is public and the shared workflow falls
     # back to GITHUB_TOKEN. A PAT here breaks all dist downloads once it expires.

@@ -86,7 +86,7 @@ inc/                        # PSR-4 root: Project_Name\Features\ → inc/
     └── Cache/  Transients/
 src/{blocks,css,js}/        # editable sources → assets/build/ (generated)
 templates/                  # theme-overridable PHP templates
-tests/{php,js}/             # PHPUnit (mirrors inc/) and Jest
+tests/{php,js}/             # PHPUnit (mirrors inc/) and Vitest
 bin/                        # init wrapper, scaffold config, block scaffolder, helper scripts
 docs/                       # these guides; docs/internal/ is for skeleton maintainers
 .github/                    # CI caller, issue/PR templates, Copilot instructions and prompts

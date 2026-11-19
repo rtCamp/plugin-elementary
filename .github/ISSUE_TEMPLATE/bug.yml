@@ -50,7 +50,7 @@ body:
         - "Modules and examples (inc/Modules/)"
         - "Core services (inc/Core/)"
         - "Blocks and assets (src/, webpack, HMR, Tailwind)"
-        - "Tests and lint (PHPUnit, Jest, PHPCS, PHPStan, ESLint, Stylelint)"
+        - "Tests and lint (PHPUnit, Vitest, PHPCS, PHPStan, ESLint, Stylelint)"
         - "CI workflows"
         - Documentation
         - Not sure

@@ -20,6 +20,22 @@ updates:
       prefix: build
       include: scope
     versioning-strategy: increase
+    groups:
+      # Mixed releases install duplicate copies, which break the block tests.
+      # @wordpress/theme follows @wordpress/stylelint-config's peer range instead.
+      wordpress:
+        patterns:
+          - '@wordpress/*'
+        exclude-patterns:
+          - '@wordpress/theme'
+      react:
+        patterns:
+          - react
+          - react-dom
+      vitest:
+        patterns:
+          - vitest
+          - '@vitest/*'
     labels:
       - Dependencies
 
