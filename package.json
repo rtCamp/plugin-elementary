@@ -1,7 +1,7 @@
 {
   "name": "project-name-features",
   "version": "1.0.1",
-  "description": "Starter plugin for rtCamp WordPress projects.",
+  "description": "Project Name features plugin, built on rtCamp plugin-elementary.",
   "private": true,
   "author": "rtCamp",
   "license": "GPL-2.0-or-later",
