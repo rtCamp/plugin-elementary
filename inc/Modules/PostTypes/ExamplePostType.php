@@ -55,6 +55,11 @@ final class ExamplePostType extends AbstractPostType {
 	 * {@inheritDoc}
 	 */
 	public function get_supported_taxonomies(): array {
-		return [ 'taxonomy-slug' ];
+		return [
+			// Taxonomies this post type supports.
+			// wp:example:taxonomies.
+			'taxonomy-slug',
+			// wp:example:taxonomies:end.
+		];
 	}
 }

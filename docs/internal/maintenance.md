@@ -38,13 +38,14 @@ Modules\Cron::class,
 // wp:example:cron:end
 ```
 
-On removal the engine deletes the region; on keep it deletes only the two marker lines. Current marked files are `inc/Main.php` (every set), `inc/Core/Assets.php` (`blocks`: the `STATIC_BLOCKS` entries), `inc/Core/PluginSetup.php` (`cron`: the `use` import and the unschedule call), and the example taxonomies and their test (`post-types`: the link to the example post types). CI workflows use `wp:ci:<key>`.
+On removal the engine deletes the region; on keep it deletes only the two marker lines. Current marked files are `inc/Main.php` (every set), `inc/Core/Assets.php` (`blocks`: the `STATIC_BLOCKS` entries), `inc/Core/PluginSetup.php` (`cron`: the `use` import and the unschedule call), the example taxonomies and their test (`post-types`: the link to the example post types), and the example post types and their test (`taxonomies`: the link to the example taxonomies). CI workflows use `wp:ci:<key>`.
 
 Rules that keep init working for every downstream project:
 
 - Keep marker pairs balanced and on their own lines. A broken pair breaks removal for everyone.
 - End new markers with a full stop (`// wp:example:<key>.`) so PHPCS accepts them. Init still recognises them.
 - Inside an array, keep one comment line outside the markers, so the array still passes PHPCS when init empties it.
+- To wrap a whole method, put the markers inside docblocks: the opener as the first line of that method's docblock, and the closer as the first line of the next method's docblock (see `tests/php/PostTypesTest.php`). A `//` marker line between methods breaks `Squiz.WhiteSpace.FunctionSpacing`, either in the source or after init. If you reorder the methods, move the closer too.
 - A capability's footprint must be complete: module file, class folder, test file, and every coupled region. Anything left behind references deleted classes.
 - Markers are consumed by the first run, so removal is one-shot by design.
 
