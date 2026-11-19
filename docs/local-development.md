@@ -54,6 +54,7 @@ Run the focused test first, then the full set before opening a pull request.
 # PHP tests — run inside the wp-env test environment (started on demand).
 npm run test:php -- --filter ShortcodesTest   # one test class
 npm run test:php                              # the whole suite
+npm run test:php:multisite                    # the whole suite on multisite
 
 # PHP style and static analysis — run on the host (PHP 8.2+).
 composer lint          # PHPCS (rtCampWP ruleset)
@@ -67,7 +68,7 @@ npm run lint:css
 npm run lint:package-json
 ```
 
-`npm run test:php` needs `npm run wp-env start` first; its `pretest` step runs `composer install` inside the container when `vendor/` is missing. `composer test` expects a WordPress test library on the host and is not the supported route.
+`npm run test:php` starts the test environment unless it is already up with its database ready, and runs `composer install` inside it when `composer.lock` is newer than `vendor/`. A running environment is reused as it is, so restart it with `npm run wp-env start -- --config=.wp-env.tests.json` after editing `.wp-env.tests.json`. `npm run test:php:multisite` runs the same suite with `WP_MULTISITE=1`. `composer test` and `composer test-multisite` expect a WordPress test library on the host and are not the supported route.
 
 **Coverage:** start the environment with Xdebug, then run the coverage script. The HTML report is written to `coverage/`.
 
