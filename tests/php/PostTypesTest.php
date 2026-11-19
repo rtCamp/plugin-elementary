@@ -84,6 +84,7 @@ final class PostTypesTest extends TestCase {
 	}
 
 	/**
+	 * wp:example:taxonomies.
 	 * The first example associates its supported taxonomy with the post type.
 	 */
 	public function test_example_post_type_associates_supported_taxonomy(): void {
@@ -95,6 +96,7 @@ final class PostTypesTest extends TestCase {
 	}
 
 	/**
+	 * wp:example:taxonomies:end.
 	 * register() actually registers the second example post type.
 	 */
 	public function test_example_post_type_two_registers(): void {
@@ -130,10 +132,12 @@ final class PostTypesTest extends TestCase {
 				unregister_post_type( $slug );
 			}
 		}
+		// wp:example:taxonomies.
 
 		if ( taxonomy_exists( 'taxonomy-slug' ) ) {
 			unregister_taxonomy( 'taxonomy-slug' );
 		}
+		// wp:example:taxonomies:end.
 
 		parent::tear_down();
 	}
