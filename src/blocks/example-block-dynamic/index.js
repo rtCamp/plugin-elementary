@@ -33,7 +33,7 @@ import save from './save';
  */
 registerBlockType( 'project-name-features/example-block-dynamic', {
 	/**
-	 * @see ./edit.js
+	 * @see ./edit.jsx
 	 */
 	edit: Edit,
 	/**

@@ -60,7 +60,7 @@ composer lint          # PHPCS (rtCampWP ruleset)
 composer format        # PHPCBF: auto-fix what PHPCS can
 composer phpstan       # PHPStan level 5
 
-# JavaScript, CSS and package.json. An initialized plugin has no Jest tests until you add one.
+# JavaScript, CSS and package.json. Vitest runs tests under src/ and tests/js/; *.jsdom.test.jsx files get a DOM.
 npm run test:js
 npm run lint:js
 npm run lint:css
@@ -75,6 +75,8 @@ npm run lint:package-json
 npm run wp-env start -- --xdebug=coverage
 npm run test:php:coverage
 ```
+
+For JavaScript, `npm run test:js:coverage` writes `tests/logs/lcov.info` and an HTML report in `tests/logs/lcov-report/`.
 
 > Use the explicit commands above rather than `npm test` or `npm run lint`. Their `test:*` / `lint:*` wildcards also match the watch, coverage and `:fix` scripts, so they neither terminate cleanly nor stay read-only. See [maintenance known gaps](internal/maintenance.md#known-gaps).
 

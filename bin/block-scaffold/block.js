@@ -223,15 +223,20 @@ const getBlockTemplateFiles = ( blockDirName ) => {
 const copyTemplateFiles = ( blockDirName, blockPath, blockFiles ) => {
 	try {
 		const blockDir = `${ blockPath }/${ blockDirName }`;
-		if ( ! fs.existsSync( blockDir ) ) {
-			fs.mkdirSync( blockDir );
+		if ( fs.existsSync( blockDir ) ) {
+			console.log(
+				info.error(
+					`${ blockDir } already exists. Choose another slug.`
+				)
+			);
+			return process.exit( 1 );
 		}
+		fs.mkdirSync( blockDir );
 		for ( const file of blockFiles ) {
-			const fileName = path.basename( file, '.mustache' );
-			const filePath = `${ blockDir }/${ fileName }`;
-			if ( ! fs.existsSync( filePath ) ) {
-				fs.copyFileSync( file, filePath );
-			}
+			fs.copyFileSync(
+				file,
+				`${ blockDir }/${ path.basename( file, '.mustache' ) }`
+			);
 		}
 		return blockDir;
 	} catch ( err ) {

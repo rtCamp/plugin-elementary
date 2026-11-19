@@ -31,7 +31,7 @@ import metadata from './block.json';
  */
 registerBlockType( metadata.name, {
 	/**
-	 * @see ./edit.js
+	 * @see ./edit.jsx
 	 */
 	edit: Edit,
 } );

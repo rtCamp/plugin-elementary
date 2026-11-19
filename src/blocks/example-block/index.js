@@ -33,11 +33,11 @@ import save from './save';
  */
 registerBlockType( 'project-name-features/example-block', {
 	/**
-	 * @see ./edit.js
+	 * @see ./edit.jsx
 	 */
 	edit: Edit,
 	/**
-	 * @see ./save.js
+	 * @see ./save.jsx
 	 */
 	save,
 } );

@@ -44,7 +44,7 @@ Apply project-sampled conventions (class suffix, sub-namespace, vendor prefix, b
 - `ai.wiring`: for each snippet, place after its anchor (or last sampled occurrence), show file + line + rendered snippet, get consent, insert idempotently.
 
 ### 7. TDD loop (mandatory)
-Tests before implementation, no exceptions. A. Expand the engine stub into the full suite from §4; strip every `markTestIncomplete`. B. Run `composer test` (PHP) / `npm run test:js` (JS); expect red. C. Implement just enough to flip ONE test green. D. Re-run. E. Loop B-D one test at a time. F. Refactor, re-run. G. Final gates: full PHPUnit, full Jest if JS touched, PHP compliance (§7a), `npm run lint:js`. For blocks, surface `npm run build` as a developer action before testing.
+Tests before implementation, no exceptions. A. Expand the engine stub into the full suite from §4; strip every `markTestIncomplete`. B. Run `composer test` (PHP) / `npm run test:js` (JS); expect red. C. Implement just enough to flip ONE test green. D. Re-run. E. Loop B-D one test at a time. F. Refactor, re-run. G. Final gates: full PHPUnit, full Vitest if JS touched, PHP compliance (§7a), `npm run lint:js`. For blocks, surface `npm run build` as a developer action before testing. Name editor tests `test/*.jsdom.test.jsx`.
 
 ### 7a. PHP compliance (required, on changed PHP)
 Write compliant PHP up front (`declare( strict_types = 1 );`, short arrays, full types, prefixed globals, `@package`/`@since`, `static::`). Then: `composer format` (phpcbf) → `composer lint` (phpcs, `rtCampWP` ruleset) → `composer phpstan` (level 5). Resolve every finding in the generated code. Never silence a real issue with a blanket `phpcs:ignore`/`@phpstan-ignore`; if a fix is unclear or changes behaviour/API, STOP and ask.

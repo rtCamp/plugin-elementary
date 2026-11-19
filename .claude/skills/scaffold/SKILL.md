@@ -164,15 +164,15 @@ For block scaffolds, surface a developer action before testing: "run `npm run bu
 | D | Re-run. Confirm that one test passes. |
 | E | Loop B-D one test at a time. |
 | F | Once green, refactor; re-run. |
-| G | Final gates - all must pass: full PHPUnit suite (`npm run test:php`), full Jest suite if JS touched (`npm run test:js`), `composer format` (phpcbf), `composer lint` (phpcs), `composer phpstan` (PHPStan level 5), `npm run lint:js`. Never silence a real phpcs/phpstan finding with a blanket ignore; fix it, or escalate (§8). |
+| G | Final gates - all must pass: full PHPUnit suite (`npm run test:php`), full Vitest suite if JS touched (`npm run test:js`), `composer format` (phpcbf), `composer lint` (phpcs), `composer phpstan` (PHPStan level 5), `npm run lint:js`. Never silence a real phpcs/phpstan finding with a blanket ignore; fix it, or escalate (§8). |
 
 Frameworks per kind:
 
 | Kind | Framework |
 |---|---|
 | `wp/cpt`, `wp/taxonomy`, `wp/cron`, `wp/cli`, `wp/rest`, `wp/shortcode`, `wp/admin-page`, `wp/settings-page`, `wp/user-role`, `wp/registrable` | PHPUnit |
-| `wp/block-dynamic` | Jest (edit.js) + PHPUnit (render method) |
-| `block/interactive` | Jest + Playwright |
+| `wp/block-dynamic` | Vitest + React Testing Library in `test/*.jsdom.test.jsx` + PHPUnit (render method) |
+| `wp/block-interactive` | Vitest + Playwright |
 | `ci/*` | actionlint + yaml-parse |
 
 ### 8. Escalate when stuck - do not guess
