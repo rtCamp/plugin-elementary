@@ -105,7 +105,7 @@
     "test": "npm-run-all --parallel test:js test:php",
     "test:js": "wp-scripts test-unit-jest --config=tests/js/jest.config.js --passWithNoTests",
     "test:js:watch": "npm run test:js -- --watch",
-    "pretest:php": "(wp-env run --config=.wp-env.tests.json cli wp core is-installed >/dev/null 2>&1 || wp-env start --config=.wp-env.tests.json) && ([ vendor/autoload.php -nt composer.lock ] || wp-env run --config=.wp-env.tests.json cli --env-cwd=wp-content/plugins/$(basename \"$PWD\") -- sh -c 'composer install --no-interaction && touch vendor/autoload.php')",
+    "pretest:php": "(wp-env run --config=.wp-env.tests.json cli wp core is-installed >/dev/null 2>&1 || wp-env start --config=.wp-env.tests.json) && ([ vendor/autoload.php -nt composer.lock ] && [ -x vendor/bin/phpunit ] || wp-env run --config=.wp-env.tests.json cli --env-cwd=wp-content/plugins/$(basename \"$PWD\") -- sh -c 'composer install --no-interaction && touch vendor/autoload.php')",
     "test:php": "wp-env run --config=.wp-env.tests.json cli --env-cwd=wp-content/plugins/$(basename \"$PWD\") -- vendor/bin/phpunit -c phpunit.xml.dist",
     "pretest:php:multisite": "npm run pretest:php",
     "test:php:multisite": "wp-env run --config=.wp-env.tests.json cli --env-cwd=wp-content/plugins/$(basename \"$PWD\") -- env WP_MULTISITE=1 vendor/bin/phpunit -c phpunit.xml.dist --exclude-group=ms-excluded",
