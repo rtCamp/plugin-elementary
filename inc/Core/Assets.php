@@ -225,7 +225,7 @@ final class Assets extends AssetLoader implements Registrable, Shareable {
 	 * Assets are registered once centrally and enqueued in modules that need them.
 	 */
 	public function register_assets(): void {
-		$this->register_script( $this->handle( 'frontend' ), 'js/main' );
+		$this->register_translated_script( $this->handle( 'frontend' ), 'js/main' );
 		$this->register_style( $this->handle( 'frontend' ), 'css/main' );
 
 		wp_enqueue_script( $this->handle( 'frontend' ) );
@@ -241,7 +241,7 @@ final class Assets extends AssetLoader implements Registrable, Shareable {
 	 * Register assets for the admin.
 	 */
 	public function register_admin_assets(): void {
-		$this->register_script( $this->handle( 'admin' ), 'js/admin' );
+		$this->register_translated_script( $this->handle( 'admin' ), 'js/admin' );
 		$this->register_style( $this->handle( 'admin' ), 'css/admin' );
 	}
 
@@ -255,7 +255,7 @@ final class Assets extends AssetLoader implements Registrable, Shareable {
 	 */
 	public function register_editor_assets(): void {
 		if ( $this->has_asset( 'js/editor', 'js' ) ) {
-			$this->register_script( $this->handle( 'editor' ), 'js/editor' );
+			$this->register_translated_script( $this->handle( 'editor' ), 'js/editor' );
 		}
 
 		if ( $this->has_asset( 'css/editor', 'css' ) ) {
@@ -270,5 +270,33 @@ final class Assets extends AssetLoader implements Registrable, Shareable {
 		if ( $this->register_script_module( '@project-name-features/module', 'js/modules/module', [ '@wordpress/interactivity' ] ) ) {
 			wp_enqueue_script_module( '@project-name-features/module' );
 		}
+	}
+
+	/**
+	 * Register a classic script and point it at the plugin's JS translations.
+	 *
+	 * Translations are set only when the build lists wp-i18n as a dependency (the
+	 * script imports @wordpress/i18n), so a script without strings does not pull
+	 * wp-i18n onto the page. Block scripts need no call: register_block_type()
+	 * sets the textdomain from block.json, and from WordPress 6.9 core finds the
+	 * JSON in the path load_plugin_textdomain() registers.
+	 *
+	 * @param string $handle   Script handle.
+	 * @param string $filename Asset path relative to assets/build, without the extension.
+	 *
+	 * @return bool Whether the script was registered.
+	 */
+	private function register_translated_script( string $handle, string $filename ): bool {
+		if ( ! $this->register_script( $handle, $filename ) ) {
+			return false;
+		}
+
+		$script = wp_scripts()->query( $handle );
+
+		if ( $script instanceof \_WP_Dependency && in_array( 'wp-i18n', $script->deps, true ) ) {
+			wp_set_script_translations( $handle, 'project-name-features', $this->base_dir . 'languages' );
+		}
+
+		return true;
 	}
 }
