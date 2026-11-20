@@ -177,4 +177,3 @@ Keep implementation follow-ups out of documentation pull requests; record each w
 - **Stale wording:** `.npmrc` still calls `wp-tooling` a private repository, and `bin/init.js` suggests the pilot `npm install --install-links`.
 - **Lockfile URLs:** `package-lock.json` resolves `@rtcamp/*` over `git+ssh://`. Confirm a clean `npm ci` works for a developer without a GitHub SSH key.
 - **Downstream docs workflow:** `documentation.yml` ships into client projects. It is inert there (its jobs only run in `rtCamp/plugin-elementary`), but decide whether init cleanup should remove it.
-- **Multisite tests:** `composer test-multisite` has no `wp-env` wrapper.

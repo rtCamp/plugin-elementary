@@ -57,7 +57,7 @@
         "lint": "phpcs",
         "phpstan": "phpstan analyse --memory-limit=1G",
         "test": "vendor/bin/phpunit -c phpunit.xml.dist",
-        "test-multisite": "WP_MULTISITE=1 phpunit --exclude-group=ms-excluded",
+        "test-multisite": "WP_MULTISITE=1 vendor/bin/phpunit -c phpunit.xml.dist --exclude-group=ms-excluded",
         "pot": "wp i18n make-pot . ./languages/project-name-features.pot --domain=project-name-features --include=\"inc,templates,assets/build/blocks\""
     }
 }

@@ -4,9 +4,6 @@
   "plugins": [
     "."
   ],
-  "themes": [
-    "https://downloads.wordpress.org/theme/twentytwentytwo.zip"
-  ],
   "testsEnvironment": false,
   "config": {
     "WP_DEBUG": true
