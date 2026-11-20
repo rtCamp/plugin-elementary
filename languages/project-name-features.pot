@@ -1,22 +1,24 @@
-# Copyright (C) 2025 rtCamp
-# This file is distributed under the GPL2.
+# Copyright (C) 2026 rtCamp
+# This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Project_Name Features 1.0\n"
+"Project-Id-Version: Project Name Features 1.0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/plugin-elementary\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-01-20T17:43:05+00:00\n"
+"POT-Creation-Date: 2026-11-20T18:00:15+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: project-name-features\n"
 
 #. Plugin Name of the plugin
 #: project-name-features.php
-msgid "Project_Name Features"
+#: inc/Modules/Settings/ExampleSettingsPage.php:53
+#: inc/Modules/Settings/ExampleSettingsPage.php:60
+msgid "Project Name Features"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -27,7 +29,7 @@ msgstr ""
 
 #. Description of the plugin
 #: project-name-features.php
-msgid "All backend functionality will take place in this plugin. Like, registering post type, taxonomy, widget and meta box."
+msgid "All backend functionality: post types, taxonomies, blocks, REST endpoints, settings, shortcodes, and custom roles."
 msgstr ""
 
 #. Author of the plugin
@@ -35,147 +37,116 @@ msgstr ""
 msgid "rtCamp"
 msgstr ""
 
-#: inc/classes/class-cache.php:69
-msgid "Cache key is required to create cache object"
+#: assets/build/blocks/example-block-interactive/render.php:37
+msgid "Toggle"
 msgstr ""
 
-#: inc/classes/class-cache.php:148
-msgid "Callback passed is not callable"
+#: assets/build/blocks/example-block-interactive/render.php:45
+msgid "Example Block Interactive - hello from an interactive block!"
 msgstr ""
 
-#: inc/classes/class-cache.php:152
-msgid "All parameters for the callback must be in an array"
+#. translators: %s: The plugin name.
+#: inc/Autoloader.php:45
+#, php-format
+msgid "%s: The Composer autoloader was not found. If you installed the plugin from the GitHub source code, make sure to run `composer install`."
 msgstr ""
 
-#: inc/classes/class-cache.php:186
-msgid "No valid callback set"
+#: inc/Modules/Admin/ExampleAdminPage.php:37
+msgid "Project Name Features Tools"
 msgstr ""
 
-#: inc/classes/post-types/class-post-type-example.php:37
-msgctxt "post type general name"
-msgid "Post_Type_Label"
+#: inc/Modules/Admin/ExampleAdminPage.php:44
+msgid "Features Tools"
 msgstr ""
 
-#: inc/classes/post-types/class-post-type-example.php:38
-msgctxt "post type singular name"
-msgid "Post_Type_Label"
+#: inc/Modules/Admin/ExampleAdminPage.php:64
+msgid "A plain admin page rendered by the plugin. Replace this with your own tooling UI."
 msgstr ""
 
-#: inc/classes/post-types/class-post-type-example.php:39
-msgctxt "admin menu"
-msgid "Post_Type_Label"
+#. translators: %s: plugin version.
+#: inc/Modules/Admin/ExampleAdminPage.php:70
+#, php-format
+msgid "Plugin version: %s"
 msgstr ""
 
-#: inc/classes/post-types/class-post-type-example.php:40
-msgctxt "add new on admin bar"
-msgid "Post_Type_Label"
+#: inc/Modules/CLI/Healthcheck.php:32
+msgid "Run a health check on the plugin."
 msgstr ""
 
-#: inc/classes/post-types/class-post-type-example.php:41
-msgctxt "post"
-msgid "Add New"
+#: inc/Modules/PostTypes/ExamplePostType.php:30
+msgid "Post Type Label"
 msgstr ""
 
-#: inc/classes/post-types/class-post-type-example.php:42
-msgid "Add New Post_Type_Label"
+#: inc/Modules/PostTypes/ExamplePostType.php:37
+msgid "Post Type Labels"
 msgstr ""
 
-#: inc/classes/post-types/class-post-type-example.php:43
-msgid "New Post_Type_Label"
+#: inc/Modules/PostTypes/ExamplePostTypeTwo.php:30
+msgid "Post Type Two Label"
 msgstr ""
 
-#: inc/classes/post-types/class-post-type-example.php:44
-msgid "Edit Post_Type_Label"
+#: inc/Modules/PostTypes/ExamplePostTypeTwo.php:37
+msgid "Post Type Two Labels"
 msgstr ""
 
-#: inc/classes/post-types/class-post-type-example.php:45
-msgid "View Post_Type_Label"
+#: inc/Modules/REST/ExampleRESTController.php:80
+msgid "Sorry, you are not allowed to access this endpoint."
 msgstr ""
 
-#: inc/classes/post-types/class-post-type-example.php:46
-msgid "All Post_Type_Label"
+#: inc/Modules/Roles/ExampleUserRole.php:34
+msgid "Content Editor"
 msgstr ""
 
-#: inc/classes/post-types/class-post-type-example.php:47
-msgid "Search Post_Type_Label"
+#: inc/Modules/Settings/ExampleSettingsPage.php:82
+msgid "Example Text"
 msgstr ""
 
-#: inc/classes/post-types/class-post-type-example.php:48
-msgid "Parent Post_Type_Label:"
+#: inc/Modules/Settings/ExampleSettingsPage.php:83
+msgid "A demo text field saved as a WordPress option."
 msgstr ""
 
-#: inc/classes/post-types/class-post-type-example.php:49
-msgid "No Post_Type_Label found."
+#: inc/Modules/Settings/ExampleSettingsPage.php:124
+msgid "Plugin Options"
 msgstr ""
 
-#: inc/classes/post-types/class-post-type-example.php:50
-msgid "No Post_Type_Label found in Trash."
+#: inc/Modules/Settings/ExampleSettingsPage.php:150
+msgid "Plugin-wide options exposed to the editor and front-end."
 msgstr ""
 
-#: inc/classes/taxonomies/class-taxonomy-example.php:30
-msgctxt "taxonomy general name"
-msgid "Taxonomy_Example"
+#. translators: %d: number of items
+#: inc/Modules/Shortcodes/ExampleShortcode.php:61
+#, php-format
+msgid "Showing %d example item."
+msgid_plural "Showing %d example items."
+msgstr[0] ""
+msgstr[1] ""
+
+#: inc/Modules/Taxonomies/ExampleTaxonomy.php:38
+msgid "Taxonomy Label"
 msgstr ""
 
-#: inc/classes/taxonomies/class-taxonomy-example.php:31
-msgctxt "taxonomy singular name"
-msgid "Taxonomy_Example"
+#: inc/Modules/Taxonomies/ExampleTaxonomy.php:45
+msgid "Taxonomy Labels"
 msgstr ""
 
-#: inc/classes/taxonomies/class-taxonomy-example.php:32
-msgid "Search Taxonomy_Example"
+#: inc/Modules/Taxonomies/ExampleTaxonomyTwo.php:38
+msgid "Taxonomy Two Label"
 msgstr ""
 
-#: inc/classes/taxonomies/class-taxonomy-example.php:33
-msgid "Popular Taxonomy_Example"
+#: inc/Modules/Taxonomies/ExampleTaxonomyTwo.php:45
+msgid "Taxonomy Two Labels"
 msgstr ""
 
-#: inc/classes/taxonomies/class-taxonomy-example.php:34
-msgid "All Taxonomy_Example"
-msgstr ""
-
-#: inc/classes/taxonomies/class-taxonomy-example.php:37
-msgid "Edit Taxonomy_Example"
-msgstr ""
-
-#: inc/classes/taxonomies/class-taxonomy-example.php:38
-msgid "Update Taxonomy_Example"
-msgstr ""
-
-#: inc/classes/taxonomies/class-taxonomy-example.php:39
-msgid "Add New Taxonomy_Example"
-msgstr ""
-
-#: inc/classes/taxonomies/class-taxonomy-example.php:40
-msgid "New Taxonomy_Example Name"
-msgstr ""
-
-#: inc/classes/taxonomies/class-taxonomy-example.php:41
-msgid "Separate Taxonomy_Example with commas"
-msgstr ""
-
-#: inc/classes/taxonomies/class-taxonomy-example.php:42
-msgid "Add or remove Taxonomy_Example"
-msgstr ""
-
-#: inc/classes/taxonomies/class-taxonomy-example.php:43
-msgid "Choose from the most used Taxonomy_Example"
-msgstr ""
-
-#: inc/classes/taxonomies/class-taxonomy-example.php:44
-msgid "No Taxonomy_Example found."
-msgstr ""
-
-#: inc/classes/taxonomies/class-taxonomy-example.php:45
-msgid "Taxonomy_Example"
-msgstr ""
-
-#: templates/block-templates/example-block-dynamic.php:9
+#: templates/block-templates/example-block-dynamic.php:16
 msgid "Example block dynamic"
 msgstr ""
 
-#: templates/block-templates/example-block-dynamic.php:11
+#: templates/block-templates/example-block-dynamic.php:18
 msgid "This is an example block dynamic template."
+msgstr ""
+
+#: assets/build/blocks/example-block-interactive/index.js:1
+msgid "Example Block Interactive – hello from the editor!"
 msgstr ""
 
 #: assets/build/blocks/example-block/index.js:1
@@ -184,10 +155,6 @@ msgstr ""
 
 #: assets/build/blocks/example-block/index.js:1
 msgid "Example Block – hello from the saved content!"
-msgstr ""
-
-#: assets/build/blocks/meta-blocks/example-meta-block/index.js:1
-msgid "Example Meta Block Field"
 msgstr ""
 
 #: assets/build/blocks/example-block-dynamic/block.json
@@ -201,17 +168,17 @@ msgctxt "block description"
 msgid "Example block description"
 msgstr ""
 
+#: assets/build/blocks/example-block-interactive/block.json
+msgctxt "block title"
+msgid "Example Block Interactive"
+msgstr ""
+
+#: assets/build/blocks/example-block-interactive/block.json
+msgctxt "block description"
+msgid "An interactive block with the Interactivity API"
+msgstr ""
+
 #: assets/build/blocks/example-block/block.json
 msgctxt "block title"
 msgid "Example Block"
-msgstr ""
-
-#: assets/build/blocks/meta-blocks/example-meta-block/block.json
-msgctxt "block title"
-msgid "example-meta-block"
-msgstr ""
-
-#: assets/build/blocks/meta-blocks/example-meta-block/block.json
-msgctxt "block description"
-msgid "An example block viewing and saving post meta"
 msgstr ""
