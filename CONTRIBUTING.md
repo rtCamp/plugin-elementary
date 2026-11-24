@@ -42,7 +42,6 @@ Then:
 - [ ] Documentation is updated.
 - [ ] Placeholders (`Project Name` / `project-name` / `Project_Name`) are intact.
 - [ ] Commits follow [Conventional Commits](https://www.conventionalcommits.org/) (enforced by the commit-message hook), and so does the PR title (checked by `pr-title.yml`): pull requests are squash-merged, and the title becomes the commit on `main` and the changelog entry.
-- [ ] `graphify-out/graph.json` is not part of the change unless the pull request is a deliberate baseline refresh.
 
 Use the pull request template and describe how you verified the change.
 

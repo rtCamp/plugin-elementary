@@ -135,7 +135,7 @@ When done, restore only the dependency source lines and regenerate the affected 
 - `init` and `scaffold` exist twice, as Claude skills (`.claude/skills/<name>/SKILL.md`) and Copilot prompts (`.github/prompts/<name>.prompt.md`). A behaviour change to one must land in the other in the same pull request.
 - `.claude/skills/setup/` is a generic bootstrap skill shipped with `wp-tooling`; it has no Copilot counterpart and is not a personalization path.
 - Skill eval cases live in `.claude/skills/<name>/evals/evals.json`. Update the expectations when a skill's behaviour changes.
-- Skills must follow the base guardrails in `AGENTS.md` (no history- or remote-affecting Git, package managers only with consent, local graph refresh only).
+- Skills must follow the base guardrails in `AGENTS.md` (no history- or remote-affecting Git, package managers only with consent, local Saguri index only).
 
 ## Documentation publishing
 
@@ -156,10 +156,6 @@ node /path/to/action-docusaurus-build/cli.mjs build \
 
 The builder fails on broken internal links and missing repository files. Also check external links, anchors and the root Markdown pages, which it does not fully cover. Update incoming links whenever a page moves.
 
-## Knowledge graph
-
-See [knowledge-graph.md](knowledge-graph.md). In short: contributors refresh their local copy with `graphify update .` and never commit it; the committed cross-repo baseline is rebuilt by a maintainer.
-
 ## Temporary procedures
 
 Status recorded on **2026-09-25** for skeleton `e49d4f3`, framework `v1.0.1` (`87774ee`) and tooling `18d003c`. Recheck against the revisions being validated.
@@ -170,7 +166,6 @@ None at the moment.
 
 Keep implementation follow-ups out of documentation pull requests; record each with a reproduction and revision when it is picked up.
 
-- **Release zip:** no `.distignore` ships, so `release:zip` includes `src/`, `docs/`, `graphify-out/`, AI files and dotfiles.
 - **Scaffold wiring targets:** `wp/rest` and `wp/cli` suggest `inc/Modules/Rest.php` and `inc/Modules/Cli.php`, but this skeleton's modules are `REST.php` and `CLI.php`, which are different files on case-sensitive filesystems. Keep the uppercase names (they match WordPress acronym style and the framework's `AbstractRESTController` / `CLICommand`); the skill adapts, and CLI users edit the existing file. Fix upstream in wp-tooling.
 - **Block scaffolder:** `npm run create:block` writes meta blocks to `src/blocks/meta-blocks/`, which `Assets::STATIC_BLOCKS` cannot register.
 - **Dangling references:** `PluginSetup::deactivate()` mentions a root `uninstall.php` and `Util::get_data()` reads `inc/data/`; neither ships.

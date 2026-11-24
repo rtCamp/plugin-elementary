@@ -50,14 +50,14 @@ Result: `{ scaffolds: [{ id, slug, category, kind, origin, counts }, ...] }`. Pi
 
 **Reuse `/init`'s findings if it handed off to you in this session.** When `/init` chained here, you already established the resolved identity and conventions while running init - root namespace, base path (`inc/`), tests namespace + path (`<Root>\Tests` -> `tests/php/`), text domain, and constant prefix. They are facts you set, not guesses: reuse them and SKIP the `composer.json` / plugin-header / `Main.php` reads below that only recover them. You still read a sample implementation for the registration pattern (next paragraph). Because init deleted the briefed `Example*`, sample the pattern from the framework abstract for the kind (`vendor/rtcamp/wp-primitives/inc/Contracts/Abstracts/Abstract<Kind>.php`) or any remaining example; do not guess.
 
-**The graph saves tokens for orientation only; read the file for any data you copy.** This repo commits a queryable graph (`graphify-out/graph.json`). Use it to LOCATE things cheaply so you open fewer files: which classes implement a kind, what references a symbol, the path between two classes - `graphify query "..."`, `graphify explain "<Class>"`, `graphify affected "<Class>"`, `graphify path "A" "B"`. The graph is structural (not the full source), so it is NOT a source of truth for the patterns you act on. For registration shape, exact namespace, how a module's `get_classes()` lists classes, and wiring location, **read the actual file** - 100% accuracy beats a few saved tokens. (If you or init changed code this session, refresh the local slice first with `graphify update .`, seconds, **never push `graphify-out/graph.json`** - AGENTS.md graphify policy.)
+**Saguri saves tokens for orientation only; read the file for any data you copy.** Use the local index to open fewer files: `sgr entity --kind <kind>` for registered classes, `sgr hook <name>` for handlers, `sgr refs <symbol> [--callees]` for callers and the hooks a symbol registers. For registration shape, exact namespace, how a module's `get_classes()` lists classes, and wiring location, **read the actual file**. If code changed this session, run `sgr index .` first; if `sgr` is missing, read the files.
 
-Read, in order (use the graph to find them fast; read the files for their contents):
+Read, in order (use Saguri to find them fast; read the files for their contents):
 
 - `composer.json` -> `autoload.psr-4` (root namespace + base path; here `<Root>\` -> `inc/`, e.g. `RT_Testimonial\Features\` -> `inc/`). `autoload-dev.psr-4` for the tests namespace (`<Root>\Tests\` -> `tests/php/`).
 - `package.json` -> scripts. For block scaffolds, parse `build:blocks` for `--output-path=<DIR>` and pass as `--build_dir`. Default `assets/build/blocks`.
 - Main plugin file -> bootstrap class (`Main`) + `Main::CLASSES`.
-- 2-3 existing implementations of the same kind under `inc/Modules/<Kind>/` (e.g. `Example*`): registration pattern, class-name suffix, sub-namespace, and how the module's `get_classes()` lists them. **Read these files** - they are the source of truth for the patterns you copy; use `graphify` only to find them.
+- 2-3 existing implementations of the same kind under `inc/Modules/<Kind>/` (e.g. `Example*`): registration pattern, class-name suffix, sub-namespace, and how the module's `get_classes()` lists them. **Read these files** - they are the source of truth for the patterns you copy; use `sgr` only to find them.
 - Block scaffolds: sample one `src/blocks/*/block.json` for vendor prefix and source dir.
 - CI scaffolds: sample one `.github/workflows/*.yml` for filename and trigger style.
 
@@ -187,9 +187,9 @@ Stop and report findings to the developer when any of the following holds. Wait 
 
 Escalation report format: **what you tried, what you observed, what's blocking, 1-3 specific resolution options.** Do not keep iterating in silence.
 
-### 9. Refresh the graph, then report
+### 9. Re-index Saguri, then report
 
-Once green, refresh the LOCAL graph so it reflects the new artifacts (and any later query stays accurate): `graphify update .` (tree-sitter, seconds). **Never commit or push `graphify-out/graph.json`** - it is a maintainer-maintained cross-repo baseline; your refresh stays local (AGENTS.md graphify policy). Do not run the cross-repo `/graphify . --update` subagent or `merge-graphs`.
+Once green, run `sgr index .` so later queries see the new files. If `sgr` is missing, say so in one line; do not block.
 
 Then report:
 
@@ -221,7 +221,7 @@ Then report:
 
 ## Hard rules - never violate
 
-- **BASE (see AGENTS.md guardrails):** never run history/remote `git`/`gh` (commit, push, `branch -D`, `reset --hard`, PR, issue comment, `gh secret set`, `gh repo edit`); print them as developer actions. `git clone`/`checkout` are fine. Never do a destructive operation outside this plugin directory. Never commit or push `graphify-out/graph.json`.
+- **BASE (see AGENTS.md guardrails):** never run history/remote `git`/`gh` (commit, push, `branch -D`, `reset --hard`, PR, issue comment, `gh secret set`, `gh repo edit`); print them as developer actions. `git clone`/`checkout` are fine. Never do a destructive operation outside this plugin directory. Never commit `.saguri/` or run `sgr install`.
 - Never write production code before its test exists on disk.
 - Never hand-write an artifact the engine can scaffold.
 - Never group multiple kinds under a per-feature folder (`Modules/<Feature>/...`).

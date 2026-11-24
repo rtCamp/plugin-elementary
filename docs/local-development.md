@@ -98,7 +98,7 @@ If your host deploys from a build step or a site repository instead, run the fir
 
 `release:zip` packs the working tree as it is on disk and never reads `.gitignore`. That is how the built `vendor/` and `assets/build/` get in, but it also means:
 
-- The plugin ships a `.distignore` that leaves out development files: dotfiles (including the gitignored `.env.local` and `.wp-env.override.json`), `src/`, `docs/`, `scripts/`, `tests/`, `bin/`, `graphify-out/`, build and lint configs, and the lock files.
+- The plugin ships a `.distignore` that leaves out development files: dotfiles (including the gitignored `.env.local` and `.wp-env.override.json`), `src/`, `docs/`, `scripts/`, `tests/`, `bin/`, build and lint configs, and the lock files.
 - A `.distignore` replaces the built-in default list rather than extending it, and does not support `!` negation, so it must list everything to leave out. Keep it up to date when you add files that should not ship.
 - Without a `.distignore`, only `.git/`, `dist/`, `tests/`, `node_modules/`, `bin/`, `.github/`, `*.config.js` and `package-lock.json` would be left out.
 
@@ -110,7 +110,6 @@ The shipped `.distignore`:
 /bin/
 /coverage/
 /docs/
-/graphify-out/
 /node_modules/
 /scripts/
 /src/

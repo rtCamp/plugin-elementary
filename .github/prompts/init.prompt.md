@@ -64,7 +64,7 @@ npm run init -- --features=hmr --yes        # exact enabled set (empty = none)
 - Tailwind enabled → developer runs `npm install` (added `src/css/tailwind.css`, `postcss.config.js`, pinned `@rtcamp/tailwind-config`).
 - Suggest `composer dump-autoload`.
 - If you hand-edited PHP under `inc/`, run `composer format` → `composer lint` → `composer phpstan` and resolve every finding. Never silence a real issue; if unclear, STOP and ask.
-- Refresh the LOCAL knowledge graph with `graphify update .`. Never commit `graphify-out/graph.json`, and never run the cross-repo `/graphify . --update` or `merge-graphs`. If not installed, say so in one line; do not block. See `AGENTS.md` (graphify).
+- Run `sgr index .`; never commit `.saguri/` or run `sgr install`. If `sgr` is missing, say so in one line; do not block.
 - Report: new identity, capabilities removed/kept, features toggled, outstanding developer actions.
 
 ## Capability model

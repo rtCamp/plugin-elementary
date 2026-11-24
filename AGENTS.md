@@ -56,19 +56,20 @@ The two core tasks, **init** (set up / manage the project) and **scaffold** (add
 - **GitHub Copilot:** prompt files in [`.github/prompts/`](.github/prompts/) (`init`, `scaffold`), invoked as `/init` and `/scaffold` in Copilot Chat.
 - Both follow this file and the path-scoped rules. `scaffold` tracks `@rtcamp/wp-tooling`; framework instructions re-sync with `npm run sync-ai`.
 
-## Knowledge graph (graphify)
+## Code intelligence (Saguri)
 
-The repo keeps a queryable code graph in `graphify-out/` (`graph.json` + `GRAPH_REPORT.md`) covering this plugin plus `wp-tooling`, `wp-primitives`, and `wp-shared-workflows`. Use it to understand the codebase, and keep it current. Tell the user each graphify step in <=30 words (50 max). Only the `init`/`scaffold` agentic tools run these commands; Copilot review does not.
+[Saguri](docs/internal/saguri.md) (`sgr`) indexes this plugin and the locked `vendor/rtcamp/wp-primitives` into the gitignored `.saguri/`. Only the `init`/`scaffold` agentic tools use it; Copilot review does not. Report each Saguri step in <=30 words.
 
-**Graph-first: do not read source files to understand them when the graph can answer.** Before opening a file to learn what a symbol does, how a subsystem works, or how the repos connect - including `wp-tooling` engine internals (token derivation in `identity.js`, capability removal in `examples.js`, etc.) - query the graph (`/graphify query "<q>"`, `explain "<symbol>"`, `path "A" "B"`). You almost never need to read engine source: the engine is a black box these skills invoke, and the skill already documents the outcome (e.g. how a project name becomes namespace/package/prefixes). Read a file only when the graph does not answer.
+Before opening files to find where something is hooked, registered or called, query the index. It locates code; read the file for anything you copy.
 
-**Before answering a question about the codebase, or before reading a file to understand code:**
+- `sgr hook <name>`: a hook's handlers and the sites that fire it.
+- `sgr entity --kind <kind>`: registered `rest_route`, `block`, `setting`, `shortcode`, `cli_command`.
+- `sgr refs <symbol> [--callees]` and `sgr trace <symbol> [--up]`: callers, callees, call tree.
+- `sgr brief "<task>"`: when you do not know the names yet.
 
-1. Graph exists (`graphify-out/graph.json`)? → query it: `/graphify query "<question>"`.
-2. graphify installed but no graph? → offer to build (`/graphify .`), say what + rough cost in one line, build on consent.
-3. graphify not installed (`command -v graphify` fails)? → ask "install graphify? (y/n)". On yes: run `scripts/graphify/install.sh`, then `scripts/graphify/verify.sh`, then build. On no: proceed without it.
+Run `sgr index .` before the first query and after any code change. `sgr path` can cross a shared hook (`init`, `rest_api_init`) into an unrelated handler, so confirm such paths with `sgr hook`. If `sgr` is missing, say so in one line, point to the install doc, and carry on.
 
-**After any task that adds, edits, or deletes code or files**, before the final report: refresh the **local** graph with `graphify update .` (re-extracts only changed files; tree-sitter, no API, seconds). This is a local working copy: **never commit or push `graphify-out/graph.json`.** The committed graph is a maintainer-maintained cross-repo baseline (rebuilt and pushed when this or a shared repo changes); your local refresh stays local. Never run the cross-repo `/graphify . --update` subagent or any `merge-graphs` here (expensive, and it would clobber the baseline). If graphify is not installed or no graph exists, say so in one line; never block the task on it.
+Never commit `.saguri/` or run `sgr install`, `sgr uninstall` or `sgr razu`.
 
 ## Guardrails (all AI tools) - BASE, non-negotiable
 

@@ -362,7 +362,7 @@ You **must never** (BASE, see AGENTS.md guardrails):
 
 - Run history/remote `git`/`gh` at all (commit, push, `branch -D`, `reset --hard`, PR, issue comment, `gh secret set`); print them as developer actions. `git clone`/`checkout` for setup are fine.
 - Do a destructive operation outside this plugin directory (cloning a NEW sibling is additive and OK; deleting/overwriting existing out-of-repo files is not).
-- Commit or push `graphify-out/graph.json`; local graph refreshes stay local.
+- Commit `.saguri/` or run `sgr install`.
 - Run `composer require`, `npm install`, `composer dump-autoload`, or any package manager command without explicit user approval.
 - Edit `composer.json` scripts or `package.json` scripts - show them, let the developer apply.
 - Apply wiring to any file without showing the diff and receiving consent.

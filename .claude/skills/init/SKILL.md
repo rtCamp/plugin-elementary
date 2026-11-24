@@ -46,7 +46,7 @@ Then verify a clean working tree (`git status`) - init rewrites files irreversib
 ### 3. Ask, confirm, run - one step
 `npm run init` is a single command; don't turn gathering its inputs into a multi-round-trip wizard.
 
-**Setup:** in ONE message ask for project name (required, e.g. `Acme Blog` → namespace `Acme_Blog\Features`, package `rtcamp/acme-blog-features`, text domain, prefixes, main file - show these back), version (default `1.0.0`), which capability sets to remove, and which features to enable (defaults: keep all sets, `hmr` on, `tailwind` off - see Capability model). The engine derives the tokens itself; do not read the engine source (`identity.js` etc.) - the mapping above is the contract, and the graph answers any deeper question (see the graphify policy in `AGENTS.md`).
+**Setup:** in ONE message ask for project name (required, e.g. `Acme Blog` → namespace `Acme_Blog\Features`, package `rtcamp/acme-blog-features`, text domain, prefixes, main file - show these back), version (default `1.0.0`), which capability sets to remove, and which features to enable (defaults: keep all sets, `hmr` on, `tailwind` off - see Capability model). The engine derives the tokens itself; do not read the engine source (`identity.js` etc.) - the mapping above is the contract.
 
 **Manage:** ask which of identity / features to change. It's a single flag on an existing project - no wizard needed.
 
@@ -70,9 +70,9 @@ npm run init -- --features=hmr --yes        # exact enabled set (empty = none)
 ### 4. After init
 - Tailwind enabled → developer runs `npm install` (it added `src/css/tailwind.css`, `postcss.config.js`, and pinned `@rtcamp/tailwind-config`).
 - `composer dump-autoload` (engine runs it when `composer.json` is present).
-- Trust the engine's own output to verify (it reports the removed sets, drops their `Main::CLASSES` lines and tests, and regenerates the autoloader). To confirm a symbol or reference, run a single `graphify query`/`affected` against the graph - never grep `Main.php`/`inc/` to check removal.
+- Trust the engine's own output to verify (it reports the removed sets, drops their `Main::CLASSES` lines and tests, and regenerates the autoloader). To confirm a symbol or reference, run `sgr index .` then one `sgr refs <Class>` - never grep `Main.php`/`inc/` to check removal.
 - If you hand-edited PHP and are NOT handing off to scaffold (e.g. a manage-mode dangling `Main::CLASSES` cleanup), run `composer lint` on the change and fix it. When a brief follows (step 5), leave the lint/PHPStan/test gates to the scaffold skill - init does not run them.
-- **Refresh the LOCAL graph** with `graphify update .` (plugin slice, tree-sitter, no API, seconds). **Never commit or push `graphify-out/graph.json`** - the committed file is a maintainer-maintained cross-repo baseline (rebuilt and pushed when this or a shared repo changes); your local refresh stays local. Do NOT run the cross-repo `/graphify . --update` subagent or `merge-graphs` (expensive; clobbers the baseline). If graphify is not installed, say so in one line; do not block.
+- **Re-index Saguri** with `sgr index .`. If `sgr` is missing, say so in one line; do not block.
 - Report: new identity, capabilities removed/kept, features toggled, outstanding developer actions.
 
 ### 5. Implement the brief by handing off to scaffold (setup only, when features were described)
@@ -80,7 +80,7 @@ By this point step 3 has already emptied the briefed capabilities (their `Exampl
 
 For each described feature, **invoke the scaffold skill**, passing the brief (e.g. a `testimonial` CPT; an `industry` taxonomy attached to `testimonial`; a REST controller that creates testimonials in `draft`). The scaffold skill owns conventions, the `wp-tooling add` call, wiring into the already-present module, the TDD loop, test execution, and the gates - report its result; do not duplicate that work here.
 
-**Pass your findings to scaffold (speeds it up).** init has already resolved the project identity while renaming, so hand those values to the scaffold skill in the same message instead of making it re-derive them. State explicitly: the resolved **PHP namespace root** (e.g. `Acme\Testimonials`), **base_path** (`inc`), **tests_namespace** (e.g. `Acme\Testimonials\Tests`), **tests_path** (`tests/php`), **text_domain** and **slug** (e.g. `testimonial-features`), the **plugin display name**, and **which capabilities step 3 kept-and-emptied** (their `inc/Modules/<Kind>/` folders already exist and are wired in `Main::CLASSES`, so scaffold wires into them rather than creating a module). With these provided, the scaffold skill skips its own `composer.json` / plugin-header / `Main.php` discovery reads. It still reads source files when it needs exact code (the graph and a handoff are for orientation, not a substitute for reading).
+**Pass your findings to scaffold (speeds it up).** init has already resolved the project identity while renaming, so hand those values to the scaffold skill in the same message instead of making it re-derive them. State explicitly: the resolved **PHP namespace root** (e.g. `Acme\Testimonials`), **base_path** (`inc`), **tests_namespace** (e.g. `Acme\Testimonials\Tests`), **tests_path** (`tests/php`), **text_domain** and **slug** (e.g. `testimonial-features`), the **plugin display name**, and **which capabilities step 3 kept-and-emptied** (their `inc/Modules/<Kind>/` folders already exist and are wired in `Main::CLASSES`, so scaffold wires into them rather than creating a module). With these provided, the scaffold skill skips its own `composer.json` / plugin-header / `Main.php` discovery reads. It still reads source files when it needs exact code (the Saguri index and a handoff are for orientation, not a substitute for reading).
 
 For a kept capability the brief did NOT mention, leave its `Example*` but tell the developer it is demo-only, not for deployment, and offer to scaffold a real class or drop the capability.
 
@@ -105,7 +105,7 @@ Add later → scaffold skill / `npx wp-tooling add <category>/<slug>` (writes th
 
 ## Hard rules
 - **BASE (see AGENTS.md guardrails):** never run history/remote `git`/`gh` (commit, push, `branch -D`, `reset --hard`, PR, issue comment, `gh secret set`) - print them as developer actions. Never do a destructive operation outside this plugin directory.
-- Never commit or push `graphify-out/graph.json`; local graph refreshes stay local.
+- Never commit `.saguri/` or run `sgr install`.
 - Package managers only with consent: `npm install`, `composer install` (step 2), and `npm run init`. Outside those, surface install commands as developer actions.
 - Never run a destructive init without confirming resolved values, on a clean tree.
 - Never commit, push, open PRs, or edit `.wp-scaffold.json` by hand.
@@ -114,4 +114,4 @@ Add later → scaffold skill / `npx wp-tooling add <category>/<slug>` (writes th
 ## Reference
 - Engine: `@rtcamp/wp-tooling/init` (via `bin/init.js`). Capability map: `bin/scaffold.config.js`.
 - Conventions renamed into: `AGENTS.md`, `.github/instructions/structure.instructions.md`.
-- Graphify policy: `AGENTS.md`.
+- Saguri policy: `AGENTS.md`.

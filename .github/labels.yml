@@ -104,7 +104,7 @@
   description: "Caller workflows for rtCamp/wp-shared-workflows"
 - name: "Scope: AI Tooling"
   color: "0075CA"
-  description: "AGENTS.md, Claude skills, Copilot prompts and graphify"
+  description: "AGENTS.md, Claude skills, Copilot prompts and Saguri"
 - name: "Scope: Docs"
   color: "FEF2C0"
   description: "Documentation"

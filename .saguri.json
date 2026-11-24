@@ -1,0 +1,9 @@
+{
+  "provenance": [
+    {
+      "pattern": "vendor/rtcamp/wp-primitives/**",
+      "provenance": "third_party",
+      "index": true
+    }
+  ]
+}

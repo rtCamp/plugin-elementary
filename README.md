@@ -68,7 +68,7 @@ Setup and feature scaffolding are also available through AI assistants, kept in 
 - **GitHub Copilot:** matching `/init` and `/scaffold` prompts in [`.github/prompts/`](.github/prompts/).
 - **Any assistant:** [AGENTS.md](AGENTS.md) is the tool-agnostic source of conventions; `CLAUDE.md` and `.github/copilot-instructions.md` point to it.
 
-A committed knowledge graph in [`graphify-out/`](graphify-out/) lets assistants query the code's structure instead of reading it all; see [docs/internal/knowledge-graph.md](docs/internal/knowledge-graph.md).
+Assistants query a local [Saguri](docs/internal/saguri.md) index for hooks, registrations and callers instead of reading the whole codebase.
 
 ## Folder structure
 
