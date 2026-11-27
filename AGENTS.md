@@ -58,7 +58,7 @@ The two core tasks, **init** (set up / manage the project) and **scaffold** (add
 
 ## Code intelligence (Saguri)
 
-[Saguri](docs/internal/saguri.md) (`sgr`) indexes this plugin and the locked `vendor/rtcamp/wp-primitives` into the gitignored `.saguri/`. Only the `init`/`scaffold` agentic tools use it; Copilot review does not. Report each Saguri step in <=30 words.
+[Saguri](docs/internal/saguri.md) (`sgr`) indexes this plugin, the locked `vendor/rtcamp/wp-primitives` and the installed `@rtcamp/wp-tooling` engine into the gitignored `.saguri/`. Only the `init`/`scaffold` agentic tools use it; Copilot review does not. Report each Saguri step in <=30 words.
 
 Before opening files to find where something is hooked, registered or called, query the index. It locates code; read the file for anything you copy.
 

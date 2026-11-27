@@ -4,6 +4,11 @@
       "pattern": "vendor/rtcamp/wp-primitives/**",
       "provenance": "third_party",
       "index": true
+    },
+    {
+      "pattern": "node_modules/@rtcamp/wp-tooling/**",
+      "provenance": "third_party",
+      "index": true
     }
   ]
 }

@@ -2,7 +2,7 @@
 
 Saguri (`sgr`, internal repository `rtCamp/saguri`) is an offline code index for coding agents. It answers which handlers a WordPress hook has, which routes, blocks and settings the plugin registers, and who calls what. Agent rules are in [`AGENTS.md`](../../AGENTS.md).
 
-The index covers this plugin plus the locked `vendor/rtcamp/wp-primitives` (set in [`.saguri.json`](../../.saguri.json)) and lives in the gitignored `.saguri/`, one per checkout.
+The index covers this plugin, the locked `vendor/rtcamp/wp-primitives` and the installed `@rtcamp/wp-tooling` engine (set in [`.saguri.json`](../../.saguri.json)). It lives in the gitignored `.saguri/`, one per checkout.
 
 ## Install
 
@@ -29,7 +29,7 @@ sgr entity --kind rest_route    # registered routes (also block, setting, ...)
 sgr refs <symbol> --callers     # who calls it
 ```
 
-Nothing re-indexes automatically: run `sgr index .` after pulling, switching branches or editing code. Vendor code is indexed only after `composer install`.
+Nothing re-indexes automatically: run `sgr index .` after pulling, switching branches or editing code. wp-primitives is indexed only after `composer install`, and wp-tooling only after `npm install`.
 
 `sgr path` can route through a shared hook into an unrelated handler. Confirm any path that crosses a hook with `sgr hook`.
 
